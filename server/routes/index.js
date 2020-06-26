@@ -1,3 +1,4 @@
+
 const router = require('express').Router()
 const parentRoute = require('./parent')
 const nannyRoute = require('./nanny')
@@ -9,3 +10,8 @@ router.use('/nanny', nannyRoute)
 router.use('/agency', agencyRoute)
 router.use('/child', childRoute)
 module.exports = router
+
+
+
+module.exports = route;
+

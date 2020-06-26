@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const SECRETKEY = "for-development" ;
 
-function jsonWebTokenSign(param) {
+function jwtSign(param) {
   const access_token = jwt.sign(
     { id: param.dataValues.id, email: param.dataValues.email },
     SECRETKEY
@@ -10,4 +10,4 @@ function jsonWebTokenSign(param) {
   return access_token;
 }
 
-module.exports = jsonWebTokenSign;
+module.exports = jwtSign;

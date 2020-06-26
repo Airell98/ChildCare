@@ -1,4 +1,8 @@
+
 const verify = require('../helper/jwtVerify')
+
+const jwtVerify = require('../helper/jwt-verify')
+
 
 const authenticationParent = (req, res, next) => {
 	const { access_token } = req.headers;
@@ -8,8 +12,14 @@ const authenticationParent = (req, res, next) => {
 	}
 
 	try {
+
 		const decoded = verify(access_token);
 		req.parentData = decoded;
+
+		const decoded = jwtVerify(access_token);
+		console.log(decoded);
+		req.userData = decoded;
+
 
 		next();
 	} catch (err) {
