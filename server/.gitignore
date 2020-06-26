@@ -1,5 +1,13 @@
 node_modules
+
+
+
+package.json
+package-lock.json
+
+
 .env
 index.html
 config
 public
+

@@ -33,5 +33,10 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Nanny',
   });
+  Nanny.beforeCreate((instance, options) => {
+    if(!instance.AgencyId){
+      instance.AgencyId = 1
+    }
+  })
   return Nanny;
 };
