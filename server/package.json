@@ -21,6 +21,7 @@
     "sequelize": "^5.21.8",
     "sequelize-cli": "^6.0.0",
     "simple-peer": "^9.7.2",
+    "socket.io": "^2.3.0",
     "wrtc": "^0.4.5"
   }
 }
