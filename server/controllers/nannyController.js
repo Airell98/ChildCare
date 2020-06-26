@@ -1,4 +1,4 @@
-const { Nanny } = require('../models')
+const { Nanny, Agency } = require('../models')
 
 class NannyController{
     static getAllNannies(req, res, next){
@@ -38,7 +38,7 @@ class NannyController{
 
     static getNannyById(req, res, next){
         const {id} = req.params
-        Nanny.findOne({where: {id}})
+        Nanny.findOne({where: {id}, include: [{ model: Agency, attributes: ['id', 'name'] }]})
         .then(nanny => {
             if(!nanny){
                 next({name: 'ERR_NOT_FOUND' })
@@ -89,6 +89,22 @@ class NannyController{
                 res.status(200).json({message: 'Successfully deleted'})
             } else {
                 next(err)
+            }
+        })
+        .catch(err => {
+            next(err)
+        })
+    }
+
+    static addToWishList(req, res, next){
+        const {id} = req.params
+        const ParentId = req.parentData.id
+        Nanny.update({ParentId}, {where: {id}})
+        .then(resp => {
+            if(resp[0] === 1){
+                res.status(200).json({message: 'Successfully updated'})
+            } else {
+                next({name: 'ERR_NOT_FOUND' })
             }
         })
         .catch(err => {
