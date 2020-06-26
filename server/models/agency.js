@@ -16,13 +16,122 @@ module.exports = (sequelize, DataTypes) => {
   }
   Agency.init(
     {
-      name: DataTypes.STRING,
-      logoUrl: DataTypes.STRING,
-      phoneNumber: DataTypes.STRING,
-      address: DataTypes.STRING,
-      city: DataTypes.STRING,
-      password: DataTypes.STRING,
-      email: DataTypes.STRING,
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Name field is not found",
+          },
+          notEmpty: {
+            args: true,
+            msg: "Please insert name",
+          },
+          len: {
+            args: [1, 30],
+            msg: "Please insert name with maximum of 30 characters",
+          },
+        },
+      },
+      logoUrl: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "imageUrl field is not found",
+          },
+          notEmpty: {
+            args: true,
+            msg: "Please insert image",
+          },
+          isUrl: {
+            args: true,
+            msg: "Invalid image url",
+          },
+          len: {
+            args: [1, 255],
+            msg: "Image url is too long. Maximum 255 chars",
+          },
+        },
+      },
+      phoneNumber: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "phoneNumber field is not found",
+          },
+          notEmpty: {
+            args: true,
+            msg: "Please insert phone number",
+          },
+          len: {
+            args: [10, 14],
+            msg: "Please insert the correct phone number",
+          },
+        },
+      },
+      address: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "address field is not found",
+          },
+          notEmpty: {
+            args: true,
+            msg: "Please insert address",
+          },
+        },
+      },
+      city: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "city field is not found",
+          },
+          notEmpty: {
+            args: true,
+            msg: "Please insert city",
+          },
+        },
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: "Password field is not found",
+          },
+          notEmpty: {
+            args: true,
+            msg: "Please insert password",
+          },
+          len: {
+            args: [5, 25],
+            msg: "Please insert password between 5 and 30 characters",
+          },
+        },
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+          notNull: {
+            msg: "Email field is not found",
+          },
+          notEmpty: {
+            args: true,
+            msg: "Please insert email",
+          },
+          isEmail: {
+            args: true,
+            msg: "Please insert the correct email",
+          },
+        },
+      },
     },
     {
       sequelize,
