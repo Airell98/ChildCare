@@ -1,18 +1,37 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Navbar></Navbar>
+    <div class="body">
+      <div class="left">
+        <FilterBox></FilterBox>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import Navbar from "../components/Navbar";
+import FilterBox from "../components/Filter";
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-    HelloWorld
+    Navbar,
+    FilterBox
   }
-}
+};
 </script>
+
+<style scoped>
+.home {
+  background-color: #e0dede;
+  min-height: 100vh;
+}
+.body {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  transform: translateY(5rem);
+}
+.left {
+  position: fixed;
+}
+</style>
