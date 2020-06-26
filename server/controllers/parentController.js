@@ -42,9 +42,10 @@ class ParentController {
         if (!parent || !compareSyncBcrypt(password, parent.password)) {
           next({ name: "INVALID_EMAIL_PASSWORD" });
         } else {
-          const token = jwtSign({parent});
+          const token = jwtSign(parent);
           res.status(200).json({
             access_token: token,
+            name: parent.name,
             message: "Login success"
           });
         }

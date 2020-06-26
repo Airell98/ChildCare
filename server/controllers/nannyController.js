@@ -11,12 +11,23 @@ class NannyController{
         })
     }
 
-    static addNanny(req, res, next){
+    static registerNanny(req, res, next){
         const {name, gender, phoneNumber, birthDate, address, imageUrl, city, expectedSalary} = req.body
         
-        // Area untuk menambahkan AgencyId dari middleware
-        
         Nanny.create({name, gender, phoneNumber, birthDate, address, imageUrl, city, expectedSalary })
+        .then(nanny => {
+            res.status(201).json(nanny)
+        })
+        .catch(err => {
+            next(err)
+        })
+    }
+
+    static addNanny(req, res, next){
+        const {name, gender, phoneNumber, birthDate, address, imageUrl, city, expectedSalary} = req.body
+        const AgencyId = req.agencyData.id
+        
+        Nanny.create({name, gender, phoneNumber, birthDate, address, imageUrl, city, expectedSalary, AgencyId })
         .then(nanny => {
             res.status(201).json(nanny)
         })

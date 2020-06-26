@@ -14,7 +14,7 @@ class AgencyController{
         })
     }
 
-    static loginAgecy(req, res, next){
+    static loginAgency(req, res, next){
         const {email, password} = req.body
         Agency.findOne({ where: { email }})
             .then((agency) => {
@@ -29,6 +29,7 @@ class AgencyController{
               }
             })
             .catch((err) => {
+                console.log(err)
                 next(err);
             });
     }
