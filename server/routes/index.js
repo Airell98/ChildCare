@@ -1,7 +1,6 @@
-const route = require('express').Router()
+const route = require("express").Router();
+const parent = require("./parent");
 
+route.use("/parent", parent);
 
-route.use('/parent')
-
-
-module.exports = router
+module.exports = route;

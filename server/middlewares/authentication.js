@@ -1,4 +1,4 @@
-const verify = require('../helper/jwt-verify')
+const jwtVerify = require('../helper/jwt-verify')
 
 const authentication = (req, res, next) => {
 	const { access_token } = req.headers;
@@ -9,7 +9,7 @@ const authentication = (req, res, next) => {
 	}
 
 	try {
-		const decoded = verify(access_token);
+		const decoded = jwtVerify(access_token);
 		console.log(decoded);
 		req.userData = decoded;
 
