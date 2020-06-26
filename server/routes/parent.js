@@ -1,7 +1,11 @@
-const route = require('express').Router()
+const router = require('express').Router()
 const parentController = require('../controllers/parentController')
 
-route.post("/register", parentController.registerParent)
-route.post("/login", parentController.loginParent)
+router.post("/register", parentController.registerParent)
+router.post("/login", parentController.loginParent)
+router.get('/', parentController.getAllParents)
+router.get('/:id', parentController.getParentById)
+router.put('/:id', parentController.updateDataParent)
+router.delete('/:id', parentController.deleteById)
 
-module.exports = route
+module.exports = router

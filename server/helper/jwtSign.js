@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const SECRETKEY = process.env.SECRETKEY;
+const SECRETKEY = process.env.SECRETKEY || "for-development" ;
 
 function jsonWebTokenSign(param) {
   const access_token = jwt.sign(
