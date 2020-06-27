@@ -26,7 +26,7 @@
 
 <script>
 import Navbar from "../components/Navbar";
-import Card from "../components/CardDummy";
+import Card from "../components/Card";
 import ParentProfile from "../components/ParentProfile";
 import AgencyProfile from "../components/AgencyProfile";
 export default {

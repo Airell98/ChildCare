@@ -43,7 +43,11 @@ h3 {
   margin: 1rem;
 }
 .image {
-  margin: 0.5rem auto;
+  margin: auto;
+  width: 60%;
+}
+img {
+  width: 100%;
 }
 .data-container {
   display: flex;
