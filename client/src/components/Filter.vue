@@ -4,10 +4,10 @@
     <div class="filter-container">
       <label>Agency</label>
       <select v-model="agency">
-        <option disabled value="">Please select one</option>
+        <option disabled value>Please select one</option>
         <!-- <option v-for="agency in agencies" :key="agency.id">{{
         agency.name
-      }}</option> -->
+        }}</option>-->
       </select>
       <label>Gender</label>
       <select v-model="gender">
@@ -41,16 +41,20 @@ export default {
 <style scoped>
 .filter-box {
   width: 90%;
-  margin: auto;
+  height: fit-content;
+  margin: 1rem auto;
+  transform: translateY(15%);
+  background-color: rgba(137, 139, 139, 0.205);
+  padding: 1rem 0rem;
 }
 h3 {
   text-align: center;
-  margin: 1rem;
   color: darkslategray;
 }
 .filter-container {
   display: flex;
   flex-direction: column;
+  padding: 1rem;
 }
 label {
   transform: translateY(2px);

@@ -3,7 +3,8 @@
     <b-navbar-brand id="logo">
       <img src="../assets/childCare.png" />
       <p id="textLogo">
-        <span id="childLogo">Child</span><span id="careLogo">Care</span>
+        <span id="childLogo">Child</span>
+        <span id="careLogo">Care</span>
       </p>
     </b-navbar-brand>
     <b-navbar-nav class="ml-auto">
