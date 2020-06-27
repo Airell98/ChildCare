@@ -119,6 +119,17 @@ class ParentController {
     })
   }
 
+  static getAllChildren(req, res, next){
+    const {id} = req.parentData
+    Child.findAll({where:{ ParentId: id}})
+    .then(children => {
+      res.status(200).json(children)
+    })
+    .catch(err => {
+      next(err)
+    })
+  }
+
 }
 
 module.exports = ParentController;
