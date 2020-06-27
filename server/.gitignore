@@ -1,5 +1,10 @@
 node_modules
 .env
-config
+
+
 package.json
 package-lock.json
+index.html
+config
+public
+
