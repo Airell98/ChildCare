@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken');
 
-const SECRETKEY = process.env.SECRETKEY;
+const SECRETKEY = "for-development" ;
 
-function jsonWebTokenVerify(param){
+function jwtVerify(param){
   return jwt.verify(param, SECRETKEY);
 }
 
 
-module.exports = jsonWebTokenVerify
+module.exports = jwtVerify

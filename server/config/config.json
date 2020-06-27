@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "airell",
-    "password": "tauhidjannah",
+    "username": "postgres",
+    "password": "postgres",
     "database": "FinalProject",
-    "host": "127.0.0.1",
+    "host": "localhost",
     "dialect": "postgres"
   },
   "test": {

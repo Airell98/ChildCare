@@ -182,11 +182,21 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
+      availability: DataTypes.BOOLEAN
     },
     {
       sequelize,
       modelName: "Nanny",
     }
   );
+
+  Nanny.beforeCreate((instance, options) => {
+    if(!instance.AgencyId){
+      instance.AgencyId = 1
+    }
+    if(!instance.availability){
+      instance.availability = true
+    }
+  })
   return Nanny;
 };
