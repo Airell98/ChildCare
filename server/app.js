@@ -17,3 +17,5 @@ app.use(errorHandler);
 http.listen(PORT, () => {
   console.log(PORT, "========================================");
 });
+
+module.exports = app;
