@@ -9,7 +9,7 @@ router.get('/:id', NannyController.getNannyById)
 
 router.use(authenticationAgency)
 router.post('/', NannyController.addNanny)
-router.get('/showAssociateNanny', NannyController.findAllCorrespondingNanny)
+router.get('/showAssociateNanny', NannyController.findAllCorrespondingNanny) 
 
 router.put('/:id', authorizationAgency, NannyController.updateDataNanny)
 router.delete('/:id', authorizationAgency, NannyController.deleteById)
