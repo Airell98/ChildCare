@@ -1,3 +1,4 @@
+
 'use strict';
 const {
   Model
@@ -10,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
       Child.belongsTo(models.Parent)
       Child.belongsToMany(models.Nanny, {through: models.NannyChild})
     }
@@ -26,4 +26,3 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Child',
   });
   return Child;
-};
