@@ -58,7 +58,12 @@ const routes = [
     path: "/login/:user",
     name: "Login",
     component: Login
-  }
+  },
+  {
+    path: '/profile',
+    name :'ShowDetailNanny',
+    component : ShowDetailNanny
+  },
 ];
 
 const router = new VueRouter({
