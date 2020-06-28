@@ -35,7 +35,7 @@ export default {
   height: fit-content;
   margin: 1rem auto;
   padding-top: 0.3rem;
-  background-color: rgba(137, 139, 139, 0.205);
+  background-color: rgba(255, 255, 255, 0.432);
   border-radius: 1rem;
 }
 h3 {

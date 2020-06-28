@@ -2,7 +2,9 @@
   <div class="Dropdown">
     <div class="Button">{{ text }}</div>
     <div class="Dropdown-content">
-      <div class="dropdown-item" v-if="text === 'REGISTER'" @click="gotoNanny">Nanny</div>
+      <div class="dropdown-item" v-if="text === 'REGISTER'" @click="gotoNanny">
+        Nanny
+      </div>
       <div class="dropdown-item" @click="gotoAgency">Agency</div>
       <div class="dropdown-item" @click="gotoParent">Parent</div>
     </div>
@@ -15,7 +17,7 @@ export default {
   props: ["text"],
   methods: {
     gotoNanny() {
-      this.$router.push({ name: "Register", params: { user: "nanny" } });
+      this.$router.push({ name: "RegisterNanny" });
     },
     gotoAgency() {
       if (this.text === "REGISTER")

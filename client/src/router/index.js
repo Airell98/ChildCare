@@ -6,6 +6,8 @@ import Wishlist from "../views/Wishlist";
 import About from "../views/About";
 import Register from "../views/Register";
 import Login from "../views/Login";
+import NannyDetail from "../views/NannyDetail";
+import AddNanny from "../views/AddNanny";
 
 Vue.use(VueRouter);
 
@@ -19,30 +21,30 @@ const routes = [
     path: "/:user/:id",
     name: "Dashboard",
     component: Dashboard,
-    props: true,
-    beforeEnter(to, from, next) {
-      if (localStorage.access_token) {
-        next();
-      } else {
-        next({
-          name: "Home"
-        });
-      }
-    }
+    props: true
+    // beforeEnter(to, from, next) {
+    //   if (localStorage.access_token) {
+    //     next();
+    //   } else {
+    //     next({
+    //       name: "Home"
+    //     });
+    //   }
+    // }
   },
   {
     path: "/parent/:id/wishlist",
     name: "Wishlist",
-    component: Wishlist,
-    beforeEnter(to, from, next) {
-      if (localStorage.access_token) {
-        next();
-      } else {
-        next({
-          name: "Home"
-        });
-      }
-    }
+    component: Wishlist
+    // beforeEnter(to, from, next) {
+    //   if (localStorage.access_token) {
+    //     next();
+    //   } else {
+    //     next({
+    //       name: "Home"
+    //     });
+    //   }
+    // }
   },
   {
     path: "/about",
@@ -52,12 +54,25 @@ const routes = [
   {
     path: "/register/:user",
     name: "Register",
+    props: true,
     component: Register
+  },
+  {
+    path: "/register/nanny",
+    name: "RegisterNanny",
+    props: true,
+    component: NannyDetail
   },
   {
     path: "/login/:user",
     name: "Login",
+    props: true,
     component: Login
+  },
+  {
+    path: "/nanny/:id",
+    name: "NannyDetail",
+    component: NannyDetail
   }
 ];
 

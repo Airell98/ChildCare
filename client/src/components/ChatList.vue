@@ -34,17 +34,17 @@ export default {
   height: fit-content;
   margin: 1rem auto;
   padding-top: 0.3rem;
-  background-color: rgba(137, 139, 139, 0.205);
+  background-color: rgba(255, 255, 255, 0.432);
 }
 h3 {
   color: darkslategray;
-  margin: 1rem;
+  margin: 1rem 2rem;
 }
 .chat-container {
   display: flex;
   flex-direction: column;
   margin: 1rem auto;
-  width: 80%;
+  width: 75%;
   height: 14rem;
   padding-bottom: 1rem;
   overflow-y: scroll;

@@ -83,18 +83,18 @@ export default {
   font-weight: 600;
   padding: 0px 1rem;
   margin: 3rem auto;
-  background-color: rgb(99, 184, 187);
+  background-color: rgba(255, 255, 255, 0.849);
   padding: 0.2rem;
   border-radius: 10px;
   text-align: center;
   font-weight: 500;
-  color: rgb(224, 247, 247);
+  color: rgb(60, 129, 129);
   cursor: pointer;
   transition: ease 370ms;
 }
 .Button:hover {
-  background-color: rgb(97, 158, 160);
-  color: rgb(255, 255, 255);
+  background-color: rgb(255, 255, 255);
+  color: rgb(33, 70, 70);
 }
 .right {
   height: 180vh;
