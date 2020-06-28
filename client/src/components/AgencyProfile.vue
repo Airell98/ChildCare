@@ -4,12 +4,8 @@
       <div class="data">
         <img src="../assets/childCare.png" />
       </div>
-      <div class="data">
-        <div class="name">Agensi Penyalur A</div>
-      </div>
-      <div class="data">
-        <div class="city">Jakarta</div>
-      </div>
+      <div class="name">Agensi Penyalur A</div>
+      <div class="city">Jakarta</div>
     </div>
   </div>
 </template>
@@ -24,10 +20,10 @@ export default {
 .data-box {
   width: 90%;
   height: fit-content;
-  margin: 1rem auto;
-  transform: translateY(15%);
+  margin: 2rem auto;
+  padding-top: 0.3rem;
   background-color: rgba(137, 139, 139, 0.205);
-  padding: 1rem 0rem;
+  border-radius: 1rem;
 }
 .data-container {
   display: flex;
@@ -39,5 +35,17 @@ img {
 }
 .data {
   margin: 0.5rem auto;
+}
+.name {
+  font-size: 2rem;
+  font-weight: 600;
+  color: darkslategray;
+  text-align: center;
+}
+.city {
+  font-size: 1.6rem;
+  font-weight: 550;
+  color: darkslategray;
+  text-align: center;
 }
 </style>

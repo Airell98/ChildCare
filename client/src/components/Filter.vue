@@ -3,24 +3,15 @@
     <h3>FILTER</h3>
     <div class="filter-container">
       <label>Agency</label>
-      <select v-model="agency">
-        <option disabled value>Please select one</option>
-        <!-- <option v-for="agency in agencies" :key="agency.id">{{
-        agency.name
-        }}</option>-->
-      </select>
+      <b-form-select v-model="agency" :options="agencies"></b-form-select>
       <label>Gender</label>
-      <select v-model="gender">
-        <option disabled value="All">Please select one</option>
-        <option>Female</option>
-        <option>Male</option>
-      </select>
+      <b-form-select v-model="gender" :options="genders"></b-form-select>
       <label>City</label>
-      <input type="text" />
+      <b-form-input v-model="city" :type="'text'"></b-form-input>
       <label>Age (Max)</label>
-      <input type="number" v-model="age" />
+      <b-form-input v-model="age" :type="'number'"></b-form-input>
       <label>Salary (Max)</label>
-      <input type="number" v-model="salary" />
+      <b-form-input v-model="salary" :type="'number'"></b-form-input>
     </div>
   </div>
 </template>
@@ -30,10 +21,21 @@ export default {
   name: "Filter",
   data() {
     return {
-      gender: "",
+      gender: null,
+      genders: [
+        { value: null, text: "Please select gender" },
+        { value: "female", text: "Female" },
+        { value: "name", text: "Male" }
+      ],
       age: 0,
-      salary: 0
+      salary: 0,
+      agency: null
     };
+  },
+  computed: {
+    agencies() {
+      return [{ value: null, text: "Please select agency" }];
+    }
   }
 };
 </script>
@@ -42,9 +44,10 @@ export default {
 .filter-box {
   width: 90%;
   height: fit-content;
-  margin: 1rem auto;
-  transform: translateY(15%);
+  margin: 0rem auto;
+  transform: translateY(12%);
   background-color: rgba(137, 139, 139, 0.205);
+  border-radius: 1rem;
   padding: 1rem 0rem;
 }
 h3 {

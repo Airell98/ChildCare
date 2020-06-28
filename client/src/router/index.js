@@ -5,6 +5,7 @@ import Dashboard from "../views/Dashboard";
 import Wishlist from "../views/Wishlist";
 import About from "../views/About";
 import Register from "../views/Register";
+import Login from "../views/Login";
 
 Vue.use(VueRouter);
 
@@ -15,7 +16,7 @@ const routes = [
     component: Home
   },
   {
-    path: "/dashboard/:user",
+    path: "/:user/:id",
     name: "Dashboard",
     component: Dashboard,
     props: true
@@ -30,7 +31,7 @@ const routes = [
     // }
   },
   {
-    path: "/parent/wishlist",
+    path: "/parent/:id/wishlist",
     name: "Wishlist",
     component: Wishlist
     // beforeEnter(to, from, next) {
@@ -49,9 +50,14 @@ const routes = [
     component: About
   },
   {
-    path: "/register",
+    path: "/register/:user",
     name: "Register",
     component: Register
+  },
+  {
+    path: "/login/:user",
+    name: "Login",
+    component: Login
   }
 ];
 

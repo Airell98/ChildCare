@@ -2,9 +2,9 @@
   <div class="Dropdown">
     <div class="Button">{{ text }}</div>
     <div class="Dropdown-content">
-      <div class="dropdown-item" v-if="text === 'REGISTER'">Nanny</div>
-      <div class="dropdown-item">Agency</div>
-      <div class="dropdown-item">Parent</div>
+      <div class="dropdown-item" v-if="text === 'REGISTER'" @click="gotoNanny">Nanny</div>
+      <div class="dropdown-item" @click="gotoAgency">Agency</div>
+      <div class="dropdown-item" @click="gotoParent">Parent</div>
     </div>
   </div>
 </template>
@@ -12,7 +12,24 @@
 <script>
 export default {
   name: "NavButton",
-  props: ["text"]
+  props: ["text"],
+  methods: {
+    gotoNanny() {
+      this.$router.push({ name: "Register", params: { user: "nanny" } });
+    },
+    gotoAgency() {
+      if (this.text === "REGISTER")
+        this.$router.push({ name: "Register", params: { user: "agency" } });
+      if (this.text === "LOGIN")
+        this.$router.push({ name: "Login", params: { user: "agency" } });
+    },
+    gotoParent() {
+      if (this.text === "REGISTER")
+        this.$router.push({ name: "Register", params: { user: "parent" } });
+      if (this.text === "LOGIN")
+        this.$router.push({ name: "Login", params: { user: "parent" } });
+    }
+  }
 };
 </script>
 

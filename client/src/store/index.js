@@ -9,10 +9,13 @@ export default new Vuex.Store({
     url: "",
     nannies: [],
     children: [],
+    agencies: [],
     nannyDetail: {},
     childDetail: {},
     loginAs: "",
-    wishlistOfNanny: []
+    wishlistOfNanny: [],
+    parent: {},
+    agency: {}
   },
   mutations: {
     set_nannies(state, payload) {
@@ -20,6 +23,15 @@ export default new Vuex.Store({
     },
     set_children(state, payload) {
       state.children = payload;
+    },
+    set_agencies(state, payload) {
+      state.agencies = payload;
+    },
+    set_parent(state, payload) {
+      state.parent = payload;
+    },
+    set_agency(state, payload) {
+      state.agency = payload;
     },
     set_nannyDetail(state, payload) {
       state.nannyDetail = payload;
