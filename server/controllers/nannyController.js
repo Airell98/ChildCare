@@ -2,7 +2,7 @@ const { Nanny, Agency, Parent, NannyChild, Child } = require('../models')
 
 class NannyController{
     static getAllNannies(req, res, next){
-        Nanny.findAll({ attributes: ['id', 'name', 'gender', 'phoneNumber', 'birthDate', 'address', 'imageUrl', 'city', 'expectedSalary', 'availability', 'ParentId']})
+        Nanny.findAll({ attributes: ['id', 'name', 'gender', 'phoneNumber', 'birthDate', 'address', 'imageUrl', 'city', 'expectedSalary', 'availability', 'ParentId'], where: { availability : true }})
         .then(nannies => {
             res.status(200).json(nannies)
         })
