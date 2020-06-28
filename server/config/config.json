@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "postgres",
-    "password": "postgres",
+    "password": "hacktiv",
     "database": "FinalProject",
     "host": "localhost",
     "dialect": "postgres"

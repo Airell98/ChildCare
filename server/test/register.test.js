@@ -1,17 +1,5 @@
 const request = require("supertest");
 const app = require("../app");
-const { Parent, Agency, sequelize } = require("../models");
-const hashPass = require("../helper/hashPass");
-
-afterAll((done) => {
-  Parent.destroy({})
-    .then(() => done())
-    .catch((err) => done(err));
-
-  Agency.destroy({})
-    .then(() => done())
-    .catch((err) => done(err));
-});
 
 describe("Parent register", () => {
   describe("Successfully create parent", () => {
@@ -29,13 +17,14 @@ describe("Parent register", () => {
       request(app)
         .post("/parent/register")
         .send(input)
-        .then((result) => {
-          const { body, status } = result;
+        .then((response) => {
+          const { body, status } = response;
           expect(status).toBe(201);
+          expect(body).toHaveProperty("name", input.name);
           expect(body).toHaveProperty("email", input.email);
-          expect(body).toHaveProperty("password", hashPass(input.password));
+          expect(body).toHaveProperty("password");
           expect(body).toHaveProperty("city", input.city);
-          expect(body).toHaveProperty("birthDate", input.birthDate);
+          expect(body).toHaveProperty("birthDate");
           expect(body).toHaveProperty("address", input.address);
           expect(body).toHaveProperty("phoneNumber", input.phoneNumber);
           expect(body).toHaveProperty("gender", input.gender);
@@ -48,28 +37,88 @@ describe("Parent register", () => {
   });
 
   describe("Failed to create parent", () => {
-    it("Should return 400 and obj (status, msg)", (done) => {
+    it("Should return 400 and error messages", (done) => {
       let input = {
         email: "",
         password: "",
-        role: "",
       };
       let output = [
-        "Email cannot be empty",
-        "Password cannot be empty",
-        "Role must be User or Admin",
+        "Please insert name",
+        "Please insert password",
+        "name field is not found",
       ];
       request(app)
-        .post("/users/register")
+        .post("/parent/register")
         .send(input)
-        .then((result) => {
-          const { body, status } = result;
+        .then((response) => {
+          const { body, status } = response;
           expect(status).toBe(400);
-          expect(body).toHaveProperty("status");
-          expect(body.status).toBe(400);
-          expect(body).toHaveProperty("msg");
-          expect(Array.isArray(body.msg)).toBe(true);
-          expect(body.msg).toEqual(expect.arrayContaining(output));
+          expect(body).toHaveProperty("error");
+          expect(body).toHaveProperty("errorMessages");
+          expect(Array.isArray(body.errorMessages)).toBe(true);
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+  });
+});
+
+describe("Agency register", () => {
+  describe("Successfully create agency", () => {
+    it("Should return 201 and obj (agency)", (done) => {
+      let input = {
+        name: "Baby Sitter Agency",
+        email: "agency@outlook.co.id",
+        password: "rahasia",
+        address: "Bumi Mas Raya Blok B4 Nomor 2",
+        city: "Tangerang",
+        logoUrl:
+          "https://image.shutterstock.com/image-vector/shield-letter-s-logosafesecureprotection-logomodern-260nw-633031571.jpg",
+        phoneNumber: "081212498600",
+      };
+      request(app)
+        .post("/agency/register")
+        .send(input)
+        .then((response) => {
+          const { body, status } = response;
+          expect(status).toBe(201);
+          expect(body).toHaveProperty("name", input.name);
+          expect(body).toHaveProperty("email", input.email);
+          expect(body).toHaveProperty("password");
+          expect(body).toHaveProperty("address", input.address);
+          expect(body).toHaveProperty("city", input.city);
+          expect(body).toHaveProperty("logoUrl", input.logoUrl);
+          expect(body).toHaveProperty("phoneNumber", input.phoneNumber);
+          done();
+        })
+        .catch((err) => {
+          done(err);
+        });
+    });
+  });
+
+  describe("Failed to create agency", () => {
+    it("Should return 400 and error messages", (done) => {
+      let input = {
+        email: "",
+        password: "",
+      };
+      let output = [
+        "Please insert name",
+        "Please insert password",
+        "name field is not found",
+      ];
+      request(app)
+        .post("/agency/register")
+        .send(input)
+        .then((response) => {
+          const { body, status } = response;
+          expect(status).toBe(400);
+          expect(body).toHaveProperty("error");
+          expect(body).toHaveProperty("errorMessages");
+          expect(Array.isArray(body.errorMessages)).toBe(true);
           done();
         })
         .catch((err) => {

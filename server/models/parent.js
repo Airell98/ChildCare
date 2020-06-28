@@ -1,7 +1,8 @@
 "use strict";
 const { Model } = require("sequelize");
+const hashPass = require("../helper/hashPass");
+
 module.exports = (sequelize, DataTypes) => {
-  const bcryptHashPass = require("../helper/hashPass");
   class Parent extends Model {
     /**
      * Helper method for defining associations.
@@ -22,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Name field is not found",
+            msg: "name field is not found",
           },
           notEmpty: {
             args: true,
@@ -40,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
         validate: {
           notNull: {
-            msg: "Email field is not found",
+            msg: "email field is not found",
           },
           notEmpty: {
             args: true,
@@ -57,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notNull: {
-            msg: "Password field is not found",
+            msg: "password field is not found",
           },
           notEmpty: {
             args: true,
@@ -148,8 +149,10 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Parent",
     }
   );
+
   Parent.beforeCreate((instance, option) => {
-    const hash = bcryptHashPass(instance);
+    const hash = hashPass(instance);
+    console.log(hash);
     instance.password = hash;
   });
   return Parent;
