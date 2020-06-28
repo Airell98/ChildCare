@@ -19,30 +19,30 @@ const routes = [
     path: "/:user/:id",
     name: "Dashboard",
     component: Dashboard,
-    props: true
-    // beforeEnter(to, from, next) {
-    //   if (localStorage.access_token) {
-    //     next();
-    //   } else {
-    //     next({
-    //       name: "Home"
-    //     });
-    //   }
-    // }
+    props: true,
+    beforeEnter(to, from, next) {
+      if (localStorage.access_token) {
+        next();
+      } else {
+        next({
+          name: "Home"
+        });
+      }
+    }
   },
   {
     path: "/parent/:id/wishlist",
     name: "Wishlist",
-    component: Wishlist
-    // beforeEnter(to, from, next) {
-    //   if (localStorage.access_token) {
-    //     next();
-    //   } else {
-    //     next({
-    //       name: "Home"
-    //     });
-    //   }
-    // }
+    component: Wishlist,
+    beforeEnter(to, from, next) {
+      if (localStorage.access_token) {
+        next();
+      } else {
+        next({
+          name: "Home"
+        });
+      }
+    }
   },
   {
     path: "/about",

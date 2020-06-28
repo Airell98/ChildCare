@@ -6,14 +6,7 @@
       <div class="right">
         <div class="title">Nanny List</div>
         <div class="card-container">
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
+          <Card v-for="nanny in nannies" :key="nanny.id" :nanny="nanny"></Card>
         </div>
       </div>
     </div>
@@ -30,6 +23,14 @@ export default {
     Navbar,
     FilterBox,
     Card
+  },
+  created() {
+    this.$store.dispatch("get_nannies");
+  },
+  computed: {
+    nannies() {
+      return this.$store.state.nannies;
+    }
   }
 };
 </script>

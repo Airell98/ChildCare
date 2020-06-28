@@ -18,15 +18,6 @@
         <div class="title" v-if="user === 'agency'">Nanny List</div>
         <div class="card-container">
           <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
         </div>
       </div>
     </div>
