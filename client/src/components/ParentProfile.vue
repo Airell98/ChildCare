@@ -1,23 +1,19 @@
 <template>
   <div class="data-box">
-    <h3>JESSICA ALBA</h3>
-    <div class="image">
-      <img
-        src="https://www.biography.com/.image/t_share/MTE4MDAzNDEwMzY0NDMzOTM0/jessica-alba-299896-1-402.jpg"
-      />
-    </div>
     <div class="data-container">
       <div class="label">
+        <p class="text">Name</p>
         <p class="text">Age</p>
         <p class="text">Gender</p>
         <p class="text">City</p>
         <p class="text">Phone</p>
       </div>
       <div class="data">
-        <p class="text">39</p>
-        <p class="text">Female</p>
-        <p class="text">Amerika</p>
-        <p class="text">000000000</p>
+        <p class="text">{{parent.name}}</p>
+        <p class="text">{{age}}</p>
+        <p class="text">{{parent.gender}}</p>
+        <p class="text">{{parent.city}}</p>
+        <p class="text">{{parent.phoneNumber}}</p>
       </div>
     </div>
   </div>
@@ -25,7 +21,13 @@
 
 <script>
 export default {
-  name: "ParentProfile"
+  name: "ParentProfile",
+  props: ["parent"],
+  computed: {
+    age() {
+      return 2020 - parseInt(this.parent.birthDate.slice(0, 5));
+    }
+  }
 };
 </script>
 
@@ -37,11 +39,6 @@ export default {
   padding-top: 0.3rem;
   background-color: rgba(255, 255, 255, 0.432);
   border-radius: 1rem;
-}
-h3 {
-  text-align: center;
-  color: darkslategray;
-  margin: 1rem;
 }
 .image {
   margin: auto;
@@ -62,6 +59,6 @@ img {
 }
 .text {
   line-height: 90%;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
 }
 </style>

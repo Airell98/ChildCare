@@ -1,26 +1,12 @@
 <template>
   <div>
     <div class="wrapper">
-      <form class="form-signin">
+      <form class="form-signin" @submit.prevent="loginUser">
         <h3 class="form-signin-heading">Login Sebagai {{ User }}</h3>
-        <input
-          type="text"
-          class="form-control"
-          name="username"
-          placeholder="Email Address"
-          v-model="email"
-        />
+        <input type="text" class="form-control" placeholder="Email Address" v-model="email" />
         <br />
-        <input
-          type="password"
-          class="form-control"
-          name="password"
-          placeholder="Password"
-          v-model="password"
-        />
-        <button class="btn btn-lg btn-primary btn-block" type="submit">
-          Login
-        </button>
+        <input type="password" class="form-control" placeholder="Password" v-model="password" />
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
       </form>
     </div>
   </div>
@@ -39,6 +25,17 @@ export default {
   },
   created() {
     this.user === "parent" ? (this.User = "Orang Tua") : (this.User = "Agensi");
+  },
+  methods: {
+    loginUser() {
+      this.$store.dispatch("login_user", {
+        user: this.user,
+        data: {
+          email: this.email,
+          password: this.password
+        }
+      });
+    }
   }
 };
 </script>

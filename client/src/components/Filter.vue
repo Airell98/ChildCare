@@ -12,6 +12,7 @@
       <b-form-input v-model="age" :type="'number'"></b-form-input>
       <label>Salary (Max)</label>
       <b-form-input v-model="salary" :type="'number'"></b-form-input>
+      <div class="button" @click.prevent="filteringNannies">Filter</div>
     </div>
   </div>
 </template>
@@ -34,7 +35,20 @@ export default {
   },
   computed: {
     agencies() {
-      return [{ value: null, text: "Please select agency" }];
+      let value = [{ value: null, text: "Please select agency" }];
+      this.$store.state.agencies.forEach(agency => {
+        value.push({ value: agency.name, text: `${agency.name}` });
+      });
+      return value;
+    },
+    nannies() {
+      return this.$store.state.nannies;
+    }
+  },
+  methods: {
+    filteringNannies() {
+      let filteredNannies = this.nannies;
+      this.$emit("passFilteredNannies", filteredNannies);
     }
   }
 };
@@ -61,5 +75,22 @@ h3 {
 }
 label {
   transform: translateY(2px);
+}
+.button {
+  text-align: center;
+  margin: 1rem auto;
+  margin-bottom: 0px;
+  padding: 0.3rem 1rem;
+  background-color: rgb(231, 230, 230);
+  color: darkslategray;
+  width: 30%;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 450;
+}
+.button:hover {
+  background-color: white;
+  color: rgb(36, 61, 61);
 }
 </style>

@@ -5,7 +5,7 @@
     </div>
     <div class="card-body">
       <div class="name">{{ nanny.name }}</div>
-      <div class="birth">{{ nanny.birthDate }}</div>
+      <div class="birth">{{ age }}</div>
       <div class="salary">Rp. {{ nanny.expectedSalary }}</div>
     </div>
   </div>
@@ -14,7 +14,12 @@
 <script>
 export default {
   name: "Card",
-  props: ["nanny"]
+  props: ["nanny"],
+  computed: {
+    age() {
+      return 2020 - parseInt(this.nanny.birthDate.slice(0, 5));
+    }
+  }
 };
 </script>
 

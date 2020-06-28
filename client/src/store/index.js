@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
 import Swal from "sweetalert2";
+import router from "../router";
 
 Vue.use(Vuex);
 
@@ -13,7 +14,7 @@ export default new Vuex.Store({
     agencies: [],
     nannyDetail: {},
     childDetail: {},
-    loginAs: "",
+    login: false,
     wishlistOfNanny: [],
     parent: {},
     agency: {}
@@ -40,8 +41,8 @@ export default new Vuex.Store({
     set_childDetail(state, payload) {
       state.childDetail = payload;
     },
-    set_loginAs(state, payload) {
-      state.loginAs = payload;
+    set_login(state, payload) {
+      state.login = payload;
     },
     set_wishlistOfNanny(state, payload) {
       state.wishlistOfNanny = payload;
@@ -224,20 +225,36 @@ export default new Vuex.Store({
         });
     },
     login_user(context, payload) {
+      const { user, data } = payload;
       axios({
         method: "post",
-        url: `${context.state.url}/${payload.user}/register`,
-        data: payload.data
+        url: `${context.state.url}/${user}/login`,
+        data: {
+          email: data.email,
+          password: data.password
+        }
       })
         .then(response => {
+          console.log(response);
           const { access_token, user } = response.data;
           const userData = JSON.stringify(user);
           localStorage.setItem("access_token", access_token);
           localStorage.setItem("loginAs", payload.user);
           localStorage.setItem("user", userData);
-          payload.user === "parent"
-            ? context.commit("set_parent", user)
-            : context.commit("set_agency", user);
+          context.commit("set_login", true);
+          if (payload.user === "parent") {
+            context.commit("set_parent", user);
+            router.push({
+              name: "Dashboard",
+              params: { user: "parent", id: user.id }
+            });
+          } else {
+            context.commit("set_agency", user);
+            router.push({
+              name: "Dashboard",
+              params: { user: "agency", id: user.id }
+            });
+          }
         })
         .catch(error => {
           if (error.response) {

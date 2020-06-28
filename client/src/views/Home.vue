@@ -2,7 +2,7 @@
   <div class="home">
     <Navbar></Navbar>
     <div class="body">
-      <FilterBox></FilterBox>
+      <FilterBox @passFilteredNannies="fillNanniesValue"></FilterBox>
       <div class="right">
         <div class="title">Nanny List</div>
         <div class="card-container">
@@ -19,6 +19,11 @@ import FilterBox from "../components/Filter";
 import Card from "../components/Card";
 export default {
   name: "Home",
+  data() {
+    return {
+      nannies: null
+    };
+  },
   components: {
     Navbar,
     FilterBox,
@@ -26,10 +31,12 @@ export default {
   },
   created() {
     this.$store.dispatch("get_nannies");
+    this.$store.dispatch("get_agencies");
+    this.nannies = this.$store.state.nannies;
   },
-  computed: {
-    nannies() {
-      return this.$store.state.nannies;
+  methods: {
+    fillNanniesValue(filteredNannies) {
+      this.nannies = filteredNannies;
     }
   }
 };
@@ -61,7 +68,7 @@ h2 {
   grid-template-columns: repeat(3, 1fr);
 }
 .right {
-  height: 90vh;
+  min-height: 100vh;
   overflow-y: scroll;
 }
 .right::-webkit-scrollbar {

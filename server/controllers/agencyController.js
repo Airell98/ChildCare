@@ -43,7 +43,8 @@ class AgencyController {
             access_token: token,
             message: "Login success",
             user: {
-              name: agency.email,
+              id: agency.id,
+              name: agency.name,
               address: agency.address,
               city: agency.city,
               logoUrl: agency.logoUrl,

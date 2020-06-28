@@ -18,33 +18,18 @@ const routes = [
     component: Home
   },
   {
-    path: "/:user/:id",
-    name: "Dashboard",
-    component: Dashboard,
-    props: true
-    // beforeEnter(to, from, next) {
-    //   if (localStorage.access_token) {
-    //     next();
-    //   } else {
-    //     next({
-    //       name: "Home"
-    //     });
-    //   }
-    // }
-  },
-  {
     path: "/parent/:id/wishlist",
     name: "Wishlist",
-    component: Wishlist
-    // beforeEnter(to, from, next) {
-    //   if (localStorage.access_token) {
-    //     next();
-    //   } else {
-    //     next({
-    //       name: "Home"
-    //     });
-    //   }
-    // }
+    component: Wishlist,
+    beforeEnter(to, from, next) {
+      if (localStorage.access_token) {
+        next();
+      } else {
+        next({
+          name: "Home"
+        });
+      }
+    }
   },
   {
     path: "/about",
@@ -55,24 +40,66 @@ const routes = [
     path: "/register/:user",
     name: "Register",
     props: true,
-    component: Register
+    component: Register,
+    beforeEnter(to, from, next) {
+      if (!localStorage.access_token) {
+        next();
+      } else {
+        next({
+          name: "Home"
+        });
+      }
+    }
   },
   {
     path: "/register/nanny",
     name: "RegisterNanny",
     props: true,
-    component: NannyDetail
+    component: NannyDetail,
+    beforeEnter(to, from, next) {
+      if (!localStorage.access_token) {
+        next();
+      } else {
+        next({
+          name: "Home"
+        });
+      }
+    }
   },
   {
     path: "/login/:user",
     name: "Login",
     props: true,
-    component: Login
+    component: Login,
+    beforeEnter(to, from, next) {
+      if (!localStorage.access_token) {
+        next();
+      } else {
+        next({
+          name: "Home"
+        });
+      }
+    }
   },
   {
     path: "/nanny/:id",
     name: "NannyDetail",
     component: NannyDetail
+  },
+  {
+    path: "/:user/:id",
+    name: "Dashboard",
+    component: Dashboard,
+    props: true,
+    beforeEnter(to, from, next) {
+      if (localStorage.access_token) {
+        next();
+      } else {
+        next({
+          name: "Home"
+        });
+      }
+    }
   }
 ];
 

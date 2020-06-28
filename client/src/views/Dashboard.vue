@@ -5,11 +5,11 @@
       <div class="left">
         <div v-if="user === 'parent'">
           <div class="Button">Add Child</div>
-          <ParentProfile></ParentProfile>
+          <ParentProfile :parent="userData"></ParentProfile>
         </div>
         <div v-if="user === 'agency'">
           <div class="Button">Add Nanny</div>
-          <AgencyProfile></AgencyProfile>
+          <AgencyProfile :agency="userData"></AgencyProfile>
         </div>
         <ChatList></ChatList>
       </div>
@@ -39,7 +39,23 @@ export default {
     AgencyProfile,
     ChatList
   },
-  props: ["user"]
+  props: ["user"],
+  created() {
+    if (this.user === "agency") {
+      this.$store.commit("set_agency", JSON.parse(localStorage.user));
+    } else {
+      this.$store.commit("set_parent", JSON.parse(localStorage.user));
+    }
+  },
+  computed: {
+    userData() {
+      let user = null;
+      this.user === "agency"
+        ? (user = this.$store.state.agency)
+        : (user = this.$store.state.parent);
+      return user;
+    }
+  }
 };
 </script>
 

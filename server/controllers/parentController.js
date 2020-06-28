@@ -47,10 +47,12 @@ class ParentController {
             access_token: token,
             message: "Login success",
             user: {
-              name: parent.email,
+              id: parent.id,
+              name: parent.name,
+              birthDate: parent.birthDate,
               address: parent.address,
               city: parent.city,
-              logoUrl: parent.logoUrl,
+              gender: parent.gender,
               phoneNumber: parent.phoneNumber,
             },
           });
