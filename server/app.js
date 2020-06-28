@@ -14,6 +14,10 @@ app.use(cors());
 app.use(routes);
 app.use(errorHandler);
 
-http.listen(PORT, () => {
-  console.log(PORT, "========================================");
-});
+if (process.env.NODE_ENV !== "test") {
+  http.listen(PORT, () => {
+    console.log(PORT, "========================================");
+  });
+}
+
+module.exports = app;
