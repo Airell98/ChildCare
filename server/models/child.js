@@ -1,3 +1,4 @@
+
 'use strict';
 const {
   Model
@@ -25,4 +26,3 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Child',
   });
   return Child;
-};
