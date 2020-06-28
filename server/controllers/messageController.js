@@ -4,7 +4,7 @@ class MessageController{
 
     static getAllMsgAgency(req, res, next){
         const AgencyId = req.agencyData.id
-        Message.findAll({ where: { AgencyId }, include: [{ model : Parent, attributes: ['id', 'name']}]})
+        Message.findAll({ where: { AgencyId }, include: [{ model: Agency, attributes: ['id', 'email'] }, { model: Parent, attributes: ['id', 'email', 'name'] }]})
         .then(messages => {
             const filterMsgArray = []
             for(let i = 0; i < messages.length; i++){
@@ -21,11 +21,11 @@ class MessageController{
 
     static getAllMsgParent(req, res, next){
         const ParentId = req.parentData.id
-        Message.findAll({ where: { ParentId }, include: [{ model : Agency, attributes: ['id', 'name']}]})
+        Message.findAll({ where: { ParentId }, include: [{ model: Agency, attributes: ['id', 'email', 'name'] }, { model: Parent, attributes: ['id', 'email'] }]})
         .then(messages => {
             const filterMsgArray = []
             for(let i = 0; i < messages.length; i++){
-                if(i === 0 || messages[i].ParentId !== messages[i-1].ParentId){
+                if(i === 0 || messages[i].AgencyId !== messages[i-1].AgencyId){
                     filterMsgArray.push(messages[i])
                 }
             }
@@ -51,7 +51,7 @@ class MessageController{
     static getMsgParent(req, res, next){
         const ParentId = req.parentData.id
         const {AgencyId} = req.params
-        Message.findAll({ where: { AgencyId, ParentId }, include: [{ model: Agency, attributes: ['id', 'email'] }]})
+        Message.findAll({ where: { AgencyId, ParentId }})
         .then(messages => {
             res.status(200).json(messages)
         })
@@ -63,8 +63,8 @@ class MessageController{
     static postMsgAgency(req, res, next){
         const AgencyId = req.agencyData.id
         const { ParentId } = req.params
-        const { content } = req.body
-        Message.create({ AgencyId, ParentId, content, sender : 'agency'})
+        const { content, sender } = req.body
+        Message.create({ AgencyId, ParentId, content, sender })
         .then(message => {
             res.status(201).json(message)
         })
@@ -77,8 +77,8 @@ class MessageController{
     static postMsgParent(req, res, next){
         const ParentId = req.parentData.id
         const {AgencyId} = req.params
-        const {content} = req.body
-        Message.create({ AgencyId, ParentId, content, sender : 'parent'})
+        const {content, sender} = req.body
+        Message.create({ AgencyId, ParentId, content, sender })
         .then(message => {
             res.status(201).json(message)
         })

@@ -71,14 +71,14 @@
         >
           <li>
             <div
-              v-if="message.sender == true"
+              v-if="message.sender == role"
               style="color:#34eb7d;"
               class="float-right"
             >
-              <p style="color: black;">{{ message.message }}</p>
+              <p style="color: black;">{{ message.content }}</p>
             </div>
             <div v-else style="background-color:#fffffc;" class="float-left">
-              <p style="color: black;">{{ message.message }}</p>
+              <p style="color: black;">{{ message.content }}</p>
             </div>
           </li>
         </ul>
@@ -128,14 +128,14 @@ export default {
     this.startVideo();
     socket.on("sendMessage", msg => {
       let pesan = {
-        message: msg.message,
-        sender: false
+        content: msg.content,
+        sender: msg.sender
       };
       this.messages.push(pesan);
     });
     socket.on("receive peerId", data => {
       this.partnerId = data.peerId;
-      this.conn = peer.connect(this.partnerId);
+      peer.connect(this.partnerId);
     });
     peer.on("call", call => {
       Swal.fire({
@@ -182,6 +182,19 @@ export default {
         el.enabled = false;
       });
     });
+    peer.on('connection', () => {
+      console.log('Other already connected')
+    })
+    peer.on('error', () => {
+      // alert('Connection problem')
+    })
+    this.$store.dispatch('getAllMsg', this.$route.params.id)
+    .then(resp => {
+      this.messages = resp.data
+    })
+    .catch(err => {
+      console.log(err)
+    })
   },
   data() {
     return {
@@ -195,6 +208,11 @@ export default {
       tempKey: ""
       // muted: "",
     };
+  },
+  computed: {
+    role(){
+      return localStorage.getItem('role')
+    }
   },
   methods: {
     callSomeone() {
@@ -270,12 +288,13 @@ export default {
     },
     addMessage() {
       let pesan = {
-        message: this.inputMessage,
-        sender: true,
+        content: this.inputMessage,
+        sender: this.role,
         roomKey: localStorage.getItem('roomKey')
       };
       this.messages.push(pesan);
       socket.emit("sendMessage", pesan);
+      this.$store.dispatch('messageDB', {content: this.inputMessage, sender: this.role, id: this.$route.params.id})
       this.inputMessage = "";
     },
     getLVideo(callbacks) {
@@ -290,9 +309,9 @@ export default {
       navigator.getUserMedia(constraints, callbacks.success, callbacks.error);
     },
     test() {
-      peer.on("open", () => {
-        console.log("masuk test", peer);
-        this.peerId = peer.id;
+      peer.on("open", (peer) => {
+        console.log("Connected >>>", peer);
+        this.peerId = peer;
       });
     },
     sendPeerId() {
