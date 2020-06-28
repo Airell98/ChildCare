@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       Parent.hasMany(models.Child);
       Parent.hasMany(models.Nanny);
       Parent.belongsToMany(models.Agency, { through: models.Nanny });
+      Parent.belongsToMany(models.Agency, { through: models.Message });
     }
   }
   Parent.init(

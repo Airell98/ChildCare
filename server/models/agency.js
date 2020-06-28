@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Agency.hasMany(models.Nanny);
       Agency.belongsToMany(models.Parent, { through: models.Nanny });
+      Agency.belongsToMany(models.Parent, { through: models.Message });
     }
   }
   Agency.init(
