@@ -296,7 +296,7 @@ export default {
 }
 
 .container-content-brief-detail-1{
-  background-color: rgb(131, 91, 91);
+  background-color: rgb(194, 205, 255);
   border: 0.1px solid rgb(0, 0, 0);
   padding-left: 20px;
 
@@ -311,7 +311,7 @@ export default {
 }
 
 .container-content-brief-detail-2{
-  background-color: rgb(190, 44, 44);
+  background-color: rgb(133, 142, 184);
   border: 0.1px solid rgb(0, 0, 0);
   padding-left: 20px;
 
