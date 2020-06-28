@@ -1,6 +1,19 @@
-const route = require("express").Router();
-const parent = require("./parent");
+var express = require('express');
+var router = express.Router();
 
-route.use("/parent", parent);
+/* GET home page. */
+var returnRouter = function(io) {
+  
 
-module.exports = route;
+    router.use('/chat', function(req, res) {
+       io.on('connection', (socket)=>{
+           socket.on('sendMessage', (data)=>{
+               console.log(data)
+           })
+       })
+    });
+
+    return router;
+}
+
+module.exports = returnRouter;
