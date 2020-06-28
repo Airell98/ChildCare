@@ -51,7 +51,7 @@ class MessageController{
     static getMsgParent(req, res, next){
         const ParentId = req.parentData.id
         const {AgencyId} = req.params
-        Message.findAll({ where: { AgencyId, ParentId }})
+        Message.findAll({ where: { AgencyId, ParentId }, include: [{ model: Agency, attributes: ['id', 'email'] }]})
         .then(messages => {
             res.status(200).json(messages)
         })

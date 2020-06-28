@@ -1,18 +1,23 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <button @click="goToRoom('room1')">Room 1</button>
+    <button @click="goToRoom('room2')">Room 2</button>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'Home',
   components: {
-    HelloWorld
+  },
+  methods: {
+    goToRoom(key){
+      console.log('Button')
+      localStorage.setItem('roomKey', key)
+      this.$router.push('/chat')
+    }
   }
 }
 </script>
