@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
 <div>
 
   <div class="wrapper">
@@ -10,17 +11,38 @@
 
       <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>   
     </form>
+=======
+  <div>
+    <div class="wrapper">
+      <form class="form-signin">
+        <h3 class="form-signin-heading">Register Sebagai {{ User }}</h3>
+        <input
+          type="text"
+          class="form-control"
+          name="username"
+          placeholder="Email Address"
+          v-model="email"
+        />
+        <br />
+        <input
+          type="password"
+          class="form-control"
+          name="password"
+          placeholder="Password"
+          v-model="password"
+        />
+        <button class="btn btn-lg btn-primary btn-block" type="submit">
+          Register
+        </button>
+      </form>
+    </div>
+>>>>>>> ececd47d9bb742fe1e9b0c67ab2e3b30c74c3c03
   </div>
-
-</div>
-    
 </template>
 
 <script>
-import Vuex from 'vuex'
-
-
 export default {
+<<<<<<< HEAD
     name:'Login',
     data(){
         return{
@@ -35,56 +57,66 @@ export default {
         console.log(this.$route.params)
     }
 }
+=======
+  name: "Register",
+  props: ["user"],
+  data() {
+    return {
+      email: "",
+      password: "",
+      User: ""
+    };
+  },
+  created() {
+    this.user === "parent" ? (this.User = "Orang Tua") : (this.User = "Agensi");
+  }
+};
+>>>>>>> ececd47d9bb742fe1e9b0c67ab2e3b30c74c3c03
 </script>
 
-<style >
-
+<style>
 body {
-	background: #eee;	
+  background: url("https://image.freepik.com/free-photo/woman-children-sitting-floor_23-2147663975.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-color: #dfdddd;
 }
 
-.wrapper {	
-  margin-top: 80px;
-  margin-bottom: 80px;
+.wrapper {
+  margin: auto;
+  transform: translateY(50%);
 }
 
 .form-signin {
   max-width: 580px;
   padding: 15px 35px 45px;
   margin: 0 auto;
-  background-color: #fff;
-  border: 1px solid rgba(0,0,0,0.1);  
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.form-signin-heading,
-.checkbox {
-    margin-bottom: 30px;
-}
-
-.checkbox {
-    font-weight: normal;
+.form-signin-heading {
+  margin-bottom: 30px;
 }
 
 .form-control {
-    position: relative;
-    font-size: 16px;
-    height: auto;
-    padding: 10px;
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
 }
 
-
 input[type="text"] {
-    margin-bottom: -1px;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+  margin-bottom: -1px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 input[type="password"] {
-    margin-bottom: 20px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
+  margin-bottom: 20px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
-
-
-
 </style>

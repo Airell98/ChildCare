@@ -45,91 +45,131 @@ class ParentController {
           const token = jwtSign(parent);
           res.status(200).json({
             access_token: token,
-            name: parent.name,
-            message: "Login success"
+            message: "Login success",
+            user: {
+              id: parent.id,
+              name: parent.name,
+              birthDate: parent.birthDate,
+              address: parent.address,
+              city: parent.city,
+              gender: parent.gender,
+              phoneNumber: parent.phoneNumber,
+            },
           });
         }
       })
       .catch((err) => {
-        console.log(err)
+        console.log(err);
         next(err);
       });
   }
 
-  static getAllParents(req, res, next){
-    Parent.findAll({ attributes: ['id', 'name', 'email', 'password', 'city', 'birthDate', 'address', 'phoneNumber', 'gender']})
-    .then(parents => {
-      res.status(200).json(parents)
+  static getAllParents(req, res, next) {
+    Parent.findAll({
+      attributes: [
+        "id",
+        "name",
+        "email",
+        "password",
+        "city",
+        "birthDate",
+        "address",
+        "phoneNumber",
+        "gender",
+      ],
     })
-    .catch(err => {
-      next(err)
-    })
+      .then((parents) => {
+        res.status(200).json(parents);
+      })
+      .catch((err) => {
+        next(err);
+      });
   }
 
-  static getParentById(req, res, next){
-    const {id} = req.params
-    Parent.findOne({ where: {id}})
-    .then(parent => {
-      if(!parent){
-        next({name: 'ERR_NOT_FOUND'})
-      } else {
-        res.status(200).json(parent)
-      }
-    })
-    .catch(err => {
-      next(err)
-    })
+  static getParentById(req, res, next) {
+    const { id } = req.params;
+    Parent.findOne({ where: { id } })
+      .then((parent) => {
+        if (!parent) {
+          next({ name: "ERR_NOT_FOUND" });
+        } else {
+          res.status(200).json(parent);
+        }
+      })
+      .catch((err) => {
+        next(err);
+      });
   }
 
-  static updateDataParent(req, res, next){
-    const {name, email, password, city, birthDate, address, phoneNumber, gender} = req.body
-    const {id} = req.params
-    Parent.findOne({where: {id}})
-    .then(parent => {
-      if(!parent){
-        throw next({name: 'ERR_NOT_FOUND'})
-      } else {
-        return Parent.update({name, email, password, city, birthDate, address, phoneNumber, gender}, {where: {id}})
-      }
-    })
-    .then(resp => {
-      if(resp[0] === 1){
-        res.status(200).json({message: 'Successfully updated'})
-      } else {
-        next(err)
-      }
-    })
-    .catch(err => {
-      next(err)
-    })
+  static updateDataParent(req, res, next) {
+    const {
+      name,
+      email,
+      password,
+      city,
+      birthDate,
+      address,
+      phoneNumber,
+      gender,
+    } = req.body;
+    const { id } = req.params;
+    Parent.findOne({ where: { id } })
+      .then((parent) => {
+        if (!parent) {
+          throw next({ name: "ERR_NOT_FOUND" });
+        } else {
+          return Parent.update(
+            {
+              name,
+              email,
+              password,
+              city,
+              birthDate,
+              address,
+              phoneNumber,
+              gender,
+            },
+            { where: { id } }
+          );
+        }
+      })
+      .then((resp) => {
+        if (resp[0] === 1) {
+          res.status(200).json({ message: "Successfully updated" });
+        } else {
+          next(err);
+        }
+      })
+      .catch((err) => {
+        next(err);
+      });
   }
 
-  static deleteById(req, res, next){
-    const {id} = req.params
-    Parent.destroy({where: {id}})
-    .then(resp => {
-      if(resp === 1){
-        res.status(200).json({message: 'Successfully deleted'})
-      } else {
-        next(err)
-      }
-    })
-    .catch(err => {
-      next(err)
-    })
+  static deleteById(req, res, next) {
+    const { id } = req.params;
+    Parent.destroy({ where: { id } })
+      .then((resp) => {
+        if (resp === 1) {
+          res.status(200).json({ message: "Successfully deleted" });
+        } else {
+          next(err);
+        }
+      })
+      .catch((err) => {
+        next(err);
+      });
   }
 
-  static getAllChildren(req, res, next){
-    const {id} = req.parentData
-    Child.findAll({where:{ ParentId: id}})
-    .then(children => {
-      res.status(200).json(children)
-    })
-    .catch(err => {
-      next(err)
-    })
+  static getAllChildren(req, res, next) {
+    const { id } = req.parentData;
+    Child.findAll({ where: { ParentId: id } })
+      .then((children) => {
+        res.status(200).json(children);
+      })
+      .catch((err) => {
+        next(err);
+      });
   }
-
 }
 
 module.exports = ParentController;

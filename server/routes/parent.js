@@ -1,3 +1,4 @@
+
 const router = require('express').Router()
 const parentController = require('../controllers/parentController')
 const { authenticationParent } = require('../middlewares/authentication')
