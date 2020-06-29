@@ -12,13 +12,14 @@
       <b-form-input v-model="age" :type="'number'"></b-form-input>
       <label>Salary (Max)</label>
       <b-form-input v-model="salary" :type="'number'"></b-form-input>
+      <div class="button" @click.prevent="filteringNannies">Filter</div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Filter",
+  name: "FilterBox",
   data() {
     return {
       gender: null,
@@ -27,14 +28,54 @@ export default {
         { value: "female", text: "Female" },
         { value: "name", text: "Male" }
       ],
-      age: 0,
-      salary: 0,
-      agency: null
+      age: null,
+      salary: null,
+      agency: null,
+      city: null
     };
   },
   computed: {
     agencies() {
-      return [{ value: null, text: "Please select agency" }];
+      let value = [{ value: null, text: "Please select agency" }];
+      this.$store.state.agencies.forEach(agency => {
+        value.push({ value: agency.id, text: `${agency.name}` });
+      });
+      return value;
+    },
+    nannies() {
+      return this.$store.state.nannies;
+    }
+  },
+  methods: {
+    filteringNannies() {
+      let filteredNannies = this.nannies;
+      if (this.agency) {
+        filteredNannies = filteredNannies.filter(nanny => {
+          return nanny.AgencyId == this.agency;
+        });
+      }
+      if (this.gender) {
+        filteredNannies = filteredNannies.filter(nanny => {
+          return nanny.gender == this.gender;
+        });
+      }
+      if (this.city) {
+        filteredNannies = filteredNannies.filter(nanny => {
+          return nanny.city == this.city;
+        });
+      }
+      if (this.age) {
+        filteredNannies = filteredNannies.filter(nanny => {
+          let age = 2020 - parseInt(nanny.birthDate.slice(0, 5));
+          return age <= this.age;
+        });
+      }
+      if (this.salary) {
+        filteredNannies = filteredNannies.filter(nanny => {
+          return nanny.expectedSalary <= this.salary;
+        });
+      }
+      this.$emit("passFilteredNannies", filteredNannies);
     }
   }
 };
@@ -61,5 +102,22 @@ h3 {
 }
 label {
   transform: translateY(2px);
+}
+.button {
+  text-align: center;
+  margin: 1rem auto;
+  margin-bottom: 0px;
+  padding: 0.3rem 1rem;
+  background-color: rgb(231, 230, 230);
+  color: darkslategray;
+  width: 30%;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 450;
+}
+.button:hover {
+  background-color: white;
+  color: rgb(36, 61, 61);
 }
 </style>

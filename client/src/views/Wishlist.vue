@@ -40,6 +40,7 @@ export default {
   background-size: cover;
   background-color: #dfdddd;
   transform: translateY(5rem);
+  min-height: 90vh;
 }
 .title {
   display: inline-block;

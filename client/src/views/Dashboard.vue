@@ -5,11 +5,11 @@
       <div class="left">
         <div v-if="user === 'parent'">
           <div class="Button">Add Child</div>
-          <ParentProfile></ParentProfile>
+          <ParentProfile :parent="userData"></ParentProfile>
         </div>
         <div v-if="user === 'agency'">
           <div class="Button">Add Nanny</div>
-          <AgencyProfile></AgencyProfile>
+          <AgencyProfile :agency="userData"></AgencyProfile>
         </div>
         <ChatList></ChatList>
       </div>
@@ -17,15 +17,6 @@
         <div class="title" v-if="user === 'parent'">Children List</div>
         <div class="title" v-if="user === 'agency'">Nanny List</div>
         <div class="card-container">
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
           <Card></Card>
         </div>
       </div>
@@ -48,7 +39,23 @@ export default {
     AgencyProfile,
     ChatList
   },
-  props: ["user"]
+  props: ["user"],
+  created() {
+    if (this.user === "agency") {
+      this.$store.commit("set_agency", JSON.parse(localStorage.user));
+    } else {
+      this.$store.commit("set_parent", JSON.parse(localStorage.user));
+    }
+  },
+  computed: {
+    userData() {
+      let user = null;
+      this.user === "agency"
+        ? (user = this.$store.state.agency)
+        : (user = this.$store.state.parent);
+      return user;
+    }
+  }
 };
 </script>
 
@@ -92,18 +99,18 @@ export default {
   font-weight: 600;
   padding: 0px 1rem;
   margin: 3rem auto;
-  background-color: rgb(99, 184, 187);
+  background-color: rgba(255, 255, 255, 0.849);
   padding: 0.2rem;
   border-radius: 10px;
   text-align: center;
   font-weight: 500;
-  color: rgb(224, 247, 247);
+  color: rgb(60, 129, 129);
   cursor: pointer;
   transition: ease 370ms;
 }
 .Button:hover {
-  background-color: rgb(97, 158, 160);
-  color: rgb(255, 255, 255);
+  background-color: rgb(255, 255, 255);
+  color: rgb(33, 70, 70);
 }
 .right {
   height: 180vh;
