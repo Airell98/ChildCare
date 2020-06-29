@@ -4,7 +4,7 @@
     <div class="body">
       <div class="left">
         <div v-if="user === 'parent'">
-          <div class="Button">Add Child</div>
+          <div class="Button" v-if="id == userLocal.id">Add Child</div>
           <ParentProfile :parent="userData"></ParentProfile>
         </div>
         <div v-if="user === 'agency'">
@@ -19,7 +19,7 @@
         <div class="title" v-if="user === 'parent'">Children List</div>
         <div class="title" v-if="user === 'agency'">Nanny List</div>
         <div class="card-container">
-          <Card></Card>
+          <Card v-for="nanny in cardDatas" :key="nanny.id" :nanny="nanny"></Card>
         </div>
       </div>
     </div>
@@ -51,10 +51,26 @@ export default {
     }
   },
   created() {
-    if (this.user === "agency") {
-      this.$store.commit("set_agency", JSON.parse(localStorage.user));
-    } else {
-      this.$store.commit("set_parent", JSON.parse(localStorage.user));
+    if (localStorage.loginAs == "agency") {
+      if (this.user === "agency") {
+        this.$store.dispatch("get_agencyById", this.id);
+        this.$store.dispatch("get_nannyByAgency");
+        this.id == this.userLocal.id
+          ? this.$store.commit("set_agency", this.userLocal)
+          : null;
+      } else {
+        this.$store.dispatch("get_parentById", this.id);
+      }
+    }
+    if (localStorage.loginAs == "parent") {
+      if (this.user === "agency") {
+        this.$store.dispatch("get_agencyById", this.id);
+      } else {
+        this.$store.dispatch("get_parentById", this.id);
+        this.id == this.userLocal.id
+          ? this.$store.commit("set_parent", this.userLocal)
+          : null;
+      }
     }
   },
   computed: {
@@ -64,6 +80,17 @@ export default {
         ? (user = this.$store.state.agency)
         : (user = this.$store.state.parent);
       return user;
+    },
+    loginAs() {
+      return localStorage.loginAs;
+    },
+    userLocal() {
+      return JSON.parse(localStorage.user);
+    },
+    cardDatas() {
+      if (this.user == "agency" && this.id == this.userLocal.id) {
+        return this.$store.state.nannyByAgency;
+      }
     }
   }
 };
@@ -74,12 +101,12 @@ export default {
   min-height: 100vh;
 }
 .body {
-  background: url("https://image.freepik.com/free-photo/woman-children-sitting-floor_23-2147663975.jpg");
+  /* background: url("https://image.freepik.com/free-photo/woman-children-sitting-floor_23-2147663975.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
-  background-color: #dfdddd;
+  background-color: #dfdddd; */
   display: grid;
   grid-template-columns: 2fr 5fr;
   transform: translateY(5rem);

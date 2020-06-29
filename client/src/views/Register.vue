@@ -3,13 +3,7 @@
     <div class="wrapper">
       <form class="form-signin" @submit.prevent="onSubmitDataRegister">
         <h3 class="form-signin-heading">Register Sebagai {{ User }}</h3>
-        <input
-          type="text"
-          class="form-control"
-          name="email"
-          placeholder="Nama"
-          v-model="name"
-        />
+        <input type="text" class="form-control" name="email" placeholder="Nama" v-model="name" />
         <input
           type="text"
           class="form-control"
@@ -17,7 +11,7 @@
           placeholder="Email Address"
           v-model="email"
         />
-        <br>
+        <br />
         <input
           type="password"
           class="form-control"
@@ -32,7 +26,7 @@
           placeholder="Cek Password"
           v-model="password2"
         />
-        <br>
+        <br />
         <input
           type="text"
           class="form-control"
@@ -40,13 +34,7 @@
           placeholder="Address"
           v-model="address"
         />
-        <input
-          type="text"
-          class="form-control"
-          name="City"
-          placeholder="City"
-          v-model="city"
-        />
+        <input type="text" class="form-control" name="City" placeholder="City" v-model="city" />
         <input
           type="text"
           class="form-control"
@@ -61,120 +49,138 @@
           placeholder="Phone Number"
           v-model="phoneNumber"
         />
-        <br>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">
-          Register
-        </button>
+        <br />
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
       </form>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios';
-import Swal from 'sweetalert2'
-
+import axios from "axios";
+import Swal from "sweetalert2";
 
 export default {
   name: "Register",
   props: ["user"],
   data() {
     return {
-      name:"",
+      name: "",
       email: "",
       password: "",
-      password2:"",
-      address:"",
-      city:"",
-      logoUrl:"",
-      phoneNumber:"",
+      password2: "",
+      address: "",
+      city: "",
+      logoUrl: "",
+      phoneNumber: "",
       User: ""
     };
   },
-  methods:{
-    onSubmitDataRegister(){
-      this.onConfirmDataRegister({name:this.name,email:this.email,password:this.password,
-      address:this.address,city:this.city,logoUrl:this.logoUrl,phoneNumber:this.phoneNumber})
-    },
-    onConfirmDataRegister(value){
-      if(this.User=='Agensi'){
-        if(this.password!==this.password2){
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Password tidak sama!',
-          });
-        }else{
-          axios({
-          method: 'Post',
-          url: 'http://localhost:3001/agency/register',
-          data:value
-          })
-          .then(({ data }) => {
-          console.log(data)
-            Swal.fire(
-              'Good job!',
-              'Berhasil Mendaftar',
-              'success'
-            )
-            this.name="",
-            this.email="",
-            this.password="",
-            this.password2="",
-            this.address="",
-            this.city="",
-            this.logoUrl="",
-            this.phoneNumber=""
-          })
-          .catch((err) => {
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Something went wrong!',
-              footer: err
-            });
-          });
-        }
-      }else{
-        if(this.password!==this.password2){
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Password tidak sama!',
-          });
-        }else{
-          axios({
-          method: 'Post',
-          url: 'http://localhost:3001/parent/register',
-          data:value
-          })
-          .then(({ data }) => {
-            console.log(data)
-            Swal.fire(
-              'Good job!',
-              'Berhasil Mendaftar',
-              'success'
-            )
-            this.name="",
-            this.email="",
-            this.password="",
-            this.password2="",
-            this.address="",
-            this.city="",
-            this.logoUrl="",
-            this.phoneNumber=""
-          })
-          .catch((err) => {
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Something went wrong!',
-              footer: err
-            });
-          });
-        };
+  methods: {
+    onSubmitDataRegister() {
+      if (this.password !== this.password2) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Password tidak sama!"
+        });
+      } else {
+        this.$store.dispatch("register_user", {
+          user: this.user,
+          data: {
+            name: this.name,
+            email: this.email,
+            password: this.password,
+            address: this.address,
+            city: this.city,
+            logoUrl: this.logoUrl,
+            phoneNumber: this.phoneNumber
+          }
+        });
       }
-    },
+    }
+    // onSubmitDataRegister() {
+    //   this.onConfirmDataRegister({
+    //     name: this.name,
+    //     email: this.email,
+    //     password: this.password,
+    //     address: this.address,
+    //     city: this.city,
+    //     logoUrl: this.logoUrl,
+    //     phoneNumber: this.phoneNumber
+    //   });
+    // },
+    // onConfirmDataRegister(value) {
+    //   if (this.User == "Agensi") {
+    //     if (this.password !== this.password2) {
+    //       Swal.fire({
+    //         icon: "error",
+    //         title: "Oops...",
+    //         text: "Password tidak sama!"
+    //       });
+    //     } else {
+    //       axios({
+    //         method: "Post",
+    //         url: "http://localhost:3001/agency/register",
+    //         data: value
+    //       })
+    //         .then(({ data }) => {
+    //           console.log(data);
+    //           Swal.fire("Good job!", "Berhasil Mendaftar", "success");
+    //           (this.name = ""),
+    //             (this.email = ""),
+    //             (this.password = ""),
+    //             (this.password2 = ""),
+    //             (this.address = ""),
+    //             (this.city = ""),
+    //             (this.logoUrl = ""),
+    //             (this.phoneNumber = "");
+    //         })
+    //         .catch(err => {
+    //           Swal.fire({
+    //             icon: "error",
+    //             title: "Oops...",
+    //             text: "Something went wrong!",
+    //             footer: err
+    //           });
+    //         });
+    //     }
+    //   } else {
+    //     if (this.password !== this.password2) {
+    //       Swal.fire({
+    //         icon: "error",
+    //         title: "Oops...",
+    //         text: "Password tidak sama!"
+    //       });
+    //     } else {
+    //       axios({
+    //         method: "Post",
+    //         url: "http://localhost:3001/parent/register",
+    //         data: value
+    //       })
+    //         .then(({ data }) => {
+    //           console.log(data);
+    //           Swal.fire("Good job!", "Berhasil Mendaftar", "success");
+    //           (this.name = ""),
+    //             (this.email = ""),
+    //             (this.password = ""),
+    //             (this.password2 = ""),
+    //             (this.address = ""),
+    //             (this.city = ""),
+    //             (this.logoUrl = ""),
+    //             (this.phoneNumber = "");
+    //         })
+    //         .catch(err => {
+    //           Swal.fire({
+    //             icon: "error",
+    //             title: "Oops...",
+    //             text: "Something went wrong!",
+    //             footer: err
+    //           });
+    //         });
+    //     }
+    //   }
+    // }
   },
   created() {
     this.user === "parent" ? (this.User = "Orang Tua") : (this.User = "Agensi");
@@ -192,15 +198,10 @@ body {
   background-color: #dfdddd;
 }
 
-.wrapper {
-  margin: auto;
-  transform: translateY(50%);
-}
-
 .form-signin {
   max-width: 580px;
   padding: 15px 35px 45px;
-  margin: 0 auto;
+  margin: 0px auto;
   background-color: rgba(255, 255, 255, 0.5);
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
