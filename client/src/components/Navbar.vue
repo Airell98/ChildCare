@@ -3,8 +3,8 @@
     <b-navbar-brand id="logo" @click.prevent="gotoHome">
       <img src="../assets/childCare.png" />
       <p id="textLogo">
-        <span id="childLogo">Child</span>
-        <span id="careLogo">Care</span>
+        <span id="childLogo">Super</span>
+        <span id="careLogo">Nanny</span>
       </p>
     </b-navbar-brand>
     <b-navbar-nav class="ml-auto" v-if="login">
