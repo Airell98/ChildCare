@@ -55,12 +55,12 @@ export default {
     },
     gotoDashboard() {
       this.$router.push({
-        name: "Dashboard",
+        name: "joji gimme lovejoji gimme love",
         params: { user: localStorage.loginAs, id: this.id }
       });
     },
     onClickEdit(){
-      
+
     }
   }
 };
