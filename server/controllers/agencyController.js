@@ -48,6 +48,7 @@ class AgencyController {
               city: agency.city,
               logoUrl: agency.logoUrl,
               phoneNumber: agency.phoneNumber,
+              email: agency.email,
             },
           });
         }

@@ -38,6 +38,11 @@ import ParentProfile from "../components/ParentProfile";
 import AgencyProfile from "../components/AgencyProfile";
 import ChatList from "../components/ChatList";
 import AddNannyModal from "../components/AddNannyModal";
+import io from "socket.io-client";
+const serverUrl = "http://localhost:3001";
+const socket = io(serverUrl, {
+  path: "/chat"
+});
 
 export default {
   name: "Home",
@@ -56,6 +61,7 @@ export default {
     }
   },
   created() {
+    this.$store.dispatch("getAllCorrespondingMsg");
     if (localStorage.loginAs == "agency") {
       if (this.user === "agency") {
         this.$store.dispatch("get_agencyById", this.id);
@@ -77,6 +83,15 @@ export default {
           : null;
       }
     }
+    const user = JSON.parse(localStorage.user);
+    localStorage.setItem("roomHome", user.email);
+    // setTimeout(() => {
+    //   this.insertLocalStorage();
+    // }, 2000);
+    socket.on("sendUnreadMsg", payload => {
+      console.log("masuk dashboard parent");
+      this.$store.dispatch("getAllCorrespondingMsg");
+    });
   },
   computed: {
     userData() {
@@ -96,6 +111,31 @@ export default {
       if (this.user == "agency" && this.id == this.userLocal.id) {
         return this.$store.state.nannyByAgency;
       }
+    }
+  },
+  methods: {
+    insertLocalStorage() {
+      let email = "";
+      console.log(this.$store.state.messages, "===========================");
+      for (let i = 0; i < this.$store.state.messages.length; i++) {
+        if (this.loginAs == "parent") {
+          email = this.$store.state.messages[i].Agency.email;
+          break;
+        } else {
+          email = this.$store.state.messages[i].Parent.email;
+          break;
+        }
+      }
+      localStorage.setItem("partnerEmail", email);
+      let emailForKey = "";
+      if (this.loginAs == "parent") {
+        emailForKey = `${localStorage.partnerEmail}${localStorage.roomHome}forHome`;
+      } else {
+        emailForKey = `${localStorage.roomHome}${localStorage.partnerEmail}forHome`;
+      }
+      let roomKey = emailForKey;
+      socket.emit("joinUnreadRoom", roomKey);
+      localStorage.setItem("dashboardRoomKey", roomKey);
     }
   }
 };

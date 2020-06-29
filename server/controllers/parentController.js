@@ -56,6 +56,7 @@ class ParentController {
               city: parent.city,
               gender: parent.gender,
               phoneNumber: parent.phoneNumber,
+              email: parent.email,
             },
           });
         }

@@ -4,9 +4,7 @@
   >
     <Navbar></Navbar>
     <div id="roomKeyWindow" style="flex: 2">
-      <h3>
-        PARTNER ID
-      </h3>
+      <h3>PARTNER ID</h3>
       <p>{{ partnerId }}</p>
       <!-- <input
         type="text"
@@ -14,33 +12,27 @@
         class="form-control"
         placeholder="enter a connection ID"
         v-model="tempKey"
-      /> -->
+      />-->
       <button
         class="btn btn-lg btn-success btn-block"
         id="conn_button"
         type="submit"
         v-on:click="sendPeerId"
-      >
-        Send Video Link
-      </button>
+      >Send Video Link</button>
 
       <button
         class="btn btn-lg btn-danger btn-block"
         id="call_button"
         type="submit"
         v-on:click="callSomeone"
-      >
-        Call
-      </button>
+      >Call</button>
 
       <button
         class="btn btn-lg btn-danger btn-block"
         id="call_button"
         type="submit"
         v-on:click="endCall"
-      >
-        End Call
-      </button>
+      >End Call</button>
     </div>
 
     <hr />
@@ -55,27 +47,14 @@
           type="submit"
         ></button>
 
-        <button
-          v-on:click="unmute"
-          class="fas fa-microphone  fa-3x"
-          id="button"
-          type="submit"
-        ></button>
+        <button v-on:click="unmute" class="fas fa-microphone fa-3x" id="button" type="submit"></button>
       </div>
     </div>
     <div id="chatWindow" style="flex: 2">
       <div style="height: 490px; overflow:scroll;">
-        <ul
-          v-for="(message, index) in messages"
-          :key="index"
-          class="list-group list-group-flush"
-        >
+        <ul v-for="(message, index) in messages" :key="index" class="list-group list-group-flush">
           <li>
-            <div
-              v-if="message.sender == role"
-              style="color:#34eb7d;"
-              class="float-right"
-            >
+            <div v-if="message.sender == role" style="color:#34eb7d;" class="float-right">
               <p style="color: black;">{{ message.content }}</p>
             </div>
             <div v-else style="background-color:#fffffc;" class="float-left">
@@ -98,9 +77,7 @@
         class="btn btn-lg btn-primary btn-block"
         id="button"
         type="submit"
-      >
-        Send
-      </button>
+      >Send</button>
     </div>
   </div>
 </template>
@@ -127,6 +104,7 @@ export default {
       localStorage.setItem("reloaded", "1");
       location.reload();
     }
+    // this.insertLocalStorage();
     this.test();
     socket.emit("join-room", localStorage.getItem("roomKey"));
     this.startVideo();
@@ -304,6 +282,7 @@ export default {
         sender: this.role,
         roomKey: localStorage.getItem("roomKey")
       };
+      // socket.emit("sendUnreadMsg", localStorage.dashboardRoomKey);
       this.messages.push(pesan);
       this.$store
         .dispatch("messageDB", {
@@ -353,6 +332,19 @@ export default {
       };
       socket.emit("receive peerId", data);
     }
+    // insertLocalStorage() {
+    //   let email = "";
+    //   for (let i = 0; i < this.messages.length; i++) {
+    //     if (this.role == "parent") {
+    //       email = this.messages[i].Agency.email;
+    //       break;
+    //     } else {
+    //       email = this.messages[i].Parent.email;
+    //       break;
+    //     }
+    //   }
+    //   localStorage.setItem("partnerEmail", email);
+    // }
   }
 };
 </script>

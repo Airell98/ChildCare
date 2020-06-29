@@ -24,7 +24,6 @@ export default new Vuex.Store({
   mutations: {
     setMessages(state, payload) {
       state.messages = payload;
-      console.log(state.messages);
     },
     set_nannies(state, payload) {
       state.nannies = payload;

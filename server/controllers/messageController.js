@@ -81,7 +81,13 @@ class MessageController {
   static getMsgAgency(req, res, next) {
     const AgencyId = req.agencyData.id;
     const { ParentId } = req.params;
-    Message.findAll({ where: { AgencyId, ParentId } })
+    Message.findAll({
+      where: { AgencyId, ParentId },
+      include: [
+        { model: Agency, attributes: ["id", "email"] },
+        { model: Parent, attributes: ["id", "email", "name"] },
+      ],
+    })
       .then((messages) => {
         res.status(200).json(messages);
       })
@@ -92,7 +98,13 @@ class MessageController {
   static getMsgParent(req, res, next) {
     const ParentId = req.parentData.id;
     const { AgencyId } = req.params;
-    Message.findAll({ where: { AgencyId, ParentId } })
+    Message.findAll({
+      where: { AgencyId, ParentId },
+      include: [
+        { model: Agency, attributes: ["id", "email"] },
+        { model: Parent, attributes: ["id", "email", "name"] },
+      ],
+    })
       .then((messages) => {
         res.status(200).json(messages);
       })

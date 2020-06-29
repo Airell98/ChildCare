@@ -2,11 +2,7 @@
   <div class="chat-box">
     <h3>Chat From</h3>
     <div class="chat-container">
-      <ChatItem
-        v-for="(message, index) in messageStore"
-        :key="index"
-        :message="message"
-      ></ChatItem>
+      <ChatItem v-for="(message, index) in messageStore" :key="index" :message="message"></ChatItem>
     </div>
   </div>
 </template>
