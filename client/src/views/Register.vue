@@ -1,17 +1,4 @@
 <template>
-<<<<<<< HEAD
-<div>
-
-  <div class="wrapper">
-    <form class="form-signin">       
-      <h2 class="form-signin-heading">Register Sebagai</h2>
-      <input type="text" class="form-control" name="username" placeholder="Email Address" v-model = 'email' />
-      <br>
-      <input type="password" class="form-control" name="password" placeholder="Password" v-model = 'password'/>      
-
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>   
-    </form>
-=======
   <div>
     <div class="wrapper">
       <form class="form-signin">
@@ -36,28 +23,11 @@
         </button>
       </form>
     </div>
->>>>>>> ececd47d9bb742fe1e9b0c67ab2e3b30c74c3c03
   </div>
 </template>
 
 <script>
 export default {
-<<<<<<< HEAD
-    name:'Login',
-    data(){
-        return{
-            email:'',
-            password:'',
-        };
-    },
-    methods:{
-        
-    },
-    created(){
-        console.log(this.$route.params)
-    }
-}
-=======
   name: "Register",
   props: ["user"],
   data() {
@@ -71,7 +41,6 @@ export default {
     this.user === "parent" ? (this.User = "Orang Tua") : (this.User = "Agensi");
   }
 };
->>>>>>> ececd47d9bb742fe1e9b0c67ab2e3b30c74c3c03
 </script>
 
 <style>

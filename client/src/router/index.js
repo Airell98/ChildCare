@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import ShowDetailNanny from '../views/ShowDetailNanny.vue'
-import Login from '../views/Login.vue'
-import MyProfile from '../views/ShowDetailParent.vue'
-=======
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
@@ -16,7 +8,6 @@ import Register from "../views/Register";
 import Login from "../views/Login";
 import NannyDetail from "../views/NannyDetail";
 import AddNanny from "../views/AddNanny";
->>>>>>> ececd47d9bb742fe1e9b0c67ab2e3b30c74c3c03
 
 Vue.use(VueRouter);
 
@@ -41,21 +32,6 @@ const routes = [
     }
   },
   {
-<<<<<<< HEAD
-    path: '/nannyprofile',
-    name :'ShowDetailNanny',
-    component : ShowDetailNanny
-  },
-  {
-    path: '/login',
-    name :'Login',
-    component : Login
-  },
-  {
-    path: '/myprofile',
-    name: '',
-    component: MyProfile
-=======
     path: "/about",
     name: "About",
     component: About
@@ -125,7 +101,6 @@ const routes = [
         });
       }
     }
->>>>>>> ececd47d9bb742fe1e9b0c67ab2e3b30c74c3c03
   }
 ];
 
