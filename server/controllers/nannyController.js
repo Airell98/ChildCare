@@ -57,6 +57,7 @@ class NannyController {
   }
 
   static addNanny(req, res, next) {
+    console.log('adddd')
     const {
       name,
       gender,
@@ -84,6 +85,7 @@ class NannyController {
         res.status(201).json(nanny);
       })
       .catch((err) => {
+        console.log(err)
         next(err);
       });
   }
