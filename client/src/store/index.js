@@ -160,7 +160,7 @@ export default new Vuex.Store({
     get_nanny(context, payload) {
       axios({
         method: "get",
-        url: `${context.state.url}/nanny/${payload.id}`
+        url: `${context.state.url}/nanny/${payload}`
       })
         .then(response => {
           const { data } = response;

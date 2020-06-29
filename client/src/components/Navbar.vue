@@ -8,7 +8,7 @@
       </p>
     </b-navbar-brand>
     <b-navbar-nav class="ml-auto" v-if="login">
-      <div class="username">{{username.toUpperCase()}}</div>
+      <div class="username" @click.prevent="gotoDashboard">{{username.toUpperCase()}}</div>
       <div class="Button Edit">EDIT</div>
       <div class="Button Logout" @click.prevent="loggingOut">LOGOUT</div>
     </b-navbar-nav>
@@ -23,6 +23,11 @@
 import NavButton from "./NavButton";
 export default {
   name: "Navbar",
+  data() {
+    return {
+      id: 0
+    };
+  },
   components: {
     NavButton
   },
@@ -35,6 +40,7 @@ export default {
     },
     username() {
       const user = JSON.parse(localStorage.user);
+      this.id = user.id;
       return user.name;
     }
   },
@@ -46,6 +52,12 @@ export default {
       localStorage.clear();
       this.$store.commit("set_login", false);
       this.$router.push({ name: "Home" });
+    },
+    gotoDashboard() {
+      this.$router.push({
+        name: "Dashboard",
+        params: { user: localStorage.loginAs, id: this.id }
+      });
     }
   }
 };
@@ -107,5 +119,10 @@ img {
   padding: 10px;
   margin: 0px 1rem;
   color: rgb(83, 132, 139);
+  cursor: pointer;
+  transition: ease 400ms;
+}
+.username:hover {
+  color: rgb(74, 157, 168);
 }
 </style>

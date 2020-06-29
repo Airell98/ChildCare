@@ -1,11 +1,11 @@
 <template>
-  <div class="card">
+  <div class="card" @click.prevent="gotoDetail">
     <div class="card-img">
       <img :src="nanny.imageUrl" />
     </div>
     <div class="card-body">
-      <div class="name">{{ nanny.name }}</div>
-      <div class="birth">{{ age }}</div>
+      <div class="name">{{ `${nanny.name} (${age})` }}</div>
+      <div class="city">{{ nanny.city }}</div>
       <div class="salary">Rp. {{ nanny.expectedSalary }}</div>
     </div>
   </div>
@@ -19,6 +19,11 @@ export default {
     age() {
       return 2020 - parseInt(this.nanny.birthDate.slice(0, 5));
     }
+  },
+  methods: {
+    gotoDetail() {
+      this.$router.push({ name: "NannyDetail", params: { id: this.nanny.id } });
+    }
   }
 };
 </script>
@@ -28,7 +33,7 @@ export default {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.5s;
   width: 15rem;
-  height: 18rem;
+  height: 20rem;
   border-radius: 1rem;
   margin: 3rem auto;
   cursor: pointer;
@@ -52,9 +57,10 @@ img {
   border-radius: 0 0 1rem 1rem;
 }
 .name {
-  font-size: 12px;
+  font-size: 1.4rem;
 }
-.birth {
+.birth,
+.city {
   margin-top: 2px;
   font-size: 18px;
 }

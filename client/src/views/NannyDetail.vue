@@ -9,13 +9,11 @@
       <div class="container-content-brief">
         <div class="container-content-brief-card">
           <div class="container-content-brief-card-name">
-            <div>Sizuka</div>
-            <pre></pre>
-            <div>Baby Sitter</div>
+            <div>{{dataNanny.name}}</div>
           </div>
           <div class="container-content-brief-card-photo">
             <div class="container-content-brief-card-photo-box">
-              <img />
+              <img :src="dataNanny.imageUrl" />
             </div>
           </div>
         </div>
@@ -23,34 +21,24 @@
           <div class="container-content-brief-detail-title">Profile</div>
 
           <div class="container-content-brief-detail-0">
-            <div class="container-content-brief-detail-1">
-              Umur
-            </div>
-            <div class="container-content-brief-detail-2"></div>
+            <div class="container-content-brief-detail-1">Umur</div>
+            <div class="container-content-brief-detail-2">{{age}}</div>
           </div>
           <div class="container-content-brief-detail-0">
-            <div class="container-content-brief-detail-1">
-              Jenis Kelamin
-            </div>
-            <div class="container-content-brief-detail-2"></div>
+            <div class="container-content-brief-detail-1">Jenis Kelamin</div>
+            <div class="container-content-brief-detail-2">{{dataNanny.gender}}</div>
           </div>
           <div class="container-content-brief-detail-0">
-            <div class="container-content-brief-detail-1">
-              Daerah
-            </div>
-            <div class="container-content-brief-detail-2"></div>
+            <div class="container-content-brief-detail-1">Daerah</div>
+            <div class="container-content-brief-detail-2">{{dataNanny.city}}</div>
           </div>
-          <div class="container-content-brief-detail-0">
-            <div class="container-content-brief-detail-1">
-              Agency
-            </div>
+          <!-- <div class="container-content-brief-detail-0">
+            <div class="container-content-brief-detail-1">Agency</div>
             <div class="container-content-brief-detail-2"></div>
-          </div>
+          </div>-->
           <div class="container-content-brief-detail-0">
-            <div class="container-content-brief-detail-1">
-              Gaji Diharapkan
-            </div>
-            <div class="container-content-brief-detail-2"></div>
+            <div class="container-content-brief-detail-1">Gaji Diharapkan</div>
+            <div class="container-content-brief-detail-2">Rp. {{dataNanny.expectedSalary}}</div>
           </div>
         </div>
       </div>
@@ -66,16 +54,10 @@
             <button @click.prevent="onClickAgency">Agency</button>
           </div>
         </div>
-        <div class="container-content-detail-detailed" v-if="detailStats">
-          ini detail
-        </div>
-        <div class="container-content-detail-detailed" v-if="keterampilanStats">
-          ini keterampilan
-        </div>
+        <div class="container-content-detail-detailed" v-if="detailStats">ini detail</div>
+        <div class="container-content-detail-detailed" v-if="keterampilanStats">ini keterampilan</div>
         <div class="container-content-detail-detailed" v-if="agencyStats">
-          <div>
-            ini agency card
-          </div>
+          <div>ini agency card</div>
         </div>
       </div>
     </div>
@@ -86,7 +68,8 @@
 import Vuex from "vuex";
 
 export default {
-  name: "ShowDetailNanny",
+  name: "NannyDetail",
+  props: ["id"],
   data() {
     return {
       detailStats: "yes",
@@ -94,7 +77,17 @@ export default {
       agencyStats: ""
     };
   },
-  components: {},
+  created() {
+    this.$store.dispatch("get_nanny", this.id);
+  },
+  computed: {
+    dataNanny() {
+      return this.$store.state.nannyDetail;
+    },
+    age() {
+      return 2020 - parseInt(this.dataNanny.birthDate.slice(0, 5));
+    }
+  },
   methods: {
     onClickDetail() {
       this.detailStats = "yes";
@@ -111,8 +104,7 @@ export default {
       this.keterampilanStats = "";
       this.agencyStats = "yes";
     }
-  },
-  computed: {}
+  }
 };
 </script>
 
@@ -225,6 +217,11 @@ export default {
   /* padding:1em; */
   width: 450px;
   height: 550px;
+}
+
+img {
+  width: 100%;
+  height: 100%;
 }
 
 .container-content-brief-detail {

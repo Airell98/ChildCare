@@ -84,6 +84,7 @@ const routes = [
   {
     path: "/nanny/:id",
     name: "NannyDetail",
+    props: true,
     component: NannyDetail
   },
   {
