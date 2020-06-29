@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import ShowDetailNanny from '../views/ShowDetailNanny.vue'
 import Login from '../views/Login.vue'
+import MyProfile from '../views/ShowDetailParent.vue'
 
 Vue.use(VueRouter)
 
@@ -21,7 +22,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
-    path: '/profile',
+    path: '/nannyprofile',
     name :'ShowDetailNanny',
     component : ShowDetailNanny
   },
@@ -29,6 +30,11 @@ const routes = [
     path: '/login',
     name :'Login',
     component : Login
+  },
+  {
+    path: '/myprofile',
+    name: '',
+    component: MyProfile
   }
 ]
 

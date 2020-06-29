@@ -7,14 +7,13 @@
     <div class='container-content'> 
         <div class='container-content-navigation'>
           
-            <button> &#8592; Sebelumnya </button>
-            <button> Berikutnya 	&#8594; </button>
+            
         </div>
         <div class='container-content-brief'> 
             <div class='container-content-brief-card'> 
                 <div class= 'container-content-brief-card-name'>  
                     
-                    <div> Sizuka </div>
+                    <div> Profile Parent </div>
                   
                 </div>
                 <div class='container-content-brief-card-photo'>
@@ -28,7 +27,7 @@
 
                 <div class='container-content-brief-detail-0'>
                     <div class='container-content-brief-detail-1'>
-                        umur
+                        1
                     </div>
                     <div class='container-content-brief-detail-2'>
                         1
@@ -36,15 +35,15 @@
                 </div>
                 <div class='container-content-brief-detail-0'>
                     <div class='container-content-brief-detail-1'>
-                        Jenis Kelamin
+                        2
                     </div>
                     <div class='container-content-brief-detail-2'>
-                        HOW DARE U PRESUME MY GENDER?!
+                        2
                     </div>
                 </div>
                 <div class='container-content-brief-detail-0'>
                     <div class='container-content-brief-detail-1'>
-                        Daerah
+                        3
                     </div>
                     <div class='container-content-brief-detail-2'>
                         3
@@ -52,7 +51,7 @@
                 </div>
                 <div class='container-content-brief-detail-0'> 
                     <div class='container-content-brief-detail-1'>
-                        Agency
+                        4
                     </div>
                     <div class='container-content-brief-detail-2'>
                         4
@@ -60,7 +59,7 @@
                 </div>
                 <div class='container-content-brief-detail-0'>
                     <div class='container-content-brief-detail-1'>
-                        Gaji Yang Diharapkan
+                        5
                     </div>
                     <div class='container-content-brief-detail-2'>
                         5
@@ -70,31 +69,23 @@
         </div>
         <div class='container-content-detail'> 
             <div class='container-content-detail-0'>
-                <div class='container-content-detail-1'> <button @click.prevent='onClickDetail'> Detail </button> 
+                <div class='container-content-detail-1'> <button @click.prevent='onClickDetail'> Dalam Asuhan </button> 
     
                 </div>
-                <div class='container-content-detail-2'> <button @click.prevent='onClickKeterampilan'> Keterampilan </button> 
+                <div class='container-content-detail-2'> <button @click.prevent='onClickKeterampilan'> Nanny Terkait </button> 
                 
                 </div>
-                <div class='container-content-detail-3'> <button @click.prevent='onClickAgency'> Agency </button> 
+                <div class='container-content-detail-3'> <button @click.prevent='onClickAgency'> Agency Terkait </button> 
                 
                 </div>
             </div>
-            <div class='container-content-detail-detailed' v-if='detailStats'> 
-                <ChildCard> 
-                  
-                </ChildCard>
-                <ChildCard> 
-
-                </ChildCard>
-                <ChildCard> 
-
-                </ChildCard>
+            <div class='container-content-detail-child' v-if='terkait1'> 
+                ini Anak Anak
             </div>
-            <div class='container-content-detail-detailed' v-if='keterampilanStats'> 
-                ini keterampilan
+            <div class='container-content-detail-detailed' v-if='terkait2'> 
+                ini Nanny Terkait
             </div>
-            <div class='container-content-detail-detailed' v-if='agencyStats'>
+            <div class='container-content-detail-detailed' v-if='terkait3'>
                 <div>
                     ini agency card
                 </div>
@@ -106,41 +97,39 @@
 
 <script>
 import Vuex from 'vuex'
-import ChildCard from '../components/ChildCard.vue'
+
 
 
 
 
 export default {
-    name : 'ShowDetailNanny',
+    name : 'ShowDetailParent',
     data(){
         return{
-            detailStats:'yes',
-            keterampilanStats:'',
-            agencyStats:'',
-            nannyId:''
+            terkait1:'yes',
+            terkait2:'',
+            terkait3:'',
 
         };
     },
     components:{
-      ChildCard
 
     },
     methods:{
         onClickDetail(){
-            this.detailStats = 'yes'
-            this.keterampilanStats = ''
-            this.agencyStats = ''
+            this.terkait1 = 'yes'
+            this.terkait2 = ''
+            this.terkait3 = ''
         },
         onClickKeterampilan(){
-            this.detailStats = ''
-            this.keterampilanStats = 'yes'
-            this.agencyStats = ''
+            this.terkait1 = ''
+            this.terkait2 = 'yes'
+            this.terkait3 = ''
         },
         onClickAgency(){
-            this.detailStats = ''
-            this.keterampilanStats = ''
-            this.agencyStats = 'yes'
+            this.terkait1 = ''
+            this.terkait2 = ''
+            this.terkait3 = 'yes'
         },
     },
     computed:{
@@ -308,13 +297,13 @@ export default {
   flex-wrap: wrap;
   /* padding:1em; */
   width: 550px;
-  /* height: 40px; */
+  height: 40px;
 }
 
 .container-content-brief-detail-1{
   background-color: rgb(185, 211, 250);
   border: 0.1px solid rgb(177, 176, 176);
-  margin-top:2px;
+  margin-top:1px;
   padding-top: 5px;
   padding-left: 20px;
 
@@ -331,7 +320,7 @@ export default {
 .container-content-brief-detail-2{
   background-color: rgb(195, 206, 230);
   border: 0.1px solid rgb(177, 176, 176);
-  margin-top:2px;
+  margin-top:1px;
   padding-top: 5px;
   padding-left: 20px;
 
@@ -402,24 +391,32 @@ export default {
   height: 60px;
 }
 
-
-
-.container-content-detail-detailed{
+.container-content-detail-child{
   background-color: rgb(255, 255, 255);
   border: 0.1px solid rgb(177, 176, 176);
-  padding: 25px;
 
   display:flex;
   flex-direction: row;
   align-items: flex-start;
-  margin-bottom:100px;
 
   flex-wrap: wrap;
   width: 1000px;
-  /* height: 1200px; */
+  min-height: 700px;
+  margin-bottom: 100px;
 }
 
+.container-content-detail-detailed{
+  background-color: rgb(255, 255, 255);
+  border: 0.1px solid rgb(177, 176, 176);
 
+  display:flex;
+  flex-direction: row;
+  align-items: flex-start;
+
+  flex-wrap: wrap;
+  width: 1000px;
+  height: 700px;
+}
 
 button {
   display: block;
