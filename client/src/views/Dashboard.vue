@@ -4,11 +4,11 @@
     <div class="body">
       <div class="left">
         <div v-if="user === 'parent'">
-          <div class="Button">Add Child</div>
+          <div class="Button" v-if="loginAs === 'parent' && id == userLocal.id">Add Child</div>
           <ParentProfile :parent="userData"></ParentProfile>
         </div>
         <div v-if="user === 'agency'">
-          <div class="Button">Add Nanny</div>
+          <div class="Button" v-if="loginAs === 'agency' && id == userLocal.id">Add Nanny</div>
           <AgencyProfile :agency="userData"></AgencyProfile>
         </div>
         <ChatList></ChatList>
@@ -39,12 +39,27 @@ export default {
     AgencyProfile,
     ChatList
   },
-  props: ["user"],
+  props: ["user", "id"],
   created() {
-    if (this.user === "agency") {
-      this.$store.commit("set_agency", JSON.parse(localStorage.user));
-    } else {
-      this.$store.commit("set_parent", JSON.parse(localStorage.user));
+    if (localStorage.loginAs == "agency") {
+      if (this.user === "agency") {
+        this.$store.dispatch("get_agencyById", this.id);
+        this.id == this.userLocal.id
+          ? this.commit("set_agency", this.userLocal)
+          : null;
+      } else {
+        this.$store.dispatch("get_parentById", this.id);
+      }
+    }
+    if (localStorage.loginAs == "parent") {
+      if (this.user === "agency") {
+        this.$store.dispatch("get_agencyById", this.id);
+      } else {
+        this.$store.dispatch("get_parentById", this.id);
+        this.id == this.userLocal.id
+          ? this.commit("set_parent", this.userLocal)
+          : null;
+      }
     }
   },
   computed: {
@@ -54,6 +69,12 @@ export default {
         ? (user = this.$store.state.agency)
         : (user = this.$store.state.parent);
       return user;
+    },
+    loginAs() {
+      return localStorage.loginAs;
+    },
+    userLocal() {
+      return JSON.parse(localStorage.user);
     }
   }
 };
