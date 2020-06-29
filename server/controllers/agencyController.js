@@ -41,6 +41,14 @@ class AgencyController {
           res.status(200).json({
             access_token: token,
             message: "Login success",
+            user: {
+              id: agency.id,
+              name: agency.name,
+              address: agency.address,
+              city: agency.city,
+              logoUrl: agency.logoUrl,
+              phoneNumber: agency.phoneNumber,
+            },
           });
         }
       })
