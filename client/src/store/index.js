@@ -17,7 +17,8 @@ export default new Vuex.Store({
     login: false,
     wishlistOfNanny: [],
     parent: {},
-    agency: {}
+    agency: {},
+    nannyByAgency: []
   },
   mutations: {
     set_nannies(state, payload) {
@@ -46,6 +47,9 @@ export default new Vuex.Store({
     },
     set_wishlistOfNanny(state, payload) {
       state.wishlistOfNanny = payload;
+    },
+    set_nannyByAgency(state, payload) {
+      state.nannyByAgency = payload;
     }
   },
 
@@ -209,7 +213,7 @@ export default new Vuex.Store({
       })
         .then(response => {
           const { data } = response;
-          context.dispatch("login_agency", payload);
+          context.dispatch("login_user", payload);
         })
         .catch(error => {
           if (error.response) {
@@ -371,6 +375,31 @@ export default new Vuex.Store({
         .then(response => {
           const { data } = response;
           context.commit("set_agency", data);
+        })
+        .catch(error => {
+          if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log("Error", error.message);
+          }
+          console.log(error.config);
+        });
+    },
+    get_nannyByAgency(context, payload) {
+      axios({
+        method: "get",
+        url: `${context.state.url}/nanny/showAssociateNanny`,
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+        .then(response => {
+          const { data } = response;
+          context.commit("set_nannyByAgency", data);
         })
         .catch(error => {
           if (error.response) {

@@ -17,7 +17,7 @@
         <div class="title" v-if="user === 'parent'">Children List</div>
         <div class="title" v-if="user === 'agency'">Nanny List</div>
         <div class="card-container">
-          <Card></Card>
+          <Card v-for="nanny in cardDatas" :key="nanny.id" :nanny="nanny"></Card>
         </div>
       </div>
     </div>
@@ -44,8 +44,9 @@ export default {
     if (localStorage.loginAs == "agency") {
       if (this.user === "agency") {
         this.$store.dispatch("get_agencyById", this.id);
+        this.$store.dispatch("get_nannyByAgency");
         this.id == this.userLocal.id
-          ? this.commit("set_agency", this.userLocal)
+          ? this.$store.commit("set_agency", this.userLocal)
           : null;
       } else {
         this.$store.dispatch("get_parentById", this.id);
@@ -57,7 +58,7 @@ export default {
       } else {
         this.$store.dispatch("get_parentById", this.id);
         this.id == this.userLocal.id
-          ? this.commit("set_parent", this.userLocal)
+          ? this.$store.commit("set_parent", this.userLocal)
           : null;
       }
     }
@@ -75,6 +76,11 @@ export default {
     },
     userLocal() {
       return JSON.parse(localStorage.user);
+    },
+    cardDatas() {
+      if (this.user == "agency" && this.id == this.userLocal.id) {
+        return this.$store.state.nannyByAgency;
+      }
     }
   }
 };
