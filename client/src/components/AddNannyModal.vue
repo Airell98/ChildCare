@@ -1,31 +1,43 @@
 <template>
-  <div class="modal-login">
+  <div class="modal-nanny">
     <b-modal id= 'modalAddNanny' v-model='modalShow'
-        title="Add to Cart Confirmation" centered ok-only ok-variant="secondary" ok-title="" hide-footer
+        title="Menambahkan Nanny" centered ok-only ok-variant="secondary" ok-title="" hide-footer
         :header-bg-variant="headerBgVariant"
         :header-text-variant="headerTextVariant"
         :body-bg-variant="bodyBgVariant"
         :body-text-variant="bodyTextVariant"
         :footer-bg-variant="footerBgVariant"
         :footer-text-variant="footerTextVariant"
-        size="sm"
+        size="L"
         >
           <form @submit.prevent="confirmToCart">
             <div>
                 <img v-bind:src="this.image_url"
                 height='265' width="265"
                 > <img>
+                <h5> Image url </h5>
+                <input type = 'text' v-model = 'image_url'>
+                <br>
                 <h5> Name </h5>
                 <input type = 'text' v-model = 'name' >
                 <br>
-                <h5> Price </h5>
-                <input type = 'text' v-model = 'price'>
+                <h5> Gender </h5>
+                <input type = 'text' v-model = 'gender'>
                 <br>
-                <h5> Quantity (default is 1)</h5>
-                <input type = 'number' v-model = 'quantity' min="1">
+                <h5> Phone Number </h5>
+                <input type = 'text' v-model = 'phoneNumber'>
+                <br>
+                <h5> Birth Date </h5>
+                <input type = 'text' v-model = 'birthDate'>
+                <br>
+                <h5> Address </h5>
+                <input type = 'text' v-model = 'address'>
+                <br>
+                <h5> Gaji Yang Diharapkan</h5>
+                <input type = 'number' v-model = 'expectedSalary' min="1000000">
                 <br>
                 <br>
-                <button class= "button" type = 'submit'> Yes, Add this to my cart ! </button>
+                <button class= "button" type = 'submit'> Submit </button>
             </div>
         </form >
 
@@ -36,7 +48,7 @@
 <script>
 import axios from 'axios';
 import Vuex from 'vuex';
-// import swal from 'sweetalert'
+// import swal from 'sweetalert2'
 
 
 export default {
@@ -45,14 +57,16 @@ export default {
     return {
       access_id:'',
 
-      id:'',
       name:'',
-      quantity:1,
-      price:'',
+      gender:'',
+      phoneNumber:'',
+      birthDate:'',
+      address:'',
+      expectedSalary:1000000,
       image_url:'',
 
       modalShow:false,
-      headerBgVariant: 'dark',
+      headerBgVariant: 'warning',
       headerTextVariant: 'light',
       bodyBgVariant: 'light',
       bodyTextVariant: 'dark',
@@ -75,7 +89,7 @@ export default {
   position: relative;
   left :15px;
   top:1px;
-  background-color: rgb(255, 69, 0);
+  background-color: rgb(221, 62, 62);
   border: none;
   color: white;
   padding: 8px 30px;
@@ -87,12 +101,12 @@ export default {
 
 input[type=number] {
   padding-left: 12px;
-  width: 70px;
+  width: 120px;
 }
 
 input[type=text] {
   padding-left: 12px;
-  width: 230px;
+  width: 300px;
 }
 
 </style>

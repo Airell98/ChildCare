@@ -8,7 +8,9 @@
           <ParentProfile :parent="userData"></ParentProfile>
         </div>
         <div v-if="user === 'agency'">
-          <div class="Button">Add Nanny</div>
+          <div class="Button" @click.prevent='addNanny'>Add Nanny
+            <AddNannyModal></AddNannyModal>
+          </div>
           <AgencyProfile :agency="userData"></AgencyProfile>
         </div>
         <ChatList></ChatList>
@@ -30,6 +32,8 @@ import Card from "../components/Card";
 import ParentProfile from "../components/ParentProfile";
 import AgencyProfile from "../components/AgencyProfile";
 import ChatList from "../components/ChatList";
+import AddNannyModal from "../components/AddNannyModal";
+
 export default {
   name: "Home",
   components: {
@@ -37,9 +41,15 @@ export default {
     Card,
     ParentProfile,
     AgencyProfile,
-    ChatList
+    ChatList,
+    AddNannyModal
   },
   props: ["user"],
+  methods:{
+    addNanny(){
+      this.$bvModal.show('modalAddNanny')
+    }
+  },
   created() {
     if (this.user === "agency") {
       this.$store.commit("set_agency", JSON.parse(localStorage.user));
