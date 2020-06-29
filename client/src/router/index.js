@@ -7,7 +7,6 @@ import About from "../views/About";
 import Register from "../views/Register";
 import Login from "../views/Login";
 import NannyDetail from "../views/NannyDetail";
-import AddNanny from "../views/AddNanny";
 
 Vue.use(VueRouter);
 

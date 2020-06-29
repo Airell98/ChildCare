@@ -297,14 +297,19 @@ export default new Vuex.Store({
         });
     },
     add_nanny(context, payload) {
+      console.log(payload);
       axios({
         method: "post",
         url: `${context.state.url}/nanny`,
-        data: payload
+        data: payload,
+        headers: {
+          access_token: localStorage.access_token
+        }
       })
         .then(response => {
           const { data } = response;
           context.state.nannies.push(data);
+          context.state.nannyByAgency.push(data);
         })
         .catch(error => {
           if (error.response) {

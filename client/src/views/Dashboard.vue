@@ -4,11 +4,16 @@
     <div class="body">
       <div class="left">
         <div v-if="user === 'parent'">
-          <div class="Button" v-if="id == userLocal.id">Add Child</div>
+          <div class="Button" v-if="loginAs == 'parent' && id == userLocal.id">Add Child</div>
           <ParentProfile :parent="userData"></ParentProfile>
         </div>
         <div v-if="user === 'agency'">
-          <div class="Button" @click.prevent='addNanny'>Add Nanny
+          <div
+            class="Button"
+            v-if="loginAs == 'agency' && id ==  userLocal.id"
+            @click.prevent="addNanny"
+          >
+            Add Nanny
             <AddNannyModal></AddNannyModal>
           </div>
           <AgencyProfile :agency="userData"></AgencyProfile>
@@ -44,10 +49,10 @@ export default {
     ChatList,
     AddNannyModal
   },
-  props: ["user"],
-  methods:{
-    addNanny(){
-      this.$bvModal.show('modalAddNanny')
+  props: ["user", "id"],
+  methods: {
+    addNanny() {
+      this.$bvModal.show("modalAddNanny");
     }
   },
   created() {
