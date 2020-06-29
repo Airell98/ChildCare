@@ -4,11 +4,11 @@
     <div class="body">
       <div class="left">
         <div v-if="user === 'parent'">
-          <div class="Button" v-if="loginAs === 'parent' && id == userLocal.id">Add Child</div>
+          <div class="Button" v-if="id == userLocal.id">Add Child</div>
           <ParentProfile :parent="userData"></ParentProfile>
         </div>
         <div v-if="user === 'agency'">
-          <div class="Button" v-if="loginAs === 'agency' && id == userLocal.id">Add Nanny</div>
+          <div class="Button" v-if="id == userLocal.id">Add Nanny</div>
           <AgencyProfile :agency="userData"></AgencyProfile>
         </div>
         <ChatList></ChatList>
@@ -85,12 +85,12 @@ export default {
   min-height: 100vh;
 }
 .body {
-  background: url("https://image.freepik.com/free-photo/woman-children-sitting-floor_23-2147663975.jpg");
+  /* background: url("https://image.freepik.com/free-photo/woman-children-sitting-floor_23-2147663975.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
-  background-color: #dfdddd;
+  background-color: #dfdddd; */
   display: grid;
   grid-template-columns: 2fr 5fr;
   transform: translateY(5rem);
