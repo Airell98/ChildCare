@@ -47,13 +47,21 @@ class ParentController {
           const token = jwtSign(parent);
           res.status(200).json({
             access_token: token,
-            name: parent.name,
             message: "Login success",
+            user: {
+              id: parent.id,
+              name: parent.name,
+              birthDate: parent.birthDate,
+              address: parent.address,
+              city: parent.city,
+              gender: parent.gender,
+              phoneNumber: parent.phoneNumber,
+              email: parent.email
+            },
           });
         }
       })
       .catch((err) => {
-        // console.log(err);
         next(err);
       });
   }

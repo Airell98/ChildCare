@@ -1,10 +1,9 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
-const SECRETKEY = "for-development" ;
+const SECRETKEY = "for-development";
 
-function jwtVerify(param){
+function jwtVerify(param) {
   return jwt.verify(param, SECRETKEY);
 }
 
-
-module.exports = jwtVerify
+module.exports = jwtVerify;
