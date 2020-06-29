@@ -22,9 +22,9 @@ export default new Vuex.Store({
     nannyByAgency: []
   },
   mutations: {
-    setMessages(state, payload){
-      state.messages = payload
-      console.log(state.messages)
+    setMessages(state, payload) {
+      state.messages = payload;
+      console.log(state.messages);
     },
     set_nannies(state, payload) {
       state.nannies = payload;
@@ -58,97 +58,84 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    getAllCorrespondingMsg(context){
-      const role = localStorage.loginAs
-      if(role === 'parent'){
+    getAllCorrespondingMsg(context) {
+      const role = localStorage.loginAs;
+      if (role === "parent") {
         axios({
-          method: 'GET',
-          url: 'http://localhost:3001/message/parent',
+          method: "GET",
+          url: "http://localhost:3001/message/parent",
           headers: {
-            access_token : localStorage.getItem('access_token')
+            access_token: localStorage.getItem("access_token")
           }
         })
-        .then(response => {
-          context.commit('setMessages', response.data)
-        })
-        .catch(err => {
-          console.log(err)
-        })
-      } else if(role === 'agency'){
+          .then(response => {
+            context.commit("setMessages", response.data);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      } else if (role === "agency") {
         axios({
-          method: 'GET',
-          url: 'http://localhost:3001/message/agency',
+          method: "GET",
+          url: "http://localhost:3001/message/agency",
           headers: {
-            access_token : localStorage.getItem('access_token')
+            access_token: localStorage.getItem("access_token")
           }
         })
-        .then(response => {
-          context.commit('setMessages', response.data)
-        })
-        .catch(err => {
-          console.log(err)
-        })
+          .then(response => {
+            context.commit("setMessages", response.data);
+          })
+          .catch(err => {
+            console.log(err);
+          });
       }
     },
-    getAllMsg(context, id){
-      const role = localStorage.loginAs
-      if(role === 'parent'){
+    getAllMsg(context, id) {
+      const role = localStorage.loginAs;
+      if (role === "parent") {
         return axios({
-          method: 'GET',
-          url: 'http://localhost:3001/message/parent/' + id,
+          method: "GET",
+          url: "http://localhost:3001/message/parent/" + id,
           headers: {
-            access_token : localStorage.getItem('access_token')
+            access_token: localStorage.getItem("access_token")
           }
-        })
-      } else if(role === 'agency'){
+        });
+      } else if (role === "agency") {
         return axios({
-          method: 'GET',
-          url: 'http://localhost:3001/message/agency/' + id,
+          method: "GET",
+          url: "http://localhost:3001/message/agency/" + id,
           headers: {
-            access_token : localStorage.getItem('access_token')
+            access_token: localStorage.getItem("access_token")
           }
-        })
+        });
       }
-      
     },
-    messageDB(context, payload){
-      const role = localStorage.loginAs
-      if(role === 'parent'){
-        axios({
-          method: 'POST',
-          url: 'http://localhost:3001/message/parent/' + payload.id,
+    messageDB(context, payload) {
+      const role = localStorage.loginAs;
+      if (role === "parent") {
+        return axios({
+          method: "POST",
+          url: "http://localhost:3001/message/parent/" + payload.id,
           headers: {
-            access_token : localStorage.getItem('access_token')
+            access_token: localStorage.getItem("access_token")
           },
           data: {
             content: payload.content,
             sender: payload.sender
           }
-        })
-        .then(() => {
-          console.log('Success')
-        })
-        .catch(err => {
-          console.log(err)
-        })
-      } else if(role === 'agency'){
-        axios({
-          method: 'POST',
-          url: 'http://localhost:3001/message/agency/' + payload.id,
+        });
+      } else if (role === "agency") {
+        return axios({
+          method: "POST",
+          url: "http://localhost:3001/message/agency/" + payload.id,
           headers: {
-            access_token : localStorage.getItem('access_token')
+            access_token: localStorage.getItem("access_token")
           },
           data: {
             content: payload.content,
             sender: payload.sender
           }
-        })
-        .then(() => {
-          console.log('Success')
-        })
-        .catch(err => {
-          console.log(err)
-        })
+        });
       }
     },
     get_nannies(context, payload) {
@@ -156,7 +143,7 @@ export default new Vuex.Store({
         title: "Fetching Nannies Data",
         showConfirmButton: false,
         onOpen: () => {
-          swal.showLoading();
+          Swal.showLoading();
         }
       });
       axios({
@@ -164,8 +151,8 @@ export default new Vuex.Store({
         url: `${context.state.url}/nanny`
       })
         .then(response => {
+          console.log(response);
           const datas = response.data;
-          console.log(datas);
           context.commit("set_nannies", datas);
           Swal.fire({
             icon: "success",
@@ -192,7 +179,7 @@ export default new Vuex.Store({
         title: "Fetching Agencies Data",
         showConfirmButton: false,
         onOpen: () => {
-          swal.showLoading();
+          Swal.showLoading();
         }
       });
       axios({
@@ -515,6 +502,36 @@ export default new Vuex.Store({
           }
           console.log(error.config);
         });
+    },
+    update_statusRead(context, payload) {
+      let url = "";
+      if (localStorage.loginAs == "agency") {
+        url = `http://localhost:3001/message/read/agency/${payload}`;
+      } else {
+        url = `http://localhost:3001/message/read/parent/${payload}`;
+      }
+      axios({
+        method: "put",
+        url: url,
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log("Error", error.message);
+          }
+          console.log(error.config);
+        });
     }
   }
-})
+});

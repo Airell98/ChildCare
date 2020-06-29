@@ -1,4 +1,3 @@
-
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
@@ -8,7 +7,7 @@ import About from "../views/About";
 import Register from "../views/Register";
 import Login from "../views/Login";
 import NannyDetail from "../views/NannyDetail";
-import Chat from '../views/ChatBox.vue';
+import Chat from "../views/ChatBox.vue";
 
 Vue.use(VueRouter);
 
@@ -38,8 +37,8 @@ const routes = [
     component: About
   },
   {
-    path: '/chat/:id',
-    name: 'Chat',
+    path: "/chat/:id",
+    name: "Chat",
     component: Chat
   },
   {

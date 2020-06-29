@@ -2,6 +2,7 @@
   <div
     style="background-color: #fffbfa; width:100%; margin:auto; display:flex; justify-content: center;"
   >
+    <Navbar></Navbar>
     <div id="roomKeyWindow" style="flex: 2">
       <h3>
         PARTNER ID
@@ -107,24 +108,27 @@
 <script>
 import io from "socket.io-client";
 import Swal from "sweetalert2";
+import Navbar from "../components/Navbar";
 // const serverUrl = "https://websocket-joey.herokuapp.com";
-const serverUrl = "http://localhost:3001"
+const serverUrl = "http://localhost:3001";
 const socket = io(serverUrl, {
   path: "/chat"
 });
 var peer = new Peer();
 export default {
   name: "ChatBox",
-  components: {},
+  components: {
+    Navbar
+  },
   created() {
-    if (localStorage.getItem('reloaded')) {
-      localStorage.removeItem('reloaded');
+    if (localStorage.getItem("reloaded")) {
+      localStorage.removeItem("reloaded");
     } else {
-      localStorage.setItem('reloaded', '1');
+      localStorage.setItem("reloaded", "1");
       location.reload();
     }
     this.test();
-    socket.emit('join-room', localStorage.getItem('roomKey'))
+    socket.emit("join-room", localStorage.getItem("roomKey"));
     this.startVideo();
     socket.on("sendMessage", msg => {
       let pesan = {
@@ -132,6 +136,7 @@ export default {
         sender: msg.sender
       };
       this.messages.push(pesan);
+      this.$store.dispatch("update_statusRead", this.$route.params.id);
     });
     socket.on("receive peerId", data => {
       this.partnerId = data.peerId;
@@ -157,7 +162,10 @@ export default {
             });
           });
         } else {
-          socket.emit("reject phone call", {msg: "phone rejected", roomKey: localStorage.getItem('roomKey')});
+          socket.emit("reject phone call", {
+            msg: "phone rejected",
+            roomKey: localStorage.getItem("roomKey")
+          });
         }
       });
     });
@@ -182,19 +190,20 @@ export default {
         el.enabled = false;
       });
     });
-    peer.on('connection', () => {
-      console.log('Other already connected')
-    })
-    peer.on('error', () => {
+    peer.on("connection", () => {
+      console.log("Other already connected");
+    });
+    peer.on("error", () => {
       // alert('Connection problem')
-    })
-    this.$store.dispatch('getAllMsg', this.$route.params.id)
-    .then(resp => {
-      this.messages = resp.data
-    })
-    .catch(err => {
-      console.log(err)
-    })
+    });
+    this.$store
+      .dispatch("getAllMsg", this.$route.params.id)
+      .then(resp => {
+        this.messages = resp.data;
+      })
+      .catch(err => {
+        console.log(err);
+      });
   },
   data() {
     return {
@@ -210,8 +219,8 @@ export default {
     };
   },
   computed: {
-    role(){
-      return localStorage.getItem('role')
+    role() {
+      return localStorage.loginAs;
     }
   },
   methods: {
@@ -262,8 +271,11 @@ export default {
       window.localstream.getTracks().forEach(el => {
         el.enabled = false;
       });
-      socket.emit("end call", {msg: "close", roomKey: localStorage.getItem('roomKey')});
-      this.startVideo()
+      socket.emit("end call", {
+        msg: "close",
+        roomKey: localStorage.getItem("roomKey")
+      });
+      this.startVideo();
     },
     unmute() {
       window.localstream.getAudioTracks()[0].enabled = true;
@@ -290,11 +302,30 @@ export default {
       let pesan = {
         content: this.inputMessage,
         sender: this.role,
-        roomKey: localStorage.getItem('roomKey')
+        roomKey: localStorage.getItem("roomKey")
       };
       this.messages.push(pesan);
-      socket.emit("sendMessage", pesan);
-      this.$store.dispatch('messageDB', {content: this.inputMessage, sender: this.role, id: this.$route.params.id})
+      this.$store
+        .dispatch("messageDB", {
+          content: this.inputMessage,
+          sender: this.role,
+          id: this.$route.params.id
+        })
+        .then(() => {
+          socket.emit("sendMessage", pesan);
+        })
+        .catch(error => {
+          if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log("Error", error.message);
+          }
+          console.log(error.config);
+        });
       this.inputMessage = "";
     },
     getLVideo(callbacks) {
@@ -309,7 +340,7 @@ export default {
       navigator.getUserMedia(constraints, callbacks.success, callbacks.error);
     },
     test() {
-      peer.on("open", (peer) => {
+      peer.on("open", peer => {
         console.log("Connected >>>", peer);
         this.peerId = peer;
       });
@@ -318,11 +349,11 @@ export default {
       console.log("masuk sendPeerId", this.peerId);
       let data = {
         peerId: this.peerId,
-        roomKey: localStorage.getItem('roomKey')
+        roomKey: localStorage.getItem("roomKey")
       };
       socket.emit("receive peerId", data);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -351,16 +382,17 @@ li div {
   width: 50%;
   padding: 20px;
 }
-.list-group{
+.list-group {
   list-style: none;
 }
-#roomKeyWindow{
+#roomKeyWindow {
+  transform: translateY(10rem);
   display: flex;
   flex-direction: column;
   padding: 10px;
   justify-content: center;
 }
-#chatWindow{
+#chatWindow {
   padding-right: 5px;
   margin-left: 5px;
 }
