@@ -1,125 +1,162 @@
 <template>
-  <div>
-    <NavBar> </NavBar>
   <div class="container-profile">
-    <!-- <div class="container-searchbox"></div> -->
-    <div class="container-content">
-      <div class="container-content-navigation">
-        <button> &#8592; Sebelumnya </button>
-        <button> Berikutnya 	&#8594; </button>
-      </div>
-      <div class="container-content-brief">
-        <div class="container-content-brief-card">
-          <div class="container-content-brief-card-name">
-            <div>{{dataNanny.name}}</div>
-          </div>
-          <div class="container-content-brief-card-photo">
-            <div class="container-content-brief-card-photo-box">
-              <img :src="dataNanny.imageUrl" />
-            </div>
-          </div>
-        </div>
-        <div class="container-content-brief-detail">
-          <div class="container-content-brief-detail-title">Profile</div>
-
-          <div class="container-content-brief-detail-0">
-            <div class="container-content-brief-detail-1">Umur</div>
-            <div class="container-content-brief-detail-2">{{age}}</div>
-          </div>
-          <div class="container-content-brief-detail-0">
-            <div class="container-content-brief-detail-1">Jenis Kelamin</div>
-            <div class="container-content-brief-detail-2">{{dataNanny.gender}}</div>
-          </div>
-          <div class="container-content-brief-detail-0">
-            <div class="container-content-brief-detail-1">Daerah</div>
-            <div class="container-content-brief-detail-2">{{dataNanny.city}}</div>
-          </div>
-          <!-- <div class="container-content-brief-detail-0">
-            <div class="container-content-brief-detail-1">Agency</div>
-            <div class="container-content-brief-detail-2"></div>
-          </div>-->
-          <div class="container-content-brief-detail-0">
-            <div class="container-content-brief-detail-1">Gaji Diharapkan</div>
-            <div class="container-content-brief-detail-2">Rp. {{dataNanny.expectedSalary}}</div>
-          </div>
-        </div>
-      </div>
-      <div class="container-content-detail">
-        <div class="container-content-detail-0">
-          <div class="container-content-detail-1">
-            <button @click.prevent="onClickDetail">Detail</button>
-          </div>
-          <div class="container-content-detail-2">
-            <button @click.prevent="onClickKeterampilan">Keterampilan</button>
-          </div>
-          <div class="container-content-detail-3">
-            <button @click.prevent="onClickAgency">Agency</button>
-          </div>
-        </div>
-        <div class="container-content-detail-detailed" v-if="detailStats">ini detail</div>
-        <div class="container-content-detail-detailed" v-if="keterampilanStats">ini keterampilan</div>
-        <div class="container-content-detail-detailed" v-if="agencyStats">
-          <div>ini agency card</div>
-        </div>
-      </div>
+    <div class='container-searchbox'> 
+        
+    
     </div>
-  </div>
+    <div class='container-content'> 
+        <div class='container-content-navigation'>
+          
+            <button> &#8592; Sebelumnya </button>
+            <button> Berikutnya 	&#8594; </button>
+        </div>
+        <div class='container-content-brief'> 
+            <div class='container-content-brief-card'> 
+                <div class= 'container-content-brief-card-name'>  
+                    
+                    <div> Sizuka </div>
+                  
+                </div>
+                <div class='container-content-brief-card-photo'>
+                    <div class='container-content-brief-card-photo-box'>
+                        <img>
+                    </div>
+                </div>
+            </div>
+            <div class='container-content-brief-detail'> 
+                <div class='container-content-brief-detail-title'> Profile</div>
+
+                <div class='container-content-brief-detail-0'>
+                    <div class='container-content-brief-detail-1'>
+                        umur
+                    </div>
+                    <div class='container-content-brief-detail-2'>
+                        1
+                    </div>
+                </div>
+                <div class='container-content-brief-detail-0'>
+                    <div class='container-content-brief-detail-1'>
+                        Jenis Kelamin
+                    </div>
+                    <div class='container-content-brief-detail-2'>
+                        HOW DARE U PRESUME MY GENDER?!
+                    </div>
+                </div>
+                <div class='container-content-brief-detail-0'>
+                    <div class='container-content-brief-detail-1'>
+                        Daerah
+                    </div>
+                    <div class='container-content-brief-detail-2'>
+                        3
+                    </div>
+                </div>
+                <div class='container-content-brief-detail-0'> 
+                    <div class='container-content-brief-detail-1'>
+                        Agency
+                    </div>
+                    <div class='container-content-brief-detail-2'>
+                        4
+                    </div>
+                </div>
+                <div class='container-content-brief-detail-0'>
+                    <div class='container-content-brief-detail-1'>
+                        Gaji Yang Diharapkan
+                    </div>
+                    <div class='container-content-brief-detail-2'>
+                        5
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class='container-content-detail'> 
+            <div class='container-content-detail-0'>
+                <div class='container-content-detail-1'> <button @click.prevent='onClickDetail'> Detail </button> 
+    
+                </div>
+                <div class='container-content-detail-2'> <button @click.prevent='onClickKeterampilan'> Keterampilan </button> 
+                
+                </div>
+                <div class='container-content-detail-3'> <button @click.prevent='onClickAgency'> Agency </button> 
+                
+                </div>
+            </div>
+            <div class='container-content-detail-detailed' v-if='detailStats'> 
+                <ChildCard> 
+                  
+                </ChildCard>
+                <ChildCard> 
+
+                </ChildCard>
+                <ChildCard> 
+
+                </ChildCard>
+            </div>
+            <div class='container-content-detail-detailed' v-if='keterampilanStats'> 
+                ini keterampilan
+            </div>
+            <div class='container-content-detail-detailed' v-if='agencyStats'>
+                <div>
+                    ini agency card
+                </div>
+            </div>
+        </div>
+    </div>
   </div>
 </template>
 
 <script>
-import Vuex from "vuex";
-import NavBar from '../components/Navbar'
+import Vuex from 'vuex'
+import ChildCard from '../components/ChildCard.vue'
+
+
+
 
 export default {
-  name: "NannyDetail",
-  props: ["id"],
-  data() {
-    return {
-      detailStats: "yes",
-      keterampilanStats: "",
-      agencyStats: ""
-    };
-  },
-  components:{
-    NavBar
-  },
-  created() {
-    this.$store.dispatch("get_nanny", this.id);
-  },
-  computed: {
-    dataNanny() {
-      return this.$store.state.nannyDetail;
+    name : 'ShowDetailNanny',
+    data(){
+        return{
+            detailStats:'yes',
+            keterampilanStats:'',
+            agencyStats:'',
+            nannyId:''
+
+        };
     },
-    age() {
-      return 2020 - parseInt(this.dataNanny.birthDate.slice(0, 5));
+    components:{
+      ChildCard
+
+    },
+    methods:{
+        onClickDetail(){
+            this.detailStats = 'yes'
+            this.keterampilanStats = ''
+            this.agencyStats = ''
+        },
+        onClickKeterampilan(){
+            this.detailStats = ''
+            this.keterampilanStats = 'yes'
+            this.agencyStats = ''
+        },
+        onClickAgency(){
+            this.detailStats = ''
+            this.keterampilanStats = ''
+            this.agencyStats = 'yes'
+        },
+    },
+    computed:{
+
+    },
+    created(){
+      console.log(this.$route.params)
     }
-  },
-  methods: {
-    onClickDetail() {
-      this.detailStats = "yes";
-      this.keterampilanStats = "";
-      this.agencyStats = "";
-    },
-    onClickKeterampilan() {
-      this.detailStats = "";
-      this.keterampilanStats = "yes";
-      this.agencyStats = "";
-    },
-    onClickAgency() {
-      this.detailStats = "";
-      this.keterampilanStats = "";
-      this.agencyStats = "yes";
-    }
-  }
-};
+}
 </script>
 
 <style scoped>
 
 .container-profile{
   /* background-color: green; */
-  transform: translateY(6rem);
+  
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -153,7 +190,7 @@ export default {
   /* padding:1em; */
   width: 1100px;
   /* height: 1500px; */
-  margin:auto;
+  margin-left:50px;
 }
 
 .container-content-navigation{
