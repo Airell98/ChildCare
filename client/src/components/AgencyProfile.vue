@@ -40,11 +40,13 @@ export default {
   flex-direction: column;
   padding: 1rem;
 }
-img {
-  width: 14rem;
-}
 .image {
-  margin: 0.5rem auto;
+  margin: auto;
+  width: 80%;
+}
+img {
+  width: 100%;
+  border-radius: 1rem;
 }
 .name {
   font-size: 2rem;

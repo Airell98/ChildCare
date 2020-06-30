@@ -1,15 +1,17 @@
 <template>
   <div class="data-box">
+    <div class="name">{{parent.name.toUpperCase()}}</div>
+    <div class="image">
+      <img :src="parent.imageUrl || defaultProfile" />
+    </div>
     <div class="data-container">
       <div class="label">
-        <p class="text">Name</p>
         <p class="text">Age</p>
         <p class="text">Gender</p>
         <p class="text">City</p>
         <p class="text">Phone</p>
       </div>
       <div class="data">
-        <p class="text">{{parent.name}}</p>
         <p class="text">{{age}}</p>
         <p class="text">{{parent.gender}}</p>
         <p class="text">{{parent.city}}</p>
@@ -26,6 +28,13 @@ export default {
   computed: {
     age() {
       return 2020 - parseInt(this.parent.birthDate.slice(0, 5));
+    },
+    defaultProfile() {
+      if (this.parent.gender === "male") {
+        return "https://logicplus.com.au/wp-content/uploads/2017/07/default-profile-img-male.jpg";
+      } else {
+        return "https://images.assetsdelivery.com/compings_v2/photoplotnikov/photoplotnikov1703/photoplotnikov170300047.jpg";
+      }
     }
   }
 };
@@ -47,6 +56,12 @@ export default {
 img {
   width: 100%;
   border-radius: 1rem;
+}
+.name {
+  font-size: 2rem;
+  font-weight: 600;
+  color: darkslategray;
+  text-align: center;
 }
 .data-container {
   display: flex;

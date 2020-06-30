@@ -1,7 +1,7 @@
 <template>
   <div class="card" @click.prevent="gotoDetail">
-    <div class="card-img" v-if="entityName === 'nanny'">
-      <img :src="data.imageUrl" />
+    <div class="card-img">
+      <img :src="data.imageUrl || defaultProfile" />
     </div>
     <div class="card-body">
       <div class="name">{{ `${data.name} (${age})` }}</div>
@@ -20,6 +20,13 @@ export default {
     age() {
       console.log(this.entityName);
       return 2020 - parseInt(this.data.birthDate.slice(0, 5));
+    },
+    defaultProfile() {
+      if (this.data.gender === "male") {
+        return "https://logicplus.com.au/wp-content/uploads/2017/07/default-profile-img-male.jpg";
+      } else {
+        return "https://images.assetsdelivery.com/compings_v2/photoplotnikov/photoplotnikov1703/photoplotnikov170300047.jpg";
+      }
     }
   },
   methods: {

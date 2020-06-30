@@ -28,7 +28,7 @@
           <b-form-input type="text" v-model="name" />
           <br />
           <h6>Gender</h6>
-          <b-form-input type="text" v-model="gender" />
+          <b-form-select v-model="gender" :options="genders"></b-form-select>
           <br />
           <h6>Phone Number</h6>
           <b-form-input type="text" v-model="phoneNumber" />
@@ -60,13 +60,18 @@ export default {
       access_id: "",
 
       name: "",
-      gender: "",
+      gender: null,
       phoneNumber: "",
       birthDate: "",
       address: "",
       expectedSalary: 1000000,
       image_url: "",
       city: "",
+      genders: [
+        { value: null, text: "Please select gender" },
+        { value: "female", text: "Female" },
+        { value: "name", text: "Male" }
+      ],
 
       modalShow: false,
       headerBgVariant: "info",

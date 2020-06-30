@@ -16,6 +16,7 @@ export default {
   },
   created() {
     this.$store.dispatch("getAllCorrespondingMsg");
+    this.$store.dispatch("get_agencies");
   },
   computed: {
     messageStore() {
