@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <LoginHome></LoginHome>
     <Navbar></Navbar>
     <div class="body">
       <FilterBox @passFilteredNannies="fillNanniesValue"></FilterBox>
@@ -22,6 +23,7 @@
 import Navbar from "../components/Navbar";
 import FilterBox from "../components/Filter";
 import Card from "../components/Card";
+import LoginHome from "../components/loginHome";
 export default {
   name: "Home",
   data() {
@@ -32,7 +34,8 @@ export default {
   components: {
     Navbar,
     FilterBox,
-    Card
+    Card,
+    LoginHome
   },
   created() {
     this.$store.dispatch("get_nannies");
@@ -40,6 +43,7 @@ export default {
   },
   computed: {
     allNannies() {
+      console.log(window.screenY, window.screen.height);
       return this.$store.state.nannies;
     }
   },
@@ -52,9 +56,6 @@ export default {
 </script>
 
 <style scoped>
-.home {
-  min-height: 100vh;
-}
 .body {
   /* background: url("https://image.freepik.com/free-photo/woman-children-sitting-floor_23-2147663975.jpg");
   background-position: center center;
@@ -64,7 +65,7 @@ export default {
   background-color: #dfdddd; */
   display: grid;
   grid-template-columns: 1fr 3fr;
-  transform: translateY(5rem);
+  transform: translateY(4rem);
 }
 h2 {
   text-align: center;
@@ -77,7 +78,7 @@ h2 {
   grid-template-columns: repeat(3, 1fr);
 }
 .right {
-  min-height: 100vh;
+  min-height: 90vh;
   overflow-y: scroll;
 }
 .right::-webkit-scrollbar {

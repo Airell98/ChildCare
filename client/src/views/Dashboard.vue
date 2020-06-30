@@ -179,7 +179,6 @@ export default {
   background-color: #dfdddd; */
   display: grid;
   grid-template-columns: 2fr 5fr;
-  transform: translateY(5rem);
 }
 .title {
   color: darkslategray;

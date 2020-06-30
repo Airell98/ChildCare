@@ -1,5 +1,5 @@
 <template>
-  <b-navbar fixed="top" id="navbar">
+  <b-navbar fixed="top" sticky="true" id="navbar" style="transition: ease 400ms;">
     <b-navbar-brand id="logo" @click.prevent="gotoHome">
       <img src="../assets/childCare.png" />
       <p id="textLogo">

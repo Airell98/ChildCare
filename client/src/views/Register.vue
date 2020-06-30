@@ -196,15 +196,6 @@ export default {
 </script>
 
 <style>
-body {
-  background: url("https://image.freepik.com/free-photo/woman-children-sitting-floor_23-2147663975.jpg");
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  background-color: #dfdddd;
-}
-
 .form-signin {
   max-width: 580px;
   padding: 15px 35px 45px;
