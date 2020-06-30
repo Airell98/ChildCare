@@ -42,7 +42,12 @@
             <div class="container-content-brief-detail-1">Gaji Diharapkan</div>
             <div class="container-content-brief-detail-2">Rp. {{dataNanny.expectedSalary}}</div>
           </div>
+          <div class="container-content-brief-detail-button">
+
+            <button> + Wish List </button>
+          </div>
         </div>
+      
       </div>
       <div class="container-content-detail">
         <div class="container-content-detail-0">
@@ -56,7 +61,9 @@
             <button @click.prevent="onClickAgency">Agency</button>
           </div>
         </div>
-        <div class="container-content-detail-detailed" v-if="detailStats">ini detail</div>
+        <div class="container-content-detail-detailed" v-if="detailStats"> 
+          <ChildCard></ChildCard>
+          </div>
         <div class="container-content-detail-detailed" v-if="keterampilanStats">ini keterampilan</div>
         <div class="container-content-detail-detailed" v-if="agencyStats">
           <div>ini agency card</div>
@@ -70,6 +77,7 @@
 <script>
 import Vuex from "vuex";
 import NavBar from '../components/Navbar'
+import ChildCard from '../components/ChildCard'
 
 export default {
   name: "NannyDetail",
@@ -82,7 +90,8 @@ export default {
     };
   },
   components:{
-    NavBar
+    NavBar,
+    ChildCard
   },
   created() {
     this.$store.dispatch("get_nanny", this.id);
@@ -169,6 +178,9 @@ export default {
   width: 1100px;
   height: 60px;
   justify-content: space-around;
+  margin-bottom: 15px;
+
+  opacity: 80%;
 }
 
 .container-content-brief{
@@ -195,6 +207,7 @@ export default {
   width: 500px;
   height: 640px;
 }
+
 
 .container-content-brief-card-name{
   background-color: rgb(235, 231, 231);
@@ -269,9 +282,20 @@ export default {
   align-items: flex-start;
   flex-direction: row;
   flex-wrap: wrap;
-  /* padding:1em; */
+  
   width: 550px;
-  /* height: 40px; */
+}
+
+.container-content-brief-detail-button{
+  margin-top: 10%;
+
+  display:flex;
+  align-items: flex-end;
+  /* justify-content: space-between; */
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  
+  width: 550px;
 }
 
 .container-content-brief-detail-1{
@@ -399,6 +423,8 @@ button {
   background-size: 100% 100%;
   box-shadow: 0 0 0 7px var(--light) inset;
   margin-bottom: 15px;
+
+  opacity: 110%;
 }
 
 </style>
