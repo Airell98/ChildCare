@@ -274,7 +274,7 @@ export default {
     },
     unmute() {
       var videoUnMute = this.$refs.rVideo;
-      videoUnMute.volume = 0.0;
+      videoUnMute.volume = 1.0;
     },
     mute() {
       var videoMute = this.$refs.rVideo;
