@@ -220,7 +220,7 @@ class EmailingController {
 
   static agencyRefuseProposal(req, res, next) {
     console.log("refuse", req.body);
-    const { nannyId, agencyId } = req.body;
+    const { nannyId, agencyId, parentId } = req.body;
     let agencyName,
       agencyEmail,
       agencyAddress,

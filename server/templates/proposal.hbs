@@ -32,6 +32,7 @@
   </form>
 
   <form action="http://localhost:3001/emailing/agency/refuse" method="POST">
+    <input type="hidden" id="parentId" name="parentId" value="{{parentId}}">
     <input type="hidden" id="nannyId" name="nannyId" value="{{nannyId}}">
     <input type="hidden" id="agencyId" name="agencyId" value="{{agencyId}}">
     <input type="submit" value="NO">
