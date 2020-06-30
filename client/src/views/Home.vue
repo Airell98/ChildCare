@@ -9,7 +9,8 @@
           <Card
             v-for="nanny in nannies || allNannies"
             :key="nanny.id"
-            :nanny="nanny"
+            :data="nanny"
+            :entityName="'nanny'"
           ></Card>
         </div>
       </div>

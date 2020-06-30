@@ -214,7 +214,7 @@ export default new Vuex.Store({
         title: "Fetching Children Data",
         showConfirmButton: false,
         onOpen: () => {
-          swal.showLoading();
+          Swal.showLoading();
         }
       });
       axios({
@@ -223,6 +223,7 @@ export default new Vuex.Store({
       })
         .then(response => {
           const datas = response.data;
+          console.log(datas);
           context.commit("set_children", datas);
           Swal.fire({
             icon: "success",

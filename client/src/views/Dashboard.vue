@@ -31,7 +31,7 @@
         <div class="title" v-if="user === 'parent'">Children List</div>
         <div class="title" v-if="user === 'agency'">Nanny List</div>
         <div class="card-container">
-          <Card v-for="nanny in cardDatas" :key="nanny.id" :nanny="nanny"></Card>
+          <Card v-for="nanny in cardDatas" :key="nanny.id" :data="nanny" :entityName="entityName"></Card>
         </div>
       </div>
     </div>
@@ -63,6 +63,11 @@ export default {
     AddNannyModal,
     AddChildModal
   },
+  data() {
+    return {
+      entityName: null
+    };
+  },
   props: ["user", "id"],
   created() {
     this.$store.dispatch("getAllCorrespondingMsg");
@@ -73,18 +78,24 @@ export default {
         this.id == this.userLocal.id
           ? this.$store.commit("set_agency", this.userLocal)
           : null;
+        this.entityName = "nanny";
       } else {
         this.$store.dispatch("get_parentById", this.id);
+        this.$store.dispatch("get_children");
+        this.entityName = "child";
       }
     }
     if (localStorage.loginAs == "parent") {
       if (this.user === "agency") {
         this.$store.dispatch("get_agencyById", this.id);
+        this.entityName = "nanny";
       } else {
         this.$store.dispatch("get_parentById", this.id);
         this.id == this.userLocal.id
           ? this.$store.commit("set_parent", this.userLocal)
           : null;
+        this.$store.dispatch("get_children");
+        this.entityName = "child";
       }
     }
     const user = JSON.parse(localStorage.user);
@@ -114,6 +125,10 @@ export default {
     cardDatas() {
       if (this.user == "agency" && this.id == this.userLocal.id) {
         return this.$store.state.nannyByAgency;
+      } else if (this.user == "parent" && this.id == this.userLocal.id) {
+        return this.$store.state.children.filter(child => {
+          return child.ParentId == this.id;
+        });
       }
     }
   },

@@ -61,14 +61,14 @@ export default {
   },
   methods: {
     confirmToCart() {
-      const nannyData = {
+      const childData = {
         name: this.name,
         gender: this.gender,
         phoneNumber: this.phoneNumber,
         birthDate: this.birthDate,
         condition: this.condition
       };
-      this.$store.dispatch("add_nanny", nannyData);
+      this.$store.dispatch("add_child", childData);
       this.modalShow = false;
     }
   }
