@@ -8,6 +8,8 @@ const { authorizationAgency } = require("../middlewares/authorization");
 
 router.post("/register", NannyController.registerNanny);
 router.get("/", NannyController.getAllNannies);
+router.get("/kanan/:id", NannyController.getAllNanniesToTheRight);
+router.get("/kiri/:id", NannyController.getAllNanniesToTheLeft);
 router.get(
   "/showAssociateNanny",
   authenticationAgency,

@@ -174,6 +174,30 @@ export default new Vuex.Store({
           console.log(error.config);
         });
     },
+    slideNannyCardToTheRight(context,payload){
+      axios({
+        method: "get",
+        url: `${context.state.url}/nanny/kanan/${payload}`
+      })
+      .then((response)=>{
+        context.commit("set_nannyDetail", response.data.nanny);
+        router.push(`/nanny/${response.data.nanny.id}`)
+      }).catch(err=>{
+        Swal.fire(err)
+      })
+    },
+    slideNannyCardToTheLeft(context,payload){
+      axios({
+        method: "get",
+        url: `${context.state.url}/nanny/kiri/${payload}`
+      })
+      .then((response)=>{
+        context.commit("set_nannyDetail", response.data.nanny);
+        router.push(`/nanny/${response.data.nanny.id}`)
+      }).catch(err=>{
+        Swal.fire(err)
+      })
+    },
     get_agencies(context, payload) {
       Swal.fire({
         title: "Fetching Agencies Data",
