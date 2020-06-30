@@ -61,7 +61,7 @@ class EmailingController {
 
         var mailOptions = {
           from: "supernanny.business@gmail.com",
-          to: "fadhlanfariz95@gmail.com",
+          to: agencyEmail,
           subject: "Super Nanny - Someone wants to hire your nanny!",
           template: `proposal`,
           context: {
@@ -106,7 +106,19 @@ class EmailingController {
       nannyBirthDate,
       nannyGender,
       nannyImageUrl,
-      nannyName;
+      nannyName,
+      parentEmail;
+
+    Parent.findOne({
+      where: { id: parentId },
+    })
+      .then((parent) => {
+        parentEmail = parent.dataValues.email;
+      })
+      .catch((err) => {
+        console.log(err);
+        next(err);
+      });
 
     Nanny.update(
       { ParentId: parentId, availability: false },
@@ -172,7 +184,7 @@ class EmailingController {
 
         var mailOptions = {
           from: "supernanny.business@gmail.com",
-          to: "fadhlan@outlook.co.id",
+          to: parentEmail,
           subject:
             "Super Nanny - Agency has accepted your nanny hiring proposal!",
           template: `acceptance`,
@@ -218,7 +230,19 @@ class EmailingController {
       nannyBirthDate,
       nannyGender,
       nannyImageUrl,
-      nannyName;
+      nannyName,
+      parentEmail;
+
+    Parent.findOne({
+      where: { id: parentId },
+    })
+      .then((parent) => {
+        parentEmail = parent.dataValues.email;
+      })
+      .catch((err) => {
+        console.log(err);
+        next(err);
+      });
 
     Nanny.findOne({
       where: { id: nannyId },
@@ -272,7 +296,7 @@ class EmailingController {
 
         var mailOptions = {
           from: "supernanny.business@gmail.com",
-          to: "fadhlan@outlook.co.id",
+          to: parentEmail,
           subject:
             "Super Nanny - Agency has refused your nanny hiring proposal",
           template: `refusal`,
