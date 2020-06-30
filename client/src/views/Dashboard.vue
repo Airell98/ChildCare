@@ -167,15 +167,13 @@ export default {
 </script>
 
 <style scoped>
+.home {
+  min-height: 100vh;
+}
 .body {
-  /* background: url("https://image.freepik.com/free-photo/woman-children-sitting-floor_23-2147663975.jpg");
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  background-color: #dfdddd; */
   display: grid;
   grid-template-columns: 2fr 5fr;
+  transform: translateY(4rem);
 }
 .title {
   color: darkslategray;
@@ -189,6 +187,7 @@ export default {
   text-align: center;
 }
 .card-container {
+  margin-top: 35px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 }

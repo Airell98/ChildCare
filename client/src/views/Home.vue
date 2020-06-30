@@ -60,12 +60,6 @@ export default {
 
 <style scoped>
 .body {
-  /* background: url("https://image.freepik.com/free-photo/woman-children-sitting-floor_23-2147663975.jpg");
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  background-color: #dfdddd; */
   display: grid;
   grid-template-columns: 1fr 3fr;
   transform: translateY(4rem);
@@ -77,11 +71,12 @@ h2 {
   padding-top: 1rem;
 }
 .card-container {
+  margin-top:35px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 }
 .right {
-  min-height: 90vh;
+  min-height: 100vh;
   overflow-y: scroll;
 }
 .right::-webkit-scrollbar {

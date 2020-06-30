@@ -42,6 +42,7 @@ export default new Vuex.Store({
     },
     set_nannyDetail(state, payload) {
       state.nannyDetail = payload;
+      console.log(payload)
     },
     set_childDetail(state, payload) {
       state.childDetail = payload;
@@ -246,6 +247,7 @@ export default new Vuex.Store({
         });
     },
     get_nanny(context, payload) {
+      console.log('masuk get nanny')
       axios({
         method: "get",
         url: `${context.state.url}/nanny/${payload}`
@@ -253,6 +255,7 @@ export default new Vuex.Store({
         .then(response => {
           const { data } = response;
           context.commit("set_nannyDetail", data);
+          console.log(data)
         })
         .catch(error => {
           if (error.response) {
@@ -433,6 +436,22 @@ export default new Vuex.Store({
           }
           console.log(error.config);
         });
+    },
+    addToWishList(context,payload){
+      axios({
+        method: "put",
+        url: `${context.state.url}/wishlist/${payload}`,
+        headers:{
+          access_token: localStorage.access_token
+        }
+      })
+      .then(response=>{
+        const { data } = response;
+        console.log(data.message)
+      })
+      .catch(error=>{
+        console.log(error)
+      })
     },
     get_parentById(context, payload) {
       axios({

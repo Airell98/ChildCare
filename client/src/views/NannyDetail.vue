@@ -5,13 +5,16 @@
     <!-- <div class="container-searchbox"></div> -->
     <div class="container-content">
       <div class="container-content-navigation">
-        <button> &#8592; Sebelumnya </button>
-        <button> Berikutnya 	&#8594; </button>
+        <button @click='onClickSebelumnya' > &#8592; Sebelumnya </button>
+        <button @click='onClickBerikutnya'> Berikutnya 	&#8594; </button>
       </div>
       <div class="container-content-brief">
         <div class="container-content-brief-card">
           <div class="container-content-brief-card-name">
-            <div>{{dataNanny.name}}</div>
+            <h6>{{dataNanny.name}}</h6>
+            <img 
+            class='img-logo'
+            src="../assets/childCare.png"/>
           </div>
           <div class="container-content-brief-card-photo">
             <div class="container-content-brief-card-photo-box">
@@ -23,26 +26,39 @@
           <div class="container-content-brief-detail-title">Profile</div>
 
           <div class="container-content-brief-detail-0">
-            <div class="container-content-brief-detail-1">Umur</div>
-            <div class="container-content-brief-detail-2">{{age}}</div>
+            <div class="container-content-brief-detail-1"><h5>Umur</h5></div>
+            <div class="container-content-brief-detail-2"><h5>{{age}}</h5></div>
           </div>
           <div class="container-content-brief-detail-0">
-            <div class="container-content-brief-detail-1">Jenis Kelamin</div>
-            <div class="container-content-brief-detail-2">{{dataNanny.gender}}</div>
+            <div class="container-content-brief-detail-1"><h5>Jenis Kelamin</h5></div>
+            <div class="container-content-brief-detail-2"><h5>{{dataNanny.gender}}</h5></div>
           </div>
           <div class="container-content-brief-detail-0">
-            <div class="container-content-brief-detail-1">Daerah</div>
-            <div class="container-content-brief-detail-2">{{dataNanny.city}}</div>
+            <div class="container-content-brief-detail-1"><h5>Daerah</h5></div>
+            <div class="container-content-brief-detail-2"><h5>{{dataNanny.city}}</h5></div>
           </div>
           <!-- <div class="container-content-brief-detail-0">
             <div class="container-content-brief-detail-1">Agency</div>
             <div class="container-content-brief-detail-2"></div>
           </div>-->
           <div class="container-content-brief-detail-0">
-            <div class="container-content-brief-detail-1">Gaji Diharapkan</div>
+            <div class="container-content-brief-detail-1"><h5>Gaji Diharapkan</h5></div>
             <div class="container-content-brief-detail-2">Rp. {{dataNanny.expectedSalary}}</div>
           </div>
+          <div class="container-content-brief-detail-button">
+            <div> 
+            <button @click.prevent='onClickEditInfo' v-if="loginAs=='agency'"> Edit Info </button>
+              <div>
+                <EditNannyModal> </EditNannyModal>
+              </div>
+            <button @click.prevent='onClickWishList' v-if="loginAs=='parent'"> + Wish List </button>
+              <div>
+
+              </div>
+            </div>
+          </div>
         </div>
+      
       </div>
       <div class="container-content-detail">
         <div class="container-content-detail-0">
@@ -56,7 +72,9 @@
             <button @click.prevent="onClickAgency">Agency</button>
           </div>
         </div>
-        <div class="container-content-detail-detailed" v-if="detailStats">ini detail</div>
+        <div class="container-content-detail-detailed" v-if="detailStats"> 
+          <ChildCard></ChildCard>
+          </div>
         <div class="container-content-detail-detailed" v-if="keterampilanStats">ini keterampilan</div>
         <div class="container-content-detail-detailed" v-if="agencyStats">
           <div>ini agency card</div>
@@ -70,6 +88,8 @@
 <script>
 import Vuex from "vuex";
 import NavBar from '../components/Navbar'
+import ChildCard from '../components/ChildCard'
+import EditNannyModal from '../components/EditNannyModal'
 
 export default {
   name: "NannyDetail",
@@ -82,7 +102,9 @@ export default {
     };
   },
   components:{
-    NavBar
+    NavBar,
+    ChildCard,
+    EditNannyModal
   },
   created() {
     this.$store.dispatch("get_nanny", this.id);
@@ -93,6 +115,9 @@ export default {
     },
     age() {
       return 2020 - parseInt(this.dataNanny.birthDate.slice(0, 5));
+    },
+     loginAs(){
+      return localStorage.loginAs
     }
   },
   methods: {
@@ -110,12 +135,39 @@ export default {
       this.detailStats = "";
       this.keterampilanStats = "";
       this.agencyStats = "yes";
+    },
+    onClickWishList(){
+      this.$store.dispatch('addToWishList',this.id)
+    },
+    onClickEditInfo(){
+      this.$bvModal.show("modalEditNanny");
+    },
+    onClickSebelumnya(){
+      this.$router.push({ name: "NannyDetail", params: { id: Number(this.id)-1 } });
+      window.location.reload()
+    },
+    onClickBerikutnya(){
+      this.$router.push({ name: "NannyDetail", params: { id: Number(this.id)+1 } });
+      window.location.reload()
     }
+  },
+  mounted(){
+    console.log(this.dataNanny)
   }
 };
 </script>
 
 <style scoped>
+
+h6{
+  font-family: 'Courier New', Courier, monospace;
+  font-size:45px;
+}
+
+h5{
+  font-family: 'Courier New', Courier, monospace;
+  font-size:15px;
+}
 
 .container-profile{
   /* background-color: green; */
@@ -157,9 +209,7 @@ export default {
 }
 
 .container-content-navigation{
-
-  background-color: rgb(202, 202, 202);
-
+padding-top: 5px;
   display:flex;
   align-items: center;
   flex-direction: row;
@@ -169,6 +219,9 @@ export default {
   width: 1100px;
   height: 60px;
   justify-content: space-around;
+  margin-bottom: 15px;
+
+  opacity: 80%;
 }
 
 .container-content-brief{
@@ -188,13 +241,14 @@ export default {
   /* background-color: rgb(131, 223, 112); */
 
   display:flex;
-  align-items: center;
+  align-items: center;padding-top: 5px;
   flex-direction: column;
   flex-wrap: wrap;
   /* padding:1em; */
   width: 500px;
   height: 640px;
 }
+
 
 .container-content-brief-card-name{
   background-color: rgb(235, 231, 231);
@@ -203,25 +257,40 @@ export default {
   align-items: center;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content:space-between;
+  padding-right:15px;
+
   /* padding:1em; */
   width: 500px;
   height: 60px;
 
 }
 
+.img-logo{
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+}
+
+img{
+  border-radius: 50%;
+}
+
 .container-content-brief-card-photo{
   /* background-color: rgb(42, 78, 35); */
   display:flex;
-  align-items: center;
+  align-items: center;padding-top: 5px;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
   width: 500px;
-  height: 580px;
+  height: 500px;
+
 }
 
 .container-content-brief-card-photo-box{
-  background-color: rgb(233, 240, 231);
+  /* background-color: rgb(233, 240, 231); */
   padding: 15px;
 
   display:flex;
@@ -230,7 +299,7 @@ export default {
   flex-wrap: wrap;
   /* padding:1em; */
   width: 450px;
-  height: 550px;
+  height: 500px;
 }
 
 .container-content-brief-detail{
@@ -269,16 +338,27 @@ export default {
   align-items: flex-start;
   flex-direction: row;
   flex-wrap: wrap;
-  /* padding:1em; */
+  
   width: 550px;
-  /* height: 40px; */
+}
+
+.container-content-brief-detail-button{
+  margin-top: 10%;
+
+  display:flex;
+  align-items: flex-end;
+  /* justify-content: space-between; */
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  
+  width: 550px;
 }
 
 .container-content-brief-detail-1{
   background-color: rgb(185, 211, 250);
   border: 0.1px solid rgb(177, 176, 176);
   margin-top:2px;
-  padding-top: 5px;
+  padding-top: 10px;
   padding-left: 20px;
 
   display:flex;
@@ -295,7 +375,7 @@ export default {
   background-color: rgb(195, 206, 230);
   border: 0.1px solid rgb(177, 176, 176);
   margin-top:2px;
-  padding-top: 5px;
+  padding-top: 10px;
   padding-left: 20px;
 
   display:flex;
@@ -399,6 +479,8 @@ button {
   background-size: 100% 100%;
   box-shadow: 0 0 0 7px var(--light) inset;
   margin-bottom: 15px;
+
+  opacity: 110%;
 }
 
 </style>
