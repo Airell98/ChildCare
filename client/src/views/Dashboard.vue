@@ -167,9 +167,6 @@ export default {
 </script>
 
 <style scoped>
-.home {
-  min-height: 100vh;
-}
 .body {
   /* background: url("https://image.freepik.com/free-photo/woman-children-sitting-floor_23-2147663975.jpg");
   background-position: center center;

@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <LoginHome></LoginHome>
+    <LoginHome v-if="!login"></LoginHome>
     <Navbar></Navbar>
     <div class="body">
       <FilterBox @passFilteredNannies="fillNanniesValue"></FilterBox>
@@ -45,6 +45,9 @@ export default {
     allNannies() {
       console.log(window.screenY, window.screen.height);
       return this.$store.state.nannies;
+    },
+    login() {
+      return this.$store.state.login;
     }
   },
   methods: {

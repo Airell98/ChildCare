@@ -42,7 +42,9 @@ export default {
   name: "loginHome",
   data() {
     return {
-      user: "parent"
+      user: "parent",
+      email: "",
+      password: ""
     };
   },
   computed: {
@@ -66,6 +68,15 @@ export default {
   methods: {
     changeUser(user) {
       this.user = user;
+    },
+    loginUser() {
+      this.$store.dispatch("login_user", {
+        user: this.user,
+        data: {
+          email: this.email,
+          password: this.password
+        }
+      });
     }
   }
 };
