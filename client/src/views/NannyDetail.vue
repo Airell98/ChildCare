@@ -5,20 +5,23 @@
     <!-- <div class="container-searchbox"></div> -->
     <div class="container-content">
       <div class="container-content-navigation">
-        <button @click='onClickSebelumnya' > &#8592; Sebelumnya </button>
-        <button @click='onClickBerikutnya'> Berikutnya 	&#8594; </button>
+        <button class=buttonN @click='onClickSebelumnya' > &#8592; Sebelumnya </button>
+        <button class=buttonN @click='onClickBerikutnya'> Berikutnya 	&#8594; </button>
       </div>
       <div class="container-content-brief">
         <div class="container-content-brief-card">
           <div class="container-content-brief-card-name">
-            <h6>{{dataNanny.name}}</h6>
+            <h6 class='container-content-brief-card-name-name'>{{dataNanny.name}}</h6>
             <img 
             class='img-logo'
             src="../assets/childCare.png"/>
           </div>
           <div class="container-content-brief-card-photo">
             <div class="container-content-brief-card-photo-box">
-              <img :src="dataNanny.imageUrl" />
+              <img :src="dataNanny.imageUrl" 
+                height="500px"
+                width="400px"
+              />
             </div>
           </div>
         </div>
@@ -47,11 +50,13 @@
           </div>
           <div class="container-content-brief-detail-button">
             <div> 
-            <button @click.prevent='onClickEditInfo' v-if="loginAs=='agency'"> Edit Info </button>
+            <button class=buttonA
+            @click.prevent='onClickEditInfo' v-if="loginAs=='agency'"> Edit Info </button>
               <div>
                 <EditNannyModal> </EditNannyModal>
               </div>
-            <button @click.prevent='onClickWishList' v-if="loginAs=='parent'"> + Wish List </button>
+            <button class=buttonA
+            @click.prevent='onClickWishList' v-if="loginAs=='parent'"> + Wish List </button>
               <div>
 
               </div>
@@ -62,20 +67,16 @@
       </div>
       <div class="container-content-detail">
         <div class="container-content-detail-0">
-          <div class="container-content-detail-1">
-            <button @click.prevent="onClickDetail">Detail</button>
-          </div>
           <div class="container-content-detail-2">
-            <button @click.prevent="onClickKeterampilan">Keterampilan</button>
+            <button class=buttonA 
+            @click.prevent="onClickDetail">Detail</button>
           </div>
           <div class="container-content-detail-3">
-            <button @click.prevent="onClickAgency">Agency</button>
+            <button class=buttonA
+            @click.prevent="onClickAgency">Agency</button>
           </div>
         </div>
-        <div class="container-content-detail-detailed" v-if="detailStats"> 
-          <ChildCard></ChildCard>
-          </div>
-        <div class="container-content-detail-detailed" v-if="keterampilanStats">ini keterampilan</div>
+        <div class="container-content-detail-detailed" v-if="DetailStats">ini Detail</div>
         <div class="container-content-detail-detailed" v-if="agencyStats">
           <div>ini agency card</div>
         </div>
@@ -96,9 +97,8 @@ export default {
   props: ["id"],
   data() {
     return {
-      detailStats: "yes",
-      keterampilanStats: "",
-      agencyStats: ""
+      DetailStats: "",
+      agencyStats: "yes"
     };
   },
   components:{
@@ -122,18 +122,11 @@ export default {
   },
   methods: {
     onClickDetail() {
-      this.detailStats = "yes";
-      this.keterampilanStats = "";
-      this.agencyStats = "";
-    },
-    onClickKeterampilan() {
-      this.detailStats = "";
-      this.keterampilanStats = "yes";
+      this.DetailStats = "yes";
       this.agencyStats = "";
     },
     onClickAgency() {
-      this.detailStats = "";
-      this.keterampilanStats = "";
+      this.DetailStats = "";
       this.agencyStats = "yes";
     },
     onClickWishList(){
@@ -209,7 +202,7 @@ h5{
 }
 
 .container-content-navigation{
-padding-top: 5px;
+  padding-top: 5px;
   display:flex;
   align-items: center;
   flex-direction: row;
@@ -251,7 +244,9 @@ padding-top: 5px;
 
 
 .container-content-brief-card-name{
-  background-color: rgb(235, 231, 231);
+  background-color: rgba(255, 255, 255, 0.801);
+  box-shadow: 0 8px 16px -8px rgba(0,0,0,0.4);
+  border-radius:25px;
   padding-left:15px;
   display:flex;
   align-items: center;
@@ -261,9 +256,15 @@ padding-top: 5px;
   padding-right:15px;
 
   /* padding:1em; */
-  width: 500px;
+  width: 450px;
   height: 60px;
 
+  opacity: 90%;
+
+}
+
+.container-content-brief-card-name-name{
+  margin-top:5px;
 }
 
 .img-logo{
@@ -303,14 +304,18 @@ img{
 }
 
 .container-content-brief-detail{
-  background-color: rgb(226, 226, 226);
+  background-color: rgba(255, 255, 255, 0.801);
+  opacity: 90%;
+  box-shadow: 0 8px 16px -8px rgba(0,0,0,0.4);
+  border-radius: 25px;
+
 
   display:flex;
   flex-direction: Column;
   align-items: center;
   flex-wrap: wrap;
   width: 600px;
-  height: 640px;
+  height: 400px;
 
   padding-left:15px;
   padding-top:60px;
@@ -463,24 +468,52 @@ img{
 }
 
 
-
-button {
-  display: block;
-  cursor: pointer;
-  outline: none;
-  border: none;
-  background-color: var(--light);
-  width: 150px;
-  height: 30px;
-  border-radius: 20px;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text);
-  background-size: 100% 100%;
-  box-shadow: 0 0 0 7px var(--light) inset;
-  margin-bottom: 15px;
-
-  opacity: 110%;
+.buttonA {
+	box-shadow: 3px 4px 0px 0px #a84f46;
+	background:linear-gradient(to bottom, #d9564a 5%, #ff756b 100%);
+	background-color:#d9564a;
+	border-radius:17px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	padding:7px 25px;
+	text-decoration:none;
+	/* text-shadow:0px 2px 0px #820700; */
 }
+
+.buttonA:hover {
+	background:linear-gradient(to bottom, #ff756b 5%, #d9564a 100%);
+	background-color:#ff756b;
+}
+.buttonA:active {
+	position:relative;
+	top:1px;
+}
+
+.buttonN {
+	box-shadow: 3px 4px 0px 0px #a39694;
+	background:linear-gradient(to bottom, #ffffff 5%, #949494 100%);
+	background-color:#ffffff;
+	border-radius:5px;
+	display:inline-block;
+	cursor:pointer;
+	color:#000000;
+	font-family:Arial;
+	font-size:17px;
+	padding:7px 25px;
+	text-decoration:none;
+	/* text-shadow:0px 2px 0px #0d0d0d; */
+}
+.buttonN:hover {
+	background:linear-gradient(to bottom, #949494 5%, #ffffff 100%);
+	background-color:#949494;
+}
+.buttonN:active {
+	position:relative;
+	top:1px;
+}
+
 
 </style>
