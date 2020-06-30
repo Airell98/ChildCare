@@ -86,7 +86,7 @@ export default {
   width: 90%;
   height: fit-content;
   margin: 0rem auto;
-  transform: translateY(12%);
+  transform: translateY(5%);
   background-color: rgba(137, 139, 139, 0.205);
   border-radius: 1rem;
   padding: 1rem 0rem;

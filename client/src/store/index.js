@@ -596,7 +596,11 @@ export default new Vuex.Store({
         data: payload.data
       })
         .then(response => {
-          console.log(response);
+          context.state.nannies = context.state.nannies.filter(nanny => {
+            return nanny.id != payload.id;
+          });
+          payload.data.id = payload.id;
+          context.state.nannies.push(payload.data);
         })
         .catch(error => {
           if (error.response) {

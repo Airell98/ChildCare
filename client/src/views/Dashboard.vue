@@ -224,7 +224,7 @@ export default {
   color: rgb(33, 70, 70);
 }
 .right {
-  height: 180vh;
+  height: 160vh;
   overflow-y: scroll;
 }
 .right::-webkit-scrollbar {

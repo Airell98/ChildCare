@@ -61,7 +61,7 @@ export default {
 .body {
   display: grid;
   grid-template-columns: 1fr 3fr;
-  transform: translateY(4rem);
+  transform: translateY(1rem);
 }
 h2 {
   text-align: center;
@@ -75,7 +75,7 @@ h2 {
   grid-template-columns: repeat(3, 1fr);
 }
 .right {
-  min-height: 90vh;
+  height: 90vh;
   overflow-y: scroll;
 }
 .right::-webkit-scrollbar {

@@ -97,7 +97,7 @@ export default {
           imageUrl: this.image_url
         }
       });
-      modalShow: false;
+      this.modalShow = false;
     }
   },
   created() {
