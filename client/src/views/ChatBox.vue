@@ -1,18 +1,10 @@
 <template>
-  <div
-    style="background-color: #fffbfa; width:100%; margin:auto; display:flex; justify-content: center;"
-  >
+  <div>
     <Navbar></Navbar>
-    <div id="roomKeyWindow" style="flex: 2">
+    <div class="chat-body">
+      <!-- <div id="roomKeyWindow" style="flex: 2">
       <h3>PARTNER ID</h3>
       <p>{{ partnerId }}</p>
-      <!-- <input
-        type="text"
-        id="connId"
-        class="form-control"
-        placeholder="enter a connection ID"
-        v-model="tempKey"
-      />-->
       <button
         class="btn btn-lg btn-success btn-block"
         id="conn_button"
@@ -33,51 +25,56 @@
         type="submit"
         v-on:click="endCall"
       >End Call</button>
-    </div>
+      </div>-->
 
-    <hr />
-    <div style="background-color: black; flex: 4;">
-      <video class="container-fluid" ref="rVideo" autoplay id="myVideo"></video>
-
-      <div style="display:flex;" class="content">
+      <div style="background-color: black; flex: 7;">
+        <video class="container-fluid" ref="rVideo" autoplay id="myVideo"></video>
+        <h5>PARTNER ID : {{partnerId}}</h5>
+        <div class="button-container">
+          <b-button variant="warning" type="submit" v-on:click="sendPeerId">Send Video Link</b-button>
+          <b-button variant="danger" style="width: 20%;" type="submit" v-on:click="callSomeone">Call</b-button>
+          <b-button variant="danger" style="width: 20%;" type="submit" v-on:click="endCall">End Call</b-button>
+        </div>
+        <!-- <div style="display:flex;" class="content">
         <button
           v-on:click="mute"
           class="fas fa-microphone-alt-slash fa-3x"
           id="button"
           type="submit"
         ></button>
-
         <button v-on:click="unmute" class="fas fa-microphone fa-3x" id="button" type="submit"></button>
+        </div>-->
       </div>
-    </div>
-    <div id="chatWindow" style="flex: 2">
-      <div style="height: 490px; overflow:scroll;">
-        <ul v-for="(message, index) in messages" :key="index" class="list-group list-group-flush">
-          <li>
-            <div v-if="message.sender == role" style="color:#34eb7d;" class="float-right">
-              <p style="color: black;">{{ message.content }}</p>
-            </div>
-            <div v-else style="background-color:#fffffc;" class="float-left">
-              <p style="color: black;">{{ message.content }}</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <input
-        type="text"
-        id="message"
-        v-model="inputMessage"
-        class="form-control"
-        placeholder="Enter a message"
-        required
-      />
 
-      <button
-        v-on:click="addMessage"
-        class="btn btn-lg btn-primary btn-block"
-        id="button"
-        type="submit"
-      >Send</button>
+      <div id="chatWindow" style="flex: 2">
+        <div style=" height:80vh; overflow-y:scroll;">
+          <ul v-for="(message, index) in messages" :key="index" class="list-group list-group-flush">
+            <li>
+              <div v-if="message.sender == role" style="color:#34eb7d;" class="float-right">
+                <p style="color: black;">{{ message.content }}</p>
+              </div>
+              <div v-else style="background-color:#fffffc;" class="float-left">
+                <p style="color: black;">{{ message.content }}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <input
+          type="text"
+          id="message"
+          v-model="inputMessage"
+          class="form-control"
+          placeholder="Enter a message"
+          required
+        />
+
+        <button
+          v-on:click="addMessage"
+          class="btn btn-lg btn-primary btn-block"
+          id="button"
+          type="submit"
+        >Send</button>
+      </div>
     </div>
   </div>
 </template>
@@ -350,6 +347,24 @@ export default {
 </script>
 
 <style scoped>
+.chat-body {
+  background-color: #fffbfa;
+  width: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  transform: translateY(3rem);
+}
+h5 {
+  color: white;
+  transform: translateY(-5rem);
+}
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 40%;
+  transform: translateY(-5rem);
+}
 li div {
   float: left;
   margin: 10px;
