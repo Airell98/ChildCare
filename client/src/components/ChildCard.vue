@@ -18,25 +18,16 @@
     </div>
 
 </div>
-    
 </template>
 
 <script>
-import Vuex from 'vuex'
-
-
 export default {
-    name:'ChildCard',
-    data(){
-        return{
-
-
-        };
-    },
-    methods:{
-
-    },
-}
+  name: "ChildCard",
+  data() {
+    return {};
+  },
+  methods: {}
+};
 </script>
 
 <style scoped>
@@ -50,7 +41,7 @@ export default {
   /* background-color: rgb(255, 255, 255); */
   border: 0.1px solid rgb(177, 176, 176);
 
-  display:flex;
+  display: flex;
   flex-wrap: wrap;
   flex-direction: column;
 
@@ -60,12 +51,11 @@ export default {
   margin: 25px;
 }
 
-.card-container-name{
+.card-container-name {
   background-color: rgb(255, 255, 255);
   border: 0.1px solid rgb(177, 176, 176);
   padding-top:2.5%;
   border-radius: 10px;
-  
 
   width: 170px;
   height: 50px;
@@ -74,10 +64,8 @@ export default {
   justify-content: center;
   align-content: center;
   align-items: center;
-
-  padding-left:10px;
 }
-.card-container-photo{
+.card-container-photo {
   background-color: rgb(255, 255, 255);
   border: 0.1px solid rgb(177, 176, 176);
   border-radius: 50%;
@@ -85,9 +73,8 @@ export default {
 
   width: 200px;
   height: 200px;
-
 }
-.card-container-detail{
+.card-container-detail {
   background-color: rgb(255, 255, 255);
   /* border: 0.1px solid rgb(177, 176, 176); */
   border-radius: 10px;
@@ -98,14 +85,14 @@ export default {
   margin-left:5px;
   flex-direction: column;
 
-  display:flex;
+  display: flex;
   justify-content: left;
-  padding-top:15px;
+  padding-top: 15px;
 }
 
-.card-container-detail-detailed{
-  padding-left:15px;
-  display:flex;
+.card-container-detail-detailed {
+  padding-left: 15px;
+  display: flex;
   align-items: center;
   align-items: flex-start;
   flex-direction: column;
@@ -117,6 +104,4 @@ h5{
   /* Courier New, monospace */
   font-size: 15px;
 }
-
-
 </style>

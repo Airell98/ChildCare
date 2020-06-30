@@ -1,17 +1,9 @@
 <template>
-  <div
-    class="name"
-    @click.prevent="
-      goToRoom(
-        `${message.Parent.email}${message.Agency.email}`,
-        message.Agency.id
-      )
-    "
-  >
+  <div class="name" @click.prevent="goToRoom">
     <span>
       <img :src="picture" />
     </span>
-    {{ `${message.Agency.name.toUpperCase()}` }}
+    {{ companionChat.toUpperCase() }}
     <p>
       {{ message.content }}
       <span v-if="message.unread">{{ message.unread }}</span>
@@ -23,10 +15,21 @@
 export default {
   name: "ChatItem",
   props: ["message"],
-  created() {
-    this.$store.dispatch("get_agencies");
-  },
   computed: {
+    userId() {
+      if (localStorage.loginAs === "parent") {
+        return this.message.Agency.id;
+      } else {
+        return this.message.Parent.id;
+      }
+    },
+    companionChat() {
+      if (localStorage.loginAs === "parent") {
+        return this.message.Agency.name;
+      } else {
+        return this.message.Parent.name;
+      }
+    },
     picture() {
       let imgUrl = "";
       const agencies = this.$store.state.agencies;
@@ -45,11 +48,13 @@ export default {
     //   localStorage.setItem('roomKey', key)
     //   this.$router.push('/chat')
     // }
-    goToRoom(key, id) {
-      localStorage.setItem("roomKey", key);
-      console.log(id);
-      this.$router.push("/chat/" + id);
-      this.$store.dispatch("update_statusRead", id);
+    goToRoom() {
+      localStorage.setItem(
+        "roomKey",
+        `${this.message.Parent.email}${this.message.Agency.email}`
+      );
+      this.$router.push("/chat/" + this.userId);
+      this.$store.dispatch("update_statusRead", this.userId);
     }
   }
 };
