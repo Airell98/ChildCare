@@ -74,20 +74,6 @@ export default {
   props: ["user", "id"],
   created() {
     this.$store.dispatch("getAllCorrespondingMsg");
-    if (localStorage.loginAs == "agency") {
-      if (this.user === "agency") {
-        this.$store.dispatch("get_agencyById", this.id);
-        this.$store.dispatch("get_nannyByAgency");
-        this.id == this.userLocal.id
-          ? this.$store.commit("set_agency", this.userLocal)
-          : null;
-        this.entityName = "nanny";
-      } else {
-        this.$store.dispatch("get_parentById", this.id);
-        this.$store.dispatch("get_children");
-        this.entityName = "child";
-      }
-    }
     socket.emit(
       "settingRoomDashboardUnread",
       JSON.parse(localStorage.getItem("user")).email
@@ -104,6 +90,7 @@ export default {
           : null;
       } else {
         this.$store.dispatch("get_parentById", this.id);
+        this.$store.dispatch("get_children");
       }
     }
     if (localStorage.loginAs == "parent") {
@@ -111,6 +98,7 @@ export default {
         this.$store.dispatch("get_agencyById", this.id);
       } else {
         this.$store.dispatch("get_parentById", this.id);
+        this.$store.dispatch("get_children");
         this.id == this.userLocal.id
           ? this.$store.commit("set_parent", this.userLocal)
           : null;
