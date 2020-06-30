@@ -4,7 +4,14 @@
     <div class="body">
       <div class="left">
         <div v-if="user === 'parent'">
-          <div class="Button" v-if="loginAs == 'parent' && id == userLocal.id">Add Child</div>
+          <div
+            class="Button"
+            v-if="loginAs == 'parent' && id == userLocal.id"
+            @click.prevent="addChild"
+          >
+            Add Child
+            <AddChildModal></AddChildModal>
+          </div>
           <ParentProfile :parent="userData"></ParentProfile>
         </div>
         <div v-if="user === 'agency'">
@@ -38,6 +45,7 @@ import ParentProfile from "../components/ParentProfile";
 import AgencyProfile from "../components/AgencyProfile";
 import ChatList from "../components/ChatList";
 import AddNannyModal from "../components/AddNannyModal";
+import AddChildModal from "../components/AddChildModal";
 import io from "socket.io-client";
 const serverUrl = "http://localhost:3001";
 const socket = io(serverUrl, {
@@ -52,7 +60,8 @@ export default {
     ParentProfile,
     AgencyProfile,
     ChatList,
-    AddNannyModal
+    AddNannyModal,
+    AddChildModal
   },
   props: ["user", "id"],
   created() {
@@ -89,9 +98,6 @@ export default {
     });
   },
   computed: {
-    addNanny() {
-      this.$bvModal.show("modalAddNanny");
-    },
     userData() {
       let user = null;
       this.user === "agency"
@@ -112,6 +118,12 @@ export default {
     }
   },
   methods: {
+    addNanny() {
+      this.$bvModal.show("modalAddNanny");
+    },
+    addChild() {
+      this.$bvModal.show("modalAddChild");
+    },
     insertLocalStorage() {
       let email = "";
       console.log(this.$store.state.messages, "===========================");
