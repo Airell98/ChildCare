@@ -487,6 +487,35 @@ export default new Vuex.Store({
           console.log(error.config);
         });
     },
+    deleteFromWishlist(context, payload) {
+      axios({
+        method: "delete",
+        url: `${context.state.url}/wishlist/delete/${payload}`,
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+        .then(response => {
+          const { data } = response;
+          context.state.wishlistOfNanny = context.state.wishlistOfNanny.filter(
+            nanny => {
+              return nanny.id != payload;
+            }
+          );
+        })
+        .catch(error => {
+          if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log("Error", error.message);
+          }
+          console.log(error.config);
+        });
+    },
     get_parentById(context, payload) {
       axios({
         method: "get",

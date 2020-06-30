@@ -1,9 +1,12 @@
-const { NannyWishlist, Nanny } = require("../models");
+const { NannyWishlist, Nanny, Agency } = require("../models");
 
 class WishlistController {
   static getAllWishList(req, res, next) {
     const ParentId = req.parentData.id;
-    NannyWishlist.findAll({ where: { ParentId } })
+    NannyWishlist.findAll({
+      where: { ParentId },
+      include: [{ model: Agency, attributes: ["email"] }],
+    })
       .then((wishlists) => {
         res.status(200).json(wishlists);
       })

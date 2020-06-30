@@ -23,9 +23,6 @@ io.on("connection", (socket) => {
   socket.on("sendMessage", (payload) => {
     socket.broadcast.in(payload.roomKey).emit("sendMessage", payload);
   });
-  socket.on("sendUnreadMsg", (payload) => {
-    socket.broadcast.in(payload).emit("sendUnreadMsg", payload);
-  });
   socket.on("receive peerId", (payload) => {
     console.log(payload, "ini peer id");
     socket.broadcast.in(payload.roomKey).emit("receive peerId", payload);
@@ -40,9 +37,11 @@ io.on("connection", (socket) => {
     console.log("Joining room ", roomKey);
     socket.join(roomKey);
   });
-  socket.on("joinUnreadRoom", (payload) => {
-    console.log(payload);
+  socket.on("settingRoomDashboardUnread", (payload) => {
     socket.join(payload);
+  });
+  socket.on("fetchingPartner", (payload) => {
+    socket.broadcast.in(payload.key).emit("fetchingClientMsg");
   });
 });
 

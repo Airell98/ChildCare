@@ -15,9 +15,9 @@
         <div class="salary">Rp. {{nanny.expectedSalary}}</div>
       </div>
       <div class="button-container">
-        <b-button variant="warning">Chat</b-button>
-        <b-button variant="success">Hire</b-button>
-        <b-button variant="danger">Delete</b-button>
+        <b-button variant="warning" @click.prevent="gotoChat">Chat</b-button>
+        <b-button variant="success" @click.prevent="hireNanny">Hire</b-button>
+        <b-button variant="danger" @click.prevent="deleteFromWishlist">Delete</b-button>
       </div>
     </div>
   </div>
@@ -26,7 +26,21 @@
 <script>
 export default {
   name: "Wishlist",
-  props: ["nanny"]
+  props: ["nanny"],
+  methods: {
+    gotoChat() {
+      const user = JSON.parse(localStorage.user);
+      localStorage.setItem(
+        "roomKey",
+        `${user.email}${this.nanny.Agency.email}`
+      );
+      this.$router.push(`/chat/${this.nanny.AgencyId}`);
+    },
+    deleteFromWishlist() {
+      this.$store.dispatch("deleteFromWishlist", this.nanny.id);
+    },
+    hireNanny() {}
+  }
 };
 </script>
 

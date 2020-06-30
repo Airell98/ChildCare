@@ -41,13 +41,13 @@
           <b-button variant="danger" style="width: 20%;" type="submit" v-on:click="endCall">End Call</b-button>
         </div>
         <!-- <div style="display:flex;" class="content">
-        <button
-          v-on:click="mute"
-          class="fas fa-microphone-alt-slash fa-3x"
-          id="button"
-          type="submit"
-        ></button>
-        <button v-on:click="unmute" class="fas fa-microphone fa-3x" id="button" type="submit"></button>
+          <button
+            v-on:click="mute"
+            class="fas fa-microphone-alt-slash fa-3x"
+            id="button"
+            type="submit"
+          ></button>
+          <button v-on:click="unmute" class="fas fa-microphone fa-3x" id="button" type="submit"></button>
         </div>-->
       </div>
 
@@ -100,13 +100,14 @@ export default {
     Navbar
   },
   created() {
+    //alert("test lagi")
     if (localStorage.getItem("reloaded")) {
       localStorage.removeItem("reloaded");
     } else {
       localStorage.setItem("reloaded", "1");
       location.reload();
     }
-    // this.insertLocalStorage();
+
     this.test();
     socket.emit("join-room", localStorage.getItem("roomKey"));
     this.startVideo();
@@ -120,7 +121,7 @@ export default {
     });
     socket.on("receive peerId", data => {
       this.partnerId = data.peerId;
-      peer.connect(this.partnerId);
+      window.conn = peer.connect(this.partnerId);
     });
     peer.on("call", call => {
       Swal.fire({
@@ -133,13 +134,16 @@ export default {
         confirmButtonText: "Yes"
       }).then(result => {
         if (result.value) {
-          this.startVideo();
+          // this.startVideo();
           return Promise.all([this.startVideo()]).then(data => {
+            console.log("masuk promise this start Video ()");
             call.answer(window.localstream);
             call.on("stream", stream => {
+              this.startVideo();
               window.peer_stream = stream;
               this.recStream2(stream);
             });
+            this.call = call;
           });
         } else {
           socket.emit("reject phone call", {
@@ -154,31 +158,34 @@ export default {
     });
     socket.on("end call", data => {
       var video = this.$refs.rVideo;
+      window.conn.close();
+      this.call.close();
 
-      video.pause();
-      video.src = "";
-      video.autoplay = false;
-
-      console.log(window.localstream.getTracks);
-      localstream.getTracks().map(function(val) {
-        val.stop();
-      });
-      window.localstream.getVideoTracks().forEach(el => {
-        el.enabled = false;
-      });
-      window.localstream.getTracks().forEach(el => {
-        el.enabled = false;
-      });
+      video.srcObject = null;
+      // video.autoplay = false;
+      // console.log(window.localstream.getTracks);
+      // localstream.getTracks().map(function(val) {
+      //   val.stop();
+      // });
+      // window.localstream.getVideoTracks().forEach(el => {
+      //   el.enabled = false;
+      // });
+      // window.localstream.getTracks().forEach(el => {
+      //   el.enabled = false;
+      // });
     });
     peer.on("connection", () => {
       console.log("Other already connected");
     });
-    peer.on("error", () => {
-      // alert('Connection problem')
-    });
+    peer.on("error", console.log);
     this.$store
       .dispatch("getAllMsg", this.$route.params.id)
       .then(resp => {
+        if (this.role == "parent") {
+          localStorage.setItem("partnerKey", resp.data[0].Agency.email);
+        } else if (this.role == "agency") {
+          localStorage.setItem("partnerKey", resp.data[0].Parent.email);
+        }
         this.messages = resp.data;
       })
       .catch(err => {
@@ -194,7 +201,9 @@ export default {
       peer_id: "",
       conn: "",
       connId: "",
-      tempKey: ""
+      tempKey: "",
+      telpon: null,
+      call: null
       // muted: "",
     };
   },
@@ -205,14 +214,21 @@ export default {
   },
   methods: {
     callSomeone() {
+      console.log("cal someone ========== baru");
       window.localstream.getVideoTracks().forEach(el => {
+        console.log("looping 1");
         el.enabled = true;
       });
+      //console.log(window.localstream.getTracks())
       window.localstream.getTracks().forEach(el => {
+        console.log("looping 2");
         el.enabled = true;
       });
-      let telpon = peer.call(this.partnerId, window.localstream);
-      telpon.on("stream", Stream => {
+      this.telpon = peer.call(this.partnerId, window.localstream);
+      this.telpon.on("stream", Stream => {
+        this.startVideo();
+
+        console.log("masuk telpon call some one======");
         window.peer_stream = Stream;
         this.recStream2(Stream);
       });
@@ -234,13 +250,12 @@ export default {
     },
     endCall() {
       console.log(navigator);
-
+      window.conn.close();
+      this.telpon.close();
       var video = this.$refs.rVideo;
-
       video.pause();
-      video.src = "";
+      video.srcObject = null;
       video.autoplay = false;
-
       console.log(window.localstream.getTracks);
       localstream.getTracks().map(function(val) {
         val.stop();
@@ -255,18 +270,18 @@ export default {
         msg: "close",
         roomKey: localStorage.getItem("roomKey")
       });
-      this.startVideo();
+      //this.startVideo();
     },
     unmute() {
-      window.localstream.getAudioTracks()[0].enabled = true;
-      localstream.getAudioTracks()[0].enabled = true;
+      var videoUnMute = this.$refs.rVideo;
+      videoUnMute.volume = 0.0;
     },
     mute() {
-      window.localstream.getAudioTracks()[0].enabled = false;
-      localstream.getAudioTracks()[0].enabled = false;
+      var videoMute = this.$refs.rVideo;
+      videoMute.volume = 0.0;
     },
-
     recStream2(stream) {
+      console.log("masuk rec stream2", this.$refs.rVideo);
       var video = this.$refs.rVideo;
       video.srcObject = stream;
       window.peer_stream = stream;
@@ -284,7 +299,6 @@ export default {
         sender: this.role,
         roomKey: localStorage.getItem("roomKey")
       };
-      // socket.emit("sendUnreadMsg", localStorage.dashboardRoomKey);
       this.messages.push(pesan);
       this.$store
         .dispatch("messageDB", {
@@ -294,6 +308,9 @@ export default {
         })
         .then(() => {
           socket.emit("sendMessage", pesan);
+          socket.emit("fetchingPartner", {
+            key: localStorage.getItem("partnerKey")
+          });
         })
         .catch(error => {
           if (error.response) {
@@ -310,15 +327,29 @@ export default {
       this.inputMessage = "";
     },
     getLVideo(callbacks) {
-      navigator.getUserMedia =
-        navigator.getUserMedia ||
-        navigator.webkitGetUserMedia ||
+      console.log("berapa kali nih ke console log rubhi");
+      navigator.mediaDevices.getUserMedia =
+        navigator.mediaDevices.getUserMedia ||
+        navigator.mediaDevices.webkitGetUserMedia ||
         navigator.mozGetUserMedia;
       let constraints = {
         audio: true,
         video: true
       };
-      navigator.getUserMedia(constraints, callbacks.success, callbacks.error);
+      //navigator.mediaDevices.getUserMedia(constraints, callbacks.success, callbacks.error);
+      navigator.mediaDevices
+        .getUserMedia(constraints)
+        .then(stream => {
+          window.localstream = stream;
+          console.log(
+            window.localstream.getTracks()[0],
+            "this is the window localstream"
+          );
+          console.log(window.localstream, "this is the window localstream");
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     test() {
       peer.on("open", peer => {
@@ -334,19 +365,6 @@ export default {
       };
       socket.emit("receive peerId", data);
     }
-    // insertLocalStorage() {
-    //   let email = "";
-    //   for (let i = 0; i < this.messages.length; i++) {
-    //     if (this.role == "parent") {
-    //       email = this.messages[i].Agency.email;
-    //       break;
-    //     } else {
-    //       email = this.messages[i].Parent.email;
-    //       break;
-    //     }
-    //   }
-    //   localStorage.setItem("partnerEmail", email);
-    // }
   }
 };
 </script>

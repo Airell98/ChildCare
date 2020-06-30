@@ -88,28 +88,34 @@ export default {
         this.entityName = "child";
       }
     }
+    socket.emit(
+      "settingRoomDashboardUnread",
+      JSON.parse(localStorage.getItem("user")).email
+    );
+    socket.on("fetchingClientMsg", () => {
+      this.$store.dispatch("getAllCorrespondingMsg");
+    });
+    if (localStorage.loginAs == "agency") {
+      if (this.user === "agency") {
+        this.$store.dispatch("get_agencyById", this.id);
+        this.$store.dispatch("get_nannyByAgency");
+        this.id == this.userLocal.id
+          ? this.$store.commit("set_agency", this.userLocal)
+          : null;
+      } else {
+        this.$store.dispatch("get_parentById", this.id);
+      }
+    }
     if (localStorage.loginAs == "parent") {
       if (this.user === "agency") {
         this.$store.dispatch("get_agencyById", this.id);
-        this.entityName = "nanny";
       } else {
         this.$store.dispatch("get_parentById", this.id);
         this.id == this.userLocal.id
           ? this.$store.commit("set_parent", this.userLocal)
           : null;
-        this.$store.dispatch("get_children");
-        this.entityName = "child";
       }
     }
-    const user = JSON.parse(localStorage.user);
-    localStorage.setItem("roomHome", user.email);
-    // setTimeout(() => {
-    //   this.insertLocalStorage();
-    // }, 2000);
-    socket.on("sendUnreadMsg", payload => {
-      console.log("masuk dashboard parent");
-      this.$store.dispatch("getAllCorrespondingMsg");
-    });
   },
   computed: {
     userData() {
@@ -147,7 +153,6 @@ export default {
     },
     insertLocalStorage() {
       let email = "";
-      console.log(this.$store.state.messages, "===========================");
       for (let i = 0; i < this.$store.state.messages.length; i++) {
         if (this.loginAs == "parent") {
           email = this.$store.state.messages[i].Agency.email;
