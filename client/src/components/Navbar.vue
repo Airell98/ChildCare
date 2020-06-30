@@ -66,7 +66,7 @@ export default {
 
 <style scoped>
 #navbar {
-  height: 5rem;
+  height: 4rem;
   background-color: white;
 }
 #logo {
@@ -75,7 +75,7 @@ export default {
   cursor: pointer;
 }
 img {
-  width: 4rem;
+  width: 3rem;
 }
 #textLogo {
   font-size: 2rem;

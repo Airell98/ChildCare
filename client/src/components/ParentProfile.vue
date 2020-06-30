@@ -60,6 +60,7 @@ img {
 .name {
   font-size: 2rem;
   font-weight: 600;
+  margin: 1rem;
   color: darkslategray;
   text-align: center;
 }

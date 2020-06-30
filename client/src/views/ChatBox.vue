@@ -32,7 +32,12 @@
         <h5>PARTNER ID : {{partnerId}}</h5>
         <div class="button-container">
           <b-button variant="warning" type="submit" v-on:click="sendPeerId">Send Video Link</b-button>
-          <b-button variant="danger" style="width: 20%;" type="submit" v-on:click="callSomeone">Call</b-button>
+          <b-button
+            variant="success"
+            style="width: 20%;"
+            type="submit"
+            v-on:click="callSomeone"
+          >Call</b-button>
           <b-button variant="danger" style="width: 20%;" type="submit" v-on:click="endCall">End Call</b-button>
         </div>
         <!-- <div style="display:flex;" class="content">
