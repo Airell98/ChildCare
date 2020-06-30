@@ -1,21 +1,28 @@
 <template>
-  <div class="Dropdown">
-    <div class="Button">{{ text }}</div>
-    <div class="Dropdown-content">
-      <div class="dropdown-item" v-if="text === 'REGISTER'" @click.prevent="gotoNanny">Nanny</div>
-      <div class="dropdown-item" @click.prevent="gotoAgency">Agency</div>
-      <div class="dropdown-item" @click.prevent="gotoParent">Parent</div>
+  <div>
+    <AddNannyModal :title="'registerNanny'"></AddNannyModal>
+    <div class="Dropdown">
+      <div class="Button">{{ text }}</div>
+      <div class="Dropdown-content">
+        <div class="dropdown-item" v-if="text === 'REGISTER'" @click.prevent="gotoNanny">Nanny</div>
+        <div class="dropdown-item" @click.prevent="gotoAgency">Agency</div>
+        <div class="dropdown-item" @click.prevent="gotoParent">Parent</div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import AddNannyModal from "../components/AddNannyModal";
 export default {
   name: "NavButton",
   props: ["text"],
+  components: {
+    AddNannyModal
+  },
   methods: {
     gotoNanny() {
-      this.$router.push({ name: "RegisterNanny" });
+      this.$bvModal.show("modalAddNanny");
     },
     gotoAgency() {
       if (this.text === "REGISTER")

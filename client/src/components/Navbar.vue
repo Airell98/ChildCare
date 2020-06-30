@@ -9,7 +9,7 @@
     </b-navbar-brand>
     <b-navbar-nav class="ml-auto" v-if="login">
       <div class="username" @click.prevent="gotoDashboard">{{username.toUpperCase()}}</div>
-      <div class="Button Edit" @click.prevent='' >EDIT</div>
+      <div class="Button Edit" @click.prevent>EDIT</div>
       <div class="Button Logout" @click.prevent="loggingOut">LOGOUT</div>
     </b-navbar-nav>
     <b-navbar-nav class="ml-auto" v-else>
@@ -55,13 +55,11 @@ export default {
     },
     gotoDashboard() {
       this.$router.push({
-        name: "joji gimme lovejoji gimme love",
+        name: "Dashboard",
         params: { user: localStorage.loginAs, id: this.id }
       });
     },
-    onClickEdit(){
-
-    }
+    onClickEdit() {}
   }
 };
 </script>

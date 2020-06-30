@@ -7,7 +7,7 @@ import About from "../views/About";
 import Register from "../views/Register";
 import Login from "../views/Login";
 import NannyDetail from "../views/NannyDetail";
-import AddNanny from "../views/AddNanny";
+import Chat from "../views/ChatBox.vue";
 
 Vue.use(VueRouter);
 
@@ -35,6 +35,11 @@ const routes = [
     path: "/about",
     name: "About",
     component: About
+  },
+  {
+    path: "/chat/:id",
+    name: "Chat",
+    component: Chat
   },
   {
     path: "/register/:user",

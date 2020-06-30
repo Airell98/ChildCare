@@ -26,7 +26,6 @@ class AgencyController {
         res.status(201).json(agency);
       })
       .catch((err) => {
-        console.log(err);
         next(err);
       });
   }
@@ -49,6 +48,7 @@ class AgencyController {
               city: agency.city,
               logoUrl: agency.logoUrl,
               phoneNumber: agency.phoneNumber,
+              email: agency.email,
             },
           });
         }

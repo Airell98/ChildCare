@@ -1,30 +1,15 @@
 const { Nanny, Agency, Parent, NannyChild, Child } = require("../models");
 
-class NannyController {
-  static getAllNannies(req, res, next) {
-    Nanny.findAll({
-      attributes: [
-        "id",
-        "name",
-        "gender",
-        "phoneNumber",
-        "birthDate",
-        "address",
-        "imageUrl",
-        "city",
-        "expectedSalary",
-        "availability",
-        "ParentId",
-        "AgencyId",
-      ],
-    })
-      .then((nannies) => {
-        res.status(200).json(nannies);
-      })
-      .catch((err) => {
-        next(err);
-      });
-  }
+class NannyController{
+    static getAllNannies(req, res, next){
+        Nanny.findAll({ attributes: ['id', 'name', 'gender', 'phoneNumber', 'birthDate', 'address', 'imageUrl', 'city', 'expectedSalary', 'availability', 'ParentId', 'AgencyId'], where: { availability : true }})
+        .then(nannies => {
+            res.status(200).json(nannies)
+        })
+        .catch(err => {
+            next(err)
+        })
+    }
 
   static registerNanny(req, res, next) {
     const {

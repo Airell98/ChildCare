@@ -40,6 +40,8 @@ class ParentController {
     })
       .then((parent) => {
         if (!parent || !compareSyncBcrypt(password, parent.password)) {
+          // console.log(password);
+          // console.log(parent.password);
           next({ name: "INVALID_EMAIL_PASSWORD" });
         } else {
           const token = jwtSign(parent);
@@ -54,12 +56,12 @@ class ParentController {
               city: parent.city,
               gender: parent.gender,
               phoneNumber: parent.phoneNumber,
+              email: parent.email,
             },
           });
         }
       })
       .catch((err) => {
-        console.log(err);
         next(err);
       });
   }

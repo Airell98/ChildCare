@@ -1,19 +1,8 @@
 <template>
   <div class="chat-box">
-    <h3>Chat List</h3>
+    <h3>Chat From</h3>
     <div class="chat-container">
-      <ChatItem></ChatItem>
-      <ChatItem></ChatItem>
-      <ChatItem></ChatItem>
-      <ChatItem></ChatItem>
-      <ChatItem></ChatItem>
-      <ChatItem></ChatItem>
-      <ChatItem></ChatItem>
-      <ChatItem></ChatItem>
-      <ChatItem></ChatItem>
-      <ChatItem></ChatItem>
-      <ChatItem></ChatItem>
-      <ChatItem></ChatItem>
+      <ChatItem v-for="(message, index) in messageStore" :key="index" :message="message"></ChatItem>
     </div>
   </div>
 </template>
@@ -24,6 +13,17 @@ export default {
   name: "ChatList",
   components: {
     ChatItem
+  },
+  created() {
+    this.$store.dispatch("getAllCorrespondingMsg");
+  },
+  computed: {
+    messageStore() {
+      return this.$store.state.messages;
+    },
+    role() {
+      return localStorage.loginAs;
+    }
   }
 };
 </script>

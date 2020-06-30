@@ -6,7 +6,11 @@
       <div class="right">
         <div class="title">Nanny List</div>
         <div class="card-container">
-          <Card v-for="nanny in nannies || allNannies" :key="nanny.id" :nanny="nanny"></Card>
+          <Card
+            v-for="nanny in nannies || allNannies"
+            :key="nanny.id"
+            :nanny="nanny"
+          ></Card>
         </div>
       </div>
     </div>
