@@ -9,8 +9,8 @@
         </p>
       </b-navbar-brand>
       <b-navbar-nav class="ml-auto">
-        <div class="Button">Join As Agency</div>
-        <div class="Button">Join As Parent</div>
+        <div class="Button" @click.prevent="register('agency')">Join As Agency</div>
+        <div class="Button" @click.prevent="register('parent')">Join As Parent</div>
       </b-navbar-nav>
     </b-navbar>
     <div class="body-container">
@@ -77,6 +77,9 @@ export default {
           password: this.password
         }
       });
+    },
+    register(user) {
+      this.$router.push({ name: "Register", params: { user: user } });
     }
   }
 };
@@ -85,7 +88,11 @@ export default {
 <style scoped>
 #body {
   z-index: 1000;
-  background: url("https://image.freepik.com/free-photo/woman-children-sitting-floor_23-2147663975.jpg");
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.568),
+      rgba(255, 255, 255, 0.233)
+    ),
+    url("https://image.freepik.com/free-photo/woman-children-sitting-floor_23-2147663975.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -99,6 +106,7 @@ export default {
 #logo {
   display: flex;
   align-items: center;
+  cursor: default;
 }
 img {
   width: 5rem;
@@ -162,6 +170,7 @@ form {
 h3 {
   font-size: 2rem;
   margin-right: 1.2rem;
+  color: darkslategray;
 }
 .button {
   margin: 0.4rem;
@@ -169,5 +178,9 @@ h3 {
   padding: 1px 12px;
   border-radius: 3px;
   cursor: pointer;
+  transition: ease 400ms;
+}
+.button:hover {
+  background-color: rgba(255, 255, 255, 0.459);
 }
 </style>
