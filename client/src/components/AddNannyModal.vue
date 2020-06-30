@@ -3,7 +3,7 @@
     <b-modal
       id="modalAddNanny"
       v-model="modalShow"
-      title="Menambahkan Nanny"
+      :title="titleBasedOnProps"
       centered
       ok-only
       ok-variant="secondary"
@@ -21,29 +21,29 @@
         <div>
           <img v-bind:src="this.image_url" height="265" width="265" />
           <img />
-          <h5>Image url</h5>
-          <input type="text" v-model="image_url" />
+          <h6>Image url</h6>
+          <b-form-input type="text" v-model="image_url" />
           <br />
-          <h5>Name</h5>
-          <input type="text" v-model="name" />
+          <h6>Name</h6>
+          <b-form-input type="text" v-model="name" />
           <br />
-          <h5>Gender</h5>
-          <input type="text" v-model="gender" />
+          <h6>Gender</h6>
+          <b-form-input type="text" v-model="gender" />
           <br />
-          <h5>Phone Number</h5>
-          <input type="text" v-model="phoneNumber" />
+          <h6>Phone Number</h6>
+          <b-form-input type="text" v-model="phoneNumber" />
           <br />
-          <h5>Birth Date</h5>
-          <input type="text" v-model="birthDate" />
+          <h6>Birth Date</h6>
+          <b-form-input type="text" v-model="birthDate" />
           <br />
-          <h5>Address</h5>
-          <input type="text" v-model="address" />
+          <h6>Address</h6>
+          <b-form-input type="text" v-model="address" />
           <br />
-          <h5>City</h5>
-          <input type="text" v-model="city" />
+          <h6>City</h6>
+          <b-form-input type="text" v-model="city" />
           <br />
-          <h5>Gaji Yang Diharapkan</h5>
-          <input type="number" v-model="expectedSalary" min="1000000" />
+          <h6>Gaji Yang Diharapkan</h6>
+          <b-form-input type="number" v-model="expectedSalary" min="1000000" />
           <br />
           <br />
           <button class="button" type="submit">Submit</button>
@@ -60,6 +60,7 @@ import Vuex from "vuex";
 
 export default {
   name: "ModalProduct",
+  props: ["title"],
   data() {
     return {
       access_id: "",
@@ -74,7 +75,7 @@ export default {
       city: "",
 
       modalShow: false,
-      headerBgVariant: "warning",
+      headerBgVariant: "info",
       headerTextVariant: "light",
       bodyBgVariant: "light",
       bodyTextVariant: "dark",
@@ -82,9 +83,18 @@ export default {
       footerTextVariant: "dark"
     };
   },
+  computed: {
+    titleBasedOnProps() {
+      if (this.title === "addNanny") {
+        return "Add Nanny";
+      } else {
+        return "Register Nanny";
+      }
+    }
+  },
   methods: {
     confirmToCart() {
-      this.$store.dispatch("add_nanny", {
+      const nannyData = {
         name: this.name,
         gender: this.gender,
         phoneNumber: this.phoneNumber,
@@ -93,11 +103,13 @@ export default {
         expectedSalary: this.expectedSalary,
         imageUrl: this.image_url,
         city: this.city
-      });
+      };
+      this.title === "addNanny"
+        ? this.$store.dispatch("add_nanny", nannyData)
+        : this.$store.dispatch("register_nanny", nannyData);
       this.modalShow = false;
     }
-  },
-  created() {}
+  }
 };
 </script>
 
@@ -107,7 +119,7 @@ export default {
   position: relative;
   left: 15px;
   top: 1px;
-  background-color: rgb(221, 62, 62);
+  background-color: rgb(73, 148, 167);
   border: none;
   color: white;
   padding: 8px 30px;

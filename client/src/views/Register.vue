@@ -1,58 +1,43 @@
 <template>
-  <div>
-    <div class="wrapper">
-      <form class="form-signin" @submit.prevent="onSubmitDataRegister">
-        <h3 class="form-signin-heading">Register Sebagai {{ User }}</h3>
-        <input type="text" class="form-control" name="email" placeholder="Nama" v-model="name" />
-        <input
-          type="text"
-          class="form-control"
-          name="email"
-          placeholder="Email Address"
-          v-model="email"
-        />
-        <br />
-        <input
-          type="password"
-          class="form-control"
-          name="password"
-          placeholder="Password"
-          v-model="password"
-        />
-        <input
-          type="password"
-          class="form-control"
-          name="password2"
-          placeholder="Cek Password"
-          v-model="password2"
-        />
-        <br />
-        <input
-          type="text"
-          class="form-control"
-          name="Address"
-          placeholder="Address"
-          v-model="address"
-        />
-        <input type="text" class="form-control" name="City" placeholder="City" v-model="city" />
-        <input
-          type="text"
-          class="form-control"
-          name="URL logo"
-          placeholder="URL logo"
-          v-model="logoUrl"
-        />
-        <input
-          type="text"
-          class="form-control"
-          name="Phone Number"
-          placeholder="Phone Number"
-          v-model="phoneNumber"
-        />
-        <br />
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
-      </form>
-    </div>
+  <div class="wrapper">
+    <b-form class="form-signin" @submit.prevent="onSubmitDataRegister">
+      <h3 class="form-signin-heading">Register As {{ User }}</h3>
+      <b-form-input type="text" name="email" placeholder="Nama" v-model="name" />
+      <b-form-input type="text" name="email" placeholder="Email Address" v-model="email" />
+      <b-form-input type="password" name="password" placeholder="Password" v-model="password" />
+      <b-form-input
+        type="password"
+        name="password2"
+        placeholder="Cek Password"
+        v-model="password2"
+      />
+      <br />
+      <b-form-datepicker
+        v-if="user == 'parent'"
+        type="text"
+        name="Birth date"
+        placeholder="Birth date"
+        v-model="birthDate"
+      />
+      <b-form-select v-if="user == 'parent'" v-model="gender" :options="genders" />
+      <b-form-input type="text" name="Address" placeholder="Address" v-model="address" />
+      <b-form-input type="text" name="City" placeholder="City" v-model="city" />
+      <b-form-input
+        v-if="user == 'agency'"
+        type="text"
+        name="URL logo"
+        placeholder="URL logo"
+        v-model="logoUrl"
+      />
+      <b-form-input
+        type="text"
+        name="Phone Number"
+        placeholder="Phone Number"
+        v-model="phoneNumber"
+      />
+      <br />
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+    </b-form>
   </div>
 </template>
 
@@ -73,29 +58,51 @@ export default {
       city: "",
       logoUrl: "",
       phoneNumber: "",
-      User: ""
+      User: "",
+      birthDate: null,
+      gender: null,
+      genders: [
+        { value: null, text: "Please select your gender" },
+        { value: "female", text: "Female" },
+        { value: "male", text: "Male" }
+      ]
     };
   },
   methods: {
     onSubmitDataRegister() {
+      let userData = null;
+      if (this.user === "agency") {
+        userData = {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+          address: this.address,
+          city: this.city,
+          logoUrl: this.logoUrl,
+          phoneNumber: this.phoneNumber
+        };
+      } else {
+        userData = {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+          address: this.address,
+          city: this.city,
+          phoneNumber: this.phoneNumber,
+          gender: this.gender,
+          birthDate: this.birthDate
+        };
+      }
       if (this.password !== this.password2) {
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: "Password tidak sama!"
+          text: "Password not match!"
         });
       } else {
         this.$store.dispatch("register_user", {
           user: this.user,
-          data: {
-            name: this.name,
-            email: this.email,
-            password: this.password,
-            address: this.address,
-            city: this.city,
-            logoUrl: this.logoUrl,
-            phoneNumber: this.phoneNumber
-          }
+          data: userData
         });
       }
     }
@@ -183,7 +190,7 @@ export default {
     // }
   },
   created() {
-    this.user === "parent" ? (this.User = "Orang Tua") : (this.User = "Agensi");
+    this.user === "parent" ? (this.User = "Parent") : (this.User = "Agency");
   }
 };
 </script>

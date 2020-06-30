@@ -14,7 +14,7 @@
             @click.prevent="addNanny"
           >
             Add Nanny
-            <AddNannyModal></AddNannyModal>
+            <AddNannyModal :title="'addNanny'"></AddNannyModal>
           </div>
           <AgencyProfile :agency="userData"></AgencyProfile>
         </div>
@@ -55,11 +55,6 @@ export default {
     AddNannyModal
   },
   props: ["user", "id"],
-  methods: {
-    addNanny() {
-      this.$bvModal.show("modalAddNanny");
-    }
-  },
   created() {
     this.$store.dispatch("getAllCorrespondingMsg");
     if (localStorage.loginAs == "agency") {
@@ -94,6 +89,9 @@ export default {
     });
   },
   computed: {
+    addNanny() {
+      this.$bvModal.show("modalAddNanny");
+    },
     userData() {
       let user = null;
       this.user === "agency"
