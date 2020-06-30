@@ -166,6 +166,7 @@ export default {
   text-align: center;
 }
 .card-container {
+  margin-top: 35px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 }

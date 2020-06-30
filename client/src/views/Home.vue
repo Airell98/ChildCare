@@ -72,6 +72,7 @@ h2 {
   padding-top: 1rem;
 }
 .card-container {
+  margin-top:35px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 }
