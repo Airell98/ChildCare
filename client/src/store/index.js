@@ -42,7 +42,7 @@ export default new Vuex.Store({
     },
     set_nannyDetail(state, payload) {
       state.nannyDetail = payload;
-      console.log(payload)
+      console.log(payload);
     },
     set_childDetail(state, payload) {
       state.childDetail = payload;
@@ -247,7 +247,7 @@ export default new Vuex.Store({
         });
     },
     get_nanny(context, payload) {
-      console.log('masuk get nanny')
+      console.log("masuk get nanny");
       axios({
         method: "get",
         url: `${context.state.url}/nanny/${payload}`
@@ -255,7 +255,7 @@ export default new Vuex.Store({
         .then(response => {
           const { data } = response;
           context.commit("set_nannyDetail", data);
-          console.log(data)
+          console.log(data);
         })
         .catch(error => {
           if (error.response) {
@@ -437,21 +437,55 @@ export default new Vuex.Store({
           console.log(error.config);
         });
     },
-    addToWishList(context,payload){
+    get_allWishlist(context, payload) {
       axios({
-        method: "put",
-        url: `${context.state.url}/wishlist/${payload}`,
-        headers:{
+        method: "get",
+        url: `${context.state.url}/wishlist`,
+        headers: {
           access_token: localStorage.access_token
         }
       })
-      .then(response=>{
-        const { data } = response;
-        console.log(data.message)
+        .then(response => {
+          const { data } = response;
+          context.commit("set_wishlistOfNanny", data);
+        })
+        .catch(error => {
+          if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log("Error", error.message);
+          }
+          console.log(error.config);
+        });
+    },
+    addToWishList(context, payload) {
+      axios({
+        method: "post",
+        url: `${context.state.url}/wishlist/add/${payload}`,
+        headers: {
+          access_token: localStorage.access_token
+        }
       })
-      .catch(error=>{
-        console.log(error)
-      })
+        .then(response => {
+          const { data } = response;
+          console.log(data);
+        })
+        .catch(error => {
+          if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log("Error", error.message);
+          }
+          console.log(error.config);
+        });
     },
     get_parentById(context, payload) {
       axios({
@@ -535,6 +569,31 @@ export default new Vuex.Store({
         headers: {
           access_token: localStorage.access_token
         }
+      })
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log("Error", error.message);
+          }
+          console.log(error.config);
+        });
+    },
+    editNanny(context, payload) {
+      axios({
+        method: "put",
+        url: `${context.state.url}/nanny/${payload.id}`,
+        headers: {
+          access_token: localStorage.access_token
+        },
+        data: payload.data
       })
         .then(response => {
           console.log(response);

@@ -60,7 +60,7 @@ import Vuex from "vuex";
 
 export default {
   name: "ModalEditNanny",
-  props: ["title"],
+  props: ["dataNanny"],
   data() {
     return {
       access_id: "",
@@ -85,31 +85,40 @@ export default {
   },
   methods: {
     confirmEdit() {
-     
+      this.$store.dispatch("editNanny", {
+        id: this.$route.params.id,
+        data: {
+          name: this.name,
+          gender: this.gender,
+          phoneNumber: this.phoneNumber,
+          birthDate: this.birthDate,
+          address: this.address,
+          expectedSalary: this.expectedSalary,
+          imageUrl: this.image_url
+        }
+      });
+      modalShow: false;
     }
   },
   created() {
-   console.log(this.dataNanny)
-   this.name=this.dataNanny.name
-   this.gender=this.dataNanny.gender
-   this.phoneNumber=this.dataNanny.phoneNumber
-   this.birthDate=this.dataNanny.birthDate
-   this.address=this.dataNanny.address
-   this.expectedSalary=this.dataNanny.expectedSalary
-   this.image_url=this.dataNanny.imageUrl
-   this.city=this.dataNanny.city
+    console.log(this.dataNanny);
+    this.name = this.dataNanny.name;
+    this.gender = this.dataNanny.gender;
+    this.phoneNumber = this.dataNanny.phoneNumber;
+    this.birthDate = this.dataNanny.birthDate;
+    this.address = this.dataNanny.address;
+    this.expectedSalary = this.dataNanny.expectedSalary;
+    this.image_url = this.dataNanny.imageUrl;
+    this.city = this.dataNanny.city;
   },
   computed: {
-    dataNanny() {
-      return this.$store.state.nannyDetail;
-    },
     age() {
       return 2020 - parseInt(this.dataNanny.birthDate.slice(0, 5));
     },
-     loginAs(){
-      return localStorage.loginAs
+    loginAs() {
+      return localStorage.loginAs;
     }
-  },
+  }
 };
 </script>
 

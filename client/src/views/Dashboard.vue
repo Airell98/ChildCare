@@ -4,13 +4,16 @@
     <div class="body">
       <div class="left">
         <div v-if="user === 'parent'">
-          <div
-            class="Button"
-            v-if="loginAs == 'parent' && id == userLocal.id"
-            @click.prevent="addChild"
-          >
-            Add Child
-            <AddChildModal></AddChildModal>
+          <div class="button-container">
+            <div
+              class="Button"
+              v-if="loginAs == 'parent' && id == userLocal.id"
+              @click.prevent="addChild"
+            >
+              Add Child
+              <AddChildModal></AddChildModal>
+            </div>
+            <div class="Button" @click="gotoWishlist">Wishlist</div>
           </div>
           <ParentProfile :parent="userData"></ParentProfile>
         </div>
@@ -139,6 +142,9 @@ export default {
     addChild() {
       this.$bvModal.show("modalAddChild");
     },
+    gotoWishlist() {
+      this.$router.push({ name: "Wishlist", params: { id: this.id } });
+    },
     insertLocalStorage() {
       let email = "";
       console.log(this.$store.state.messages, "===========================");
@@ -195,8 +201,11 @@ export default {
   display: flex;
   flex-direction: column;
 }
+.button-container {
+  display: flex;
+}
 .Button {
-  width: 60%;
+  width: 40%;
   font-size: 2rem;
   font-weight: 600;
   padding: 0px 1rem;

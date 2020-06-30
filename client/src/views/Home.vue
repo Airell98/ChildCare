@@ -43,7 +43,6 @@ export default {
   },
   computed: {
     allNannies() {
-      console.log(window.screenY, window.screen.height);
       return this.$store.state.nannies;
     },
     login() {
@@ -71,12 +70,12 @@ h2 {
   padding-top: 1rem;
 }
 .card-container {
-  margin-top:35px;
+  margin-top: 35px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
 }
 .right {
-  min-height: 100vh;
+  min-height: 90vh;
   overflow-y: scroll;
 }
 .right::-webkit-scrollbar {
