@@ -4,7 +4,14 @@
     <div class="body">
       <div class="left">
         <div v-if="user === 'parent'">
-          <div class="Button" v-if="loginAs == 'parent' && id == userLocal.id">Add Child</div>
+          <div
+            class="Button"
+            v-if="loginAs == 'parent' && id == userLocal.id"
+            @click.prevent="addChild"
+          >
+            Add Child
+            <AddChildModal></AddChildModal>
+          </div>
           <ParentProfile :parent="userData"></ParentProfile>
         </div>
         <div v-if="user === 'agency'">
@@ -24,7 +31,7 @@
         <div class="title" v-if="user === 'parent'">Children List</div>
         <div class="title" v-if="user === 'agency'">Nanny List</div>
         <div class="card-container">
-          <Card v-for="nanny in cardDatas" :key="nanny.id" :nanny="nanny"></Card>
+          <Card v-for="nanny in cardDatas" :key="nanny.id" :data="nanny" :entityName="entityName"></Card>
         </div>
       </div>
     </div>
@@ -38,6 +45,7 @@ import ParentProfile from "../components/ParentProfile";
 import AgencyProfile from "../components/AgencyProfile";
 import ChatList from "../components/ChatList";
 import AddNannyModal from "../components/AddNannyModal";
+import AddChildModal from "../components/AddChildModal";
 import io from "socket.io-client";
 const serverUrl = "http://localhost:3001";
 const socket = io(serverUrl, {
@@ -52,7 +60,13 @@ export default {
     ParentProfile,
     AgencyProfile,
     ChatList,
-    AddNannyModal
+    AddNannyModal,
+    AddChildModal
+  },
+  data() {
+    return {
+      entityName: null
+    };
   },
   props: ["user", "id"],
   created() {
@@ -64,18 +78,24 @@ export default {
         this.id == this.userLocal.id
           ? this.$store.commit("set_agency", this.userLocal)
           : null;
+        this.entityName = "nanny";
       } else {
         this.$store.dispatch("get_parentById", this.id);
+        this.$store.dispatch("get_children");
+        this.entityName = "child";
       }
     }
     if (localStorage.loginAs == "parent") {
       if (this.user === "agency") {
         this.$store.dispatch("get_agencyById", this.id);
+        this.entityName = "nanny";
       } else {
         this.$store.dispatch("get_parentById", this.id);
         this.id == this.userLocal.id
           ? this.$store.commit("set_parent", this.userLocal)
           : null;
+        this.$store.dispatch("get_children");
+        this.entityName = "child";
       }
     }
     const user = JSON.parse(localStorage.user);
@@ -89,9 +109,6 @@ export default {
     });
   },
   computed: {
-    addNanny() {
-      this.$bvModal.show("modalAddNanny");
-    },
     userData() {
       let user = null;
       this.user === "agency"
@@ -108,10 +125,20 @@ export default {
     cardDatas() {
       if (this.user == "agency" && this.id == this.userLocal.id) {
         return this.$store.state.nannyByAgency;
+      } else if (this.user == "parent" && this.id == this.userLocal.id) {
+        return this.$store.state.children.filter(child => {
+          return child.ParentId == this.id;
+        });
       }
     }
   },
   methods: {
+    addNanny() {
+      this.$bvModal.show("modalAddNanny");
+    },
+    addChild() {
+      this.$bvModal.show("modalAddChild");
+    },
     insertLocalStorage() {
       let email = "";
       console.log(this.$store.state.messages, "===========================");
@@ -144,15 +171,9 @@ export default {
   min-height: 100vh;
 }
 .body {
-  /* background: url("https://image.freepik.com/free-photo/woman-children-sitting-floor_23-2147663975.jpg");
-  background-position: center center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
-  background-color: #dfdddd; */
   display: grid;
   grid-template-columns: 2fr 5fr;
-  transform: translateY(5rem);
+  transform: translateY(4rem);
 }
 .title {
   color: darkslategray;

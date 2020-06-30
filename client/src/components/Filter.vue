@@ -108,7 +108,7 @@ label {
   margin: 1rem auto;
   margin-bottom: 0px;
   padding: 0.3rem 1rem;
-  background-color: rgb(231, 230, 230);
+  background-color: rgb(247, 247, 247);
   color: darkslategray;
   width: 30%;
   border-radius: 3px;

@@ -1,5 +1,5 @@
 <template>
-  <b-navbar fixed="top" id="navbar">
+  <b-navbar fixed="top" sticky="true" id="navbar" style="transition: ease 400ms;">
     <b-navbar-brand id="logo" @click.prevent="gotoHome">
       <img src="../assets/childCare.png" />
       <p id="textLogo">
@@ -66,7 +66,7 @@ export default {
 
 <style scoped>
 #navbar {
-  height: 5rem;
+  height: 4rem;
   background-color: white;
 }
 #logo {
@@ -75,7 +75,7 @@ export default {
   cursor: pointer;
 }
 img {
-  width: 4rem;
+  width: 3rem;
 }
 #textLogo {
   font-size: 2rem;

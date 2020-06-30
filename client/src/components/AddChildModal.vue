@@ -1,9 +1,9 @@
 <template>
   <div class="modal-nanny">
     <b-modal
-      id="modalAddNanny"
+      id="modalAddChild"
       v-model="modalShow"
-      :title="titleBasedOnProps"
+      title="Add Children"
       centered
       ok-only
       ok-variant="secondary"
@@ -19,31 +19,17 @@
     >
       <form @submit.prevent="confirmToCart">
         <div>
-          <img v-bind:src="this.image_url" height="265" width="265" />
-          <img />
-          <h6>Image url</h6>
-          <b-form-input type="text" v-model="image_url" />
-          <br />
           <h6>Name</h6>
           <b-form-input type="text" v-model="name" />
           <br />
           <h6>Gender</h6>
           <b-form-select v-model="gender" :options="genders"></b-form-select>
           <br />
-          <h6>Phone Number</h6>
-          <b-form-input type="text" v-model="phoneNumber" />
-          <br />
           <h6>Birth Date</h6>
-          <b-form-datepicker type="text" v-model="birthDate" />
+          <b-form-datepicker v-model="birthDate" />
           <br />
-          <h6>Address</h6>
-          <b-form-input type="text" v-model="address" />
-          <br />
-          <h6>City</h6>
-          <b-form-input type="text" v-model="city" />
-          <br />
-          <h6>Gaji Yang Diharapkan</h6>
-          <b-form-input type="number" v-model="expectedSalary" min="1000000" />
+          <h6>Condition</h6>
+          <b-form-textarea type="text" v-model="condition" />
           <button class="button" type="submit">Submit</button>
         </div>
       </form>
@@ -53,8 +39,7 @@
 
 <script>
 export default {
-  name: "ModalProduct",
-  props: ["title"],
+  name: "ModalChild",
   data() {
     return {
       access_id: "",
@@ -63,10 +48,7 @@ export default {
       gender: null,
       phoneNumber: "",
       birthDate: "",
-      address: "",
-      expectedSalary: 1000000,
-      image_url: "",
-      city: "",
+      condition: "",
       genders: [
         { value: null, text: "Please select gender" },
         { value: "female", text: "Female" },
@@ -82,30 +64,16 @@ export default {
       footerTextVariant: "dark"
     };
   },
-  computed: {
-    titleBasedOnProps() {
-      if (this.title === "addNanny") {
-        return "Add Nanny";
-      } else {
-        return "Register Nanny";
-      }
-    }
-  },
   methods: {
     confirmToCart() {
-      const nannyData = {
+      const childData = {
         name: this.name,
         gender: this.gender,
         phoneNumber: this.phoneNumber,
         birthDate: this.birthDate,
-        address: this.address,
-        expectedSalary: this.expectedSalary,
-        imageUrl: this.image_url,
-        city: this.city
+        condition: this.condition
       };
-      this.title === "addNanny"
-        ? this.$store.dispatch("add_nanny", nannyData)
-        : this.$store.dispatch("register_nanny", nannyData);
+      this.$store.dispatch("add_child", childData);
       this.modalShow = false;
     }
   }
@@ -116,6 +84,7 @@ export default {
 <style scoped>
 .button {
   position: relative;
+  top: 1px;
   background-color: rgb(73, 148, 167);
   border: none;
   color: white;
@@ -124,8 +93,8 @@ export default {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+  margin-top: 1rem;
 }
-
 form {
   padding: 1rem;
 }

@@ -4,7 +4,7 @@
     <div class="Dropdown">
       <div class="Button">{{ text }}</div>
       <div class="Dropdown-content">
-        <div class="dropdown-item" v-if="text === 'REGISTER'" @click.prevent="gotoNanny">Nanny</div>
+        <div class="dropdown-item" v-if="text === 'REGISTER'" @click.prevent="showNannyModal">Nanny</div>
         <div class="dropdown-item" @click.prevent="gotoAgency">Agency</div>
         <div class="dropdown-item" @click.prevent="gotoParent">Parent</div>
       </div>
@@ -21,7 +21,7 @@ export default {
     AddNannyModal
   },
   methods: {
-    gotoNanny() {
+    showNannyModal() {
       this.$bvModal.show("modalAddNanny");
     },
     gotoAgency() {
