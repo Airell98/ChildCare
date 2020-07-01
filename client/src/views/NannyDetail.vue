@@ -95,9 +95,7 @@
 
       </div>
       <div class="container-searchbox2">
-        <button class='effect1' @click="onClickBerikutnya">Next
-           <span class="bg"></span>
-        </button>
+        <div class="button_cont" align="center"><a class="example_f" href="add-website-here" target="_blank" rel="nofollow"><span>Next</span></a></div>
       </div>
     </div>
   </div>
@@ -224,7 +222,7 @@ h5{
 }
 
 .container-searchbox{
-  background-color: rgba(255, 255, 255, 0.801);
+  /* background-color: rgba(255, 255, 255, 0.801); */
 
   padding-top: 5px;
   display:flex;
@@ -241,7 +239,7 @@ h5{
 }
 
 .container-searchbox2{
-  background-color: rgba(255, 255, 255, 0.801);
+  /* background-color: rgba(255, 255, 255, 0.801); */
 
   padding-top: 5px;
   display:flex;
@@ -472,94 +470,40 @@ img{
 	top:1px;
 }
 
-.effect1 {
-  color: #222;
-  text-decoration: none;
-  font-family: sans-serif;
-  font-size: 10px;
-  position: relative;
-  padding: 10px 20px 10px 20px;
-
-  -webkit-transition: all 0.3s;
-
-  -o-transition: all 0.3s;
-
-  transition: all 0.3s;
-
-  -webkit-transform: scale(3);
-
-      -ms-transform: scale(3);
-
-          transform: scale(3); /*change scale(3) to scale(1)*/
-}
-
-.effect1 .bg {
-  background: #222;
-  width: 30px;
-  height: 2px;
-  position: absolute;
-  right: 0;
-  top: 50%;
-  margin-top: -1px;
-  z-index: -1;
-
-  -webkit-transition: all 0.3s;
-
-  -o-transition: all 0.3s;
-
-  transition: all 0.3s;
-}
-
-.effect1:hover {
-  padding-right: 1px;
-  color: #fff;
-}
-
-.effect1:hover .bg {
-  height: 100%;
-  width: 100%;
-  -webkit-transform: translate(0, -50%);
-      -ms-transform: translate(0, -50%);
-          transform: translate(0, -50%);
-}
-
-.effect1 .bg:before, .effect1 .bg:after {
-  content: '';
-  height: 2px;
-  width: 1px;
-  background: #222;
-  position: absolute;
-  right: -2px;      
-  -webkit-transition: all 0.3s;      
-  -o-transition: all 0.3s;      
-  transition: all 0.3s;
-}
-
-.effect1 .bg:before {
-  bottom: 3px;
-  -webkit-transform: rotate(45deg);
-      -ms-transform: rotate(45deg);
-          transform: rotate(45deg);
-}
-.effect1 .bg:after{
-  top: 3px;
-  -webkit-transform: rotate(-45deg);
-      -ms-transform: rotate(-45deg);
-          transform: rotate(-45deg);
-}
-
-.effect1:hover .bg:before,
-.effect1:hover .bg:after{
-  right: 0;
-}
-
-.effect1:hover .bg:before{
-  bottom: 6px;
-}
-
-.effect1:hover .bg:after{
-  top: 6px;
-}
-
+.example_f {
+   border-radius: 4px;
+   background: linear-gradient(to right, #67b26b, #4ca2cb) !important;
+   border: none;
+   color: #FFFFFF;
+   text-align: center;
+   text-transform: uppercase;
+   font-size: 22px;
+   padding: 20px;
+   width: 200px;
+   transition: all 0.4s;
+   cursor: pointer;
+   margin: 5px;
+ }
+ .example_f span {
+   cursor: pointer;
+   display: inline-block;
+   position: relative;
+   transition: 0.4s;
+ }
+ .example_f span:after {
+   content: '>>';
+   position: absolute;
+   opacity: 0;
+   top: 0;
+   right: -20px;
+   transition: 0.5s;
+ }
+ .example_f:hover span {
+   padding-right: 25px;
+ }
+ .example_f:hover span:after {
+   opacity: 1;
+   right: 0;
+ }
 
 </style>
