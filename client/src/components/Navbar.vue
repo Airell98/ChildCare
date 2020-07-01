@@ -99,7 +99,7 @@ img {
   margin-right: 2rem;
 }
 .Button {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: 600;
   cursor: pointer;
   padding: 10px;
