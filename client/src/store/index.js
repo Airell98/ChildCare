@@ -709,6 +709,51 @@ export default new Vuex.Store({
           }
           console.log(error.config);
         });
+    },
+    slideNannyCardToTheRight(context, payload) {
+      axios({
+        method: "get",
+        url: `${context.state.url}/nanny/kanan/${payload}`
+      })
+        .then(response => {
+          context.commit("set_nannyDetail", response.data.nanny);
+          router.push(`/nanny/${response.data.nanny.id}`);
+        })
+        .catch(error => {
+          if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log("Error", error.message);
+          }
+          console.log(error.config);
+        });
+    },
+    slideNannyCardToTheLeft(context, payload) {
+      console.log(payload);
+      axios({
+        method: "get",
+        url: `${context.state.url}/nanny/kiri/${payload}`
+      })
+        .then(response => {
+          context.commit("set_nannyDetail", response.data.nanny);
+          router.push(`/nanny/${response.data.nanny.id}`);
+        })
+        .catch(error => {
+          if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log("Error", error.message);
+          }
+          console.log(error.config);
+        });
     }
   }
 });

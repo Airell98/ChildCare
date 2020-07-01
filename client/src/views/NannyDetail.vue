@@ -3,7 +3,11 @@
     <NavBar></NavBar>
     <div class="container-profile">
       <div class="container-searchbox">
-        <div class="button_cont" align="center">
+        <div
+          class="button_cont"
+          align="center"
+          @click.prevent="onClickSebelumnya"
+        >
           <a class="example_g" target="_blank" rel="nofollow">
             <span>Previous</span>
           </a>
@@ -115,7 +119,12 @@
       </div>
       <div class="container-searchbox2">
         <div class="button_cont" align="center">
-          <a class="example_f" target="_blank" rel="nofollow">
+          <a
+            class="example_f"
+            target="_blank"
+            @click.prevent="onClickBerikutnya"
+            rel="nofollow"
+          >
             <span>Next</span>
           </a>
         </div>
@@ -188,11 +197,7 @@ export default {
       this.$bvModal.show("modalEditNanny");
     },
     onClickSebelumnya() {
-      // this.$router.push({
-      //   name: "NannyDetail",
-      //   params: { id: Number(this.id) - 1 }
-      // });
-      // window.location.reload();
+      console.log("klik");
       this.$store.dispatch("slideNannyCardToTheLeft", Number(this.id) - 1);
     },
     onClickBerikutnya() {
