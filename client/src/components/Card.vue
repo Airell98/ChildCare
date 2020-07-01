@@ -75,6 +75,9 @@ export default {
   width: 100%;
   height: 100%;
 
+  display: grid;
+  grid-template-columns: 1fr;
+
   background: rgba(158, 157, 157, 0.9);
   color: #eeeeee;
   opacity: 0;

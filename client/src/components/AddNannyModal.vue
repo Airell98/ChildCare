@@ -22,7 +22,12 @@
           <img v-bind:src="this.image_url" height="265" width="265" />
           <img />
           <h6>Image url</h6>
-          <b-form-input type="text" v-model="image_url" />
+          <b-form-file
+            @change.prevent="uploadImg"
+            multiple
+            accept="image/jpeg, image/png"
+            ref="myFiles"
+          />
           <br />
           <h6>Name</h6>
           <b-form-input type="text" v-model="name" />
@@ -52,6 +57,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "ModalProduct",
   props: ["title"],
@@ -70,7 +76,7 @@ export default {
       genders: [
         { value: null, text: "Please select gender" },
         { value: "female", text: "Female" },
-        { value: "name", text: "Male" }
+        { value: "male", text: "Male" }
       ],
 
       modalShow: false,
@@ -92,6 +98,75 @@ export default {
     }
   },
   methods: {
+    uploadImg(event) {
+      let imageUrl;
+      // var $files = $("input[type=file]").get(0).files;
+      var files = event.target.files;
+      console.log(files, "files");
+      // var img = new Image();
+      // img.src = url; // local image url
+      if (files.length) {
+        // Reject big files
+        // if (files[0].size > $(this).data("max-size") * 1024) {
+        //   console.log("Please select a smaller file");
+        //   return false;
+        // }
+        // Begin file upload
+        console.log("Uploading file to Imgur..");
+        // Replace ctrlq with your own API key
+        var apiUrl = "https://api.imgur.com/3/image";
+        var apiKey = "6b9f0e258a0d16b";
+        // var settings = {
+        //   async: false,
+        //   crossDomain: true,
+        //   processData: false,
+        //   contentType: false,
+        //   type: "POST",
+        //   url: apiUrl,
+        //   headers: {
+        //     Authorization: "Client-ID " + apiKey,
+        //     Accept: "application/json"
+        //   },
+        //   mimeType: "multipart/form-data"
+        // };
+        var formData = new FormData();
+        formData.append("image", files[0]);
+        // settings.data = formData;
+        // Response contains stringified JSON
+        // Image URL available at response.data.link
+        axios({
+          async: false,
+          crossDomain: true,
+          processData: false,
+          contentType: false,
+          method: "POST",
+          url: apiUrl,
+          headers: {
+            Authorization: "Client-ID " + apiKey,
+            Accept: "application/json"
+          },
+          mimeType: "multipart/form-data",
+          data: formData
+        })
+          .then(response => {
+            // console.log(response.data.data.link, "response");
+            this.image_url = response.data.data.link;
+            console.log(this.logoUrl, "sdfh");
+          })
+          .catch(err => {
+            console.log(err.response.data);
+            this.logoUrl =
+              "https://e7.pngegg.com/pngimages/379/878/png-clipart-nanny-childcare-worker-child-care-infant-child-nanny-childcare.png";
+            Swal.fire({
+              icon: "error",
+              title: "Upload image failed",
+              text: "Changed to default image"
+            });
+          });
+      }
+      // $("input[type=file]").val("");
+      return imageUrl;
+    },
     confirmToCart() {
       const nannyData = {
         name: this.name,
