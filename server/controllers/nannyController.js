@@ -58,7 +58,6 @@ class NannyController {
   }
 
   static addNanny(req, res, next) {
-    console.log("adddd");
     const {
       name,
       gender,
@@ -86,7 +85,6 @@ class NannyController {
         res.status(201).json(nanny);
       })
       .catch((err) => {
-        console.log(err);
         next(err);
       });
   }
@@ -238,7 +236,7 @@ class NannyController {
   static findAllCorrespondingNanny(req, res, next) {
     const AgencyId = req.agencyData.id;
     Nanny.findAll({
-      where: { AgencyId },
+      where: { AgencyId, availability: false },
       attributes: [
         "id",
         "name",

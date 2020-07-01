@@ -4,11 +4,7 @@
     <div class="body">
       <div class="title">Your Wishlist</div>
       <div class="card-container">
-        <WishlistCard
-          v-for="nanny in nannies"
-          :key="nanny.id"
-          :nanny="nanny"
-        ></WishlistCard>
+        <WishlistCard v-for="nanny in nannies" :key="nanny.id" :nanny="nanny"></WishlistCard>
       </div>
     </div>
   </div>

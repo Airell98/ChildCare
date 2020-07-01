@@ -9,6 +9,7 @@ import Login from "../views/Login";
 import NannyDetail from "../views/NannyDetail";
 import Chat from "../views/ChatBox.vue";
 import Edit from "../views/Edit";
+import ThankyouPage from "../views/ThankyouPage";
 
 Vue.use(VueRouter);
 
@@ -17,6 +18,11 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home
+  },
+  {
+    path: "/thankyou",
+    name: "Thank You",
+    component: ThankyouPage
   },
   {
     path: "/parent/:id/wishlist",

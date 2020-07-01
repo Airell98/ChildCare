@@ -47,7 +47,24 @@ export default {
     deleteFromWishlist() {
       this.$store.dispatch("deleteFromWishlist", this.nanny.id);
     },
-    hireNanny() {}
+    hireNanny() {
+      let nannyId = null;
+      for (let i = 0; i < this.originalNannies.length; i++) {
+        if (this.nanny.name == this.originalNannies[i].name) {
+          nannyId = this.originalNannies[i].id;
+          break;
+        }
+      }
+      this.$store.dispatch("hireNanny", nannyId);
+    }
+  },
+  created() {
+    this.$store.dispatch("get_nannies");
+  },
+  computed: {
+    originalNannies() {
+      return this.$store.state.nannies;
+    }
   }
 };
 </script>
