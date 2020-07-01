@@ -75,10 +75,6 @@ export default {
   width: 100%;
   height: 100%;
 
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr 2fr 2fr 1fr;
-
   background: rgba(158, 157, 157, 0.9);
   color: #eeeeee;
   opacity: 0;
@@ -102,7 +98,6 @@ export default {
 }
 
 .condition {
-  line-height: 0;
   letter-spacing: 1px;
 }
 </style>

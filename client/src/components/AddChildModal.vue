@@ -52,7 +52,7 @@ export default {
       genders: [
         { value: null, text: "Please select gender" },
         { value: "female", text: "Female" },
-        { value: "name", text: "Male" }
+        { value: "male", text: "Male" }
       ],
 
       modalShow: false,

@@ -2,24 +2,9 @@
   <div class="wrapper">
     <b-form class="form-signin" @submit.prevent="onSubmitDataRegister">
       <h3 class="form-signin-heading">Register As {{ User }}</h3>
-      <b-form-input
-        type="text"
-        name="email"
-        placeholder="Nama"
-        v-model="name"
-      />
-      <b-form-input
-        type="text"
-        name="email"
-        placeholder="Email Address"
-        v-model="email"
-      />
-      <b-form-input
-        type="password"
-        name="password"
-        placeholder="Password"
-        v-model="password"
-      />
+      <b-form-input type="text" name="email" placeholder="Nama" v-model="name" />
+      <b-form-input type="text" name="email" placeholder="Email Address" v-model="email" />
+      <b-form-input type="password" name="password" placeholder="Password" v-model="password" />
       <b-form-input
         type="password"
         name="password2"
@@ -34,24 +19,15 @@
         placeholder="Birth date"
         v-model="birthDate"
       />
-      <b-form-select
-        v-if="user == 'parent'"
-        v-model="gender"
-        :options="genders"
-      />
-      <b-form-input
-        type="text"
-        name="Address"
-        placeholder="Address"
-        v-model="address"
-      />
+      <b-form-select v-if="user == 'parent'" v-model="gender" :options="genders" />
+      <b-form-input type="text" name="Address" placeholder="Address" v-model="address" />
       <b-form-input type="text" name="City" placeholder="City" v-model="city" />
-      <b-form-input
+      <b-form-file
         v-if="user == 'agency'"
-        type="text"
-        name="URL logo"
-        placeholder="URL logo"
-        v-model="logoUrl"
+        @change.prevent="uploadImg"
+        multiple
+        accept="image/jpeg, image/png"
+        ref="myFiles"
       />
       <b-form-input
         type="text"
@@ -61,12 +37,8 @@
       />
       <br />
       <div style="display:flex; justify-content:space-between">
-        <button class="btn btn-lg btn-primary" type="submit">
-          Register
-        </button>
-        <button class="btn btn-lg btn-info" @click="gotoHome">
-          Kembali
-        </button>
+        <button class="btn btn-lg btn-primary" type="submit">Register</button>
+        <button class="btn btn-lg btn-info" @click="gotoHome">Kembali</button>
       </div>
     </b-form>
   </div>
@@ -100,6 +72,75 @@ export default {
     };
   },
   methods: {
+    uploadImg(event) {
+      let imageUrl;
+      // var $files = $("input[type=file]").get(0).files;
+      var files = event.target.files;
+      console.log(files, "files");
+      // var img = new Image();
+      // img.src = url; // local image url
+      if (files.length) {
+        // Reject big files
+        // if (files[0].size > $(this).data("max-size") * 1024) {
+        //   console.log("Please select a smaller file");
+        //   return false;
+        // }
+        // Begin file upload
+        console.log("Uploading file to Imgur..");
+        // Replace ctrlq with your own API key
+        var apiUrl = "https://api.imgur.com/3/image";
+        var apiKey = "6b9f0e258a0d16b";
+        // var settings = {
+        //   async: false,
+        //   crossDomain: true,
+        //   processData: false,
+        //   contentType: false,
+        //   type: "POST",
+        //   url: apiUrl,
+        //   headers: {
+        //     Authorization: "Client-ID " + apiKey,
+        //     Accept: "application/json"
+        //   },
+        //   mimeType: "multipart/form-data"
+        // };
+        var formData = new FormData();
+        formData.append("image", files[0]);
+        // settings.data = formData;
+        // Response contains stringified JSON
+        // Image URL available at response.data.link
+        axios({
+          async: false,
+          crossDomain: true,
+          processData: false,
+          contentType: false,
+          method: "POST",
+          url: apiUrl,
+          headers: {
+            Authorization: "Client-ID " + apiKey,
+            Accept: "application/json"
+          },
+          mimeType: "multipart/form-data",
+          data: formData
+        })
+          .then(response => {
+            // console.log(response.data.data.link, "response");
+            this.logoUrl = response.data.data.link;
+            console.log(this.logoUrl, "sdfh");
+          })
+          .catch(err => {
+            console.log(err.response.data);
+            this.logoUrl =
+              "https://e7.pngegg.com/pngimages/379/878/png-clipart-nanny-childcare-worker-child-care-infant-child-nanny-childcare.png";
+            Swal.fire({
+              icon: "error",
+              title: "Upload image failed",
+              text: "Changed to default image"
+            });
+          });
+      }
+      // $("input[type=file]").val("");
+      return imageUrl;
+    },
     onSubmitDataRegister() {
       let userData = null;
       if (this.user === "agency") {
