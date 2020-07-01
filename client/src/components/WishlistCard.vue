@@ -54,7 +54,7 @@ export default {
 
 <style scoped>
 .cart {
-  width: 35rem;
+  width: 38rem;
   height: 17rem;
   display: flex;
   background-color: white;

@@ -31,14 +31,15 @@
         <video class="container-fluid" ref="rVideo" autoplay id="myVideo"></video>
         <h5>PARTNER ID : {{partnerId}}</h5>
         <div class="button-container">
-          <b-button variant="warning" type="submit" v-on:click="sendPeerId">Send Video Link</b-button>
-          <b-button
-            variant="success"
-            style="width: 20%;"
-            type="submit"
-            v-on:click="callSomeone"
-          >Call</b-button>
-          <b-button variant="danger" style="width: 20%;" type="submit" v-on:click="endCall">End Call</b-button>
+          <div class="button share" v-on:click="sendPeerId">
+            <img src="https://image.flaticon.com/icons/svg/1828/1828956.svg" alt />
+          </div>
+          <div class="button call" v-on:click="callSomeone">
+            <img src="https://image.flaticon.com/icons/svg/2947/2947981.svg" alt />
+          </div>
+          <div class="button end-call" v-on:click="endCall">
+            <img src="https://image.flaticon.com/icons/svg/481/481305.svg" alt />
+          </div>
         </div>
         <!-- <div style="display:flex;" class="content">
           <button
@@ -385,8 +386,36 @@ h5 {
 .button-container {
   display: flex;
   justify-content: space-between;
-  width: 40%;
-  transform: translateY(-5rem);
+  width: 30%;
+  transform: translateY(-4rem);
+}
+.button {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: ease 400ms;
+  filter: grayscale(50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.button:hover {
+  filter: grayscale(10%);
+  transform: translateY(-6px);
+}
+img {
+  width: 70%;
+  filter: invert(100%);
+}
+.share {
+  background-color: rgb(0, 95, 219);
+}
+.call {
+  background-color: rgb(4, 187, 44);
+}
+.end-call {
+  background-color: rgb(255, 0, 0);
 }
 li div {
   float: left;

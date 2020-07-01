@@ -42,8 +42,10 @@ export default {
   transform: translateX(40vw);
 }
 .card-container {
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   margin: 1rem;
 }
 </style>
