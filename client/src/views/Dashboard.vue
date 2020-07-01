@@ -50,7 +50,7 @@ import ChatList from "../components/ChatList";
 import AddNannyModal from "../components/AddNannyModal";
 import AddChildModal from "../components/AddChildModal";
 import io from "socket.io-client";
-const serverUrl = "http://localhost:3001";
+const serverUrl = "https://supernannywebcam.herokuapp.com";
 const socket = io(serverUrl, {
   path: "/chat"
 });

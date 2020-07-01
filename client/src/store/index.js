@@ -9,7 +9,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     messages: [],
-    url: "http://localhost:3001",
+    url: "https://supernannywebcam.herokuapp.com",
     nannies: [],
     children: [],
     agencies: [],
@@ -63,7 +63,7 @@ export default new Vuex.Store({
       if (role === "parent") {
         axios({
           method: "GET",
-          url: "http://localhost:3001/message/parent",
+          url: "https://supernannywebcam.herokuapp.com/message/parent",
           headers: {
             access_token: localStorage.getItem("access_token")
           }
@@ -77,7 +77,7 @@ export default new Vuex.Store({
       } else if (role === "agency") {
         axios({
           method: "GET",
-          url: "http://localhost:3001/message/agency",
+          url: "https://supernannywebcam.herokuapp.com/message/agency",
           headers: {
             access_token: localStorage.getItem("access_token")
           }
@@ -95,7 +95,7 @@ export default new Vuex.Store({
       if (role === "parent") {
         return axios({
           method: "GET",
-          url: "http://localhost:3001/message/parent/" + id,
+          url: "https://supernannywebcam.herokuapp.com/message/parent/" + id,
           headers: {
             access_token: localStorage.getItem("access_token")
           }
@@ -103,7 +103,7 @@ export default new Vuex.Store({
       } else if (role === "agency") {
         return axios({
           method: "GET",
-          url: "http://localhost:3001/message/agency/" + id,
+          url: "https://supernannywebcam.herokuapp.com/message/agency/" + id,
           headers: {
             access_token: localStorage.getItem("access_token")
           }
@@ -115,7 +115,7 @@ export default new Vuex.Store({
       if (role === "parent") {
         return axios({
           method: "POST",
-          url: "http://localhost:3001/message/parent/" + payload.id,
+          url: "https://supernannywebcam.herokuapp.com/message/parent/" + payload.id,
           headers: {
             access_token: localStorage.getItem("access_token")
           },
@@ -127,7 +127,7 @@ export default new Vuex.Store({
       } else if (role === "agency") {
         return axios({
           method: "POST",
-          url: "http://localhost:3001/message/agency/" + payload.id,
+          url: "https://supernannywebcam.herokuapp.com/message/agency/" + payload.id,
           headers: {
             access_token: localStorage.getItem("access_token")
           },
@@ -173,6 +173,31 @@ export default new Vuex.Store({
           }
           console.log(error.config);
         });
+    },
+    slideNannyCardToTheRight(context,payload){
+      console.log(payload)
+      axios({
+        method: "get",
+        url: `${context.state.url}/nanny/kanan/${payload}`
+      })
+      .then((response)=>{
+        context.commit("set_nannyDetail", response.data.nanny);
+        router.push(`/nanny/${response.data.nanny.id}`)
+      }).catch(err=>{
+        Swal.fire(err)
+      })
+    },
+    slideNannyCardToTheLeft(context,payload){
+      axios({
+        method: "get",
+        url: `${context.state.url}/nanny/kiri/${payload}`
+      })
+      .then((response)=>{
+        context.commit("set_nannyDetail", response.data.nanny);
+        router.push(`/nanny/${response.data.nanny.id}`)
+      }).catch(err=>{
+        Swal.fire(err)
+      })
     },
     get_agencies(context, payload) {
       Swal.fire({
@@ -588,9 +613,9 @@ export default new Vuex.Store({
     update_statusRead(context, payload) {
       let url = "";
       if (localStorage.loginAs == "agency") {
-        url = `http://localhost:3001/message/read/agency/${payload}`;
+        url = `https://supernannywebcam.herokuapp.com/message/read/agency/${payload}`;
       } else {
-        url = `http://localhost:3001/message/read/parent/${payload}`;
+        url = `hhttps://supernannywebcam.herokuapp.com/message/read/parent/${payload}`;
       }
       axios({
         method: "put",

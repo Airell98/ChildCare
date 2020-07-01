@@ -152,24 +152,27 @@ export default {
       this.$bvModal.show("modalEditNanny");
     },
     onClickSebelumnya() {
-      this.$router.push({
-        name: "NannyDetail",
-        params: { id: Number(this.id) - 1 }
-      });
-      window.location.reload();
+      // this.$router.push({
+      //   name: "NannyDetail",
+      //   params: { id: Number(this.id) - 1 }
+      // });
+      // window.location.reload();
+
+    this.$store.dispatch('slideNannyCardToTheLeft', Number(this.id)-1)
     },
     onClickBerikutnya() {
-      this.$router.push({
-        name: "NannyDetail",
-        params: { id: Number(this.id) + 1 }
-      });
-      window.location.reload();
-    }
+    //   this.$router.push({
+    //     name: "NannyDetail",
+    //     params: { id: Number(this.id) + 1 }
+    //   });
+    //   window.location.reload();
+    // }
+   
+  this.$store.dispatch('slideNannyCardToTheRight', Number(this.id)+1)
   },
-  mounted() {
-    console.log(this.dataNanny);
-  }
-};
+ 
+}
+}
 </script>
 
 <style scoped>

@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "postgres",
-    "password": "postgres",
-    "database": "FinalProject",
+    "username": "airell",
+    "password": "tauhidjannah",
+    "database": "SuperNanny",
     "host": "localhost",
     "dialect": "postgres"
   },
@@ -14,11 +14,11 @@
     "dialect": "postgres"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql",
-    "operatorsAliases": false
+    "username": "jfrbbczovibyaz",
+    "password": "18df2cd4a028dd4f8dd86ee9b326fa06398f1b72ee3734dcdd29ff08a9ff4ba1",
+    "database": "df3mi4shq3m7b",
+    "host": "ec2-34-239-241-25.compute-1.amazonaws.com",
+    "dialect": "postgres"
+    
   }
 }

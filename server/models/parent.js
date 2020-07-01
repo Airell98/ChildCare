@@ -52,6 +52,17 @@ module.exports = (sequelize, DataTypes) => {
             args: true,
             msg: "Please insert the correct email",
           },
+          isDuplicate(value) {
+            return Parent.findOne({
+              where: {
+                email: value,
+              },
+            }).then((data) => {
+              if (data) {
+                throw new Error("This email is already taken, try another one");
+              }
+            });
+          },
         },
       },
       password: {

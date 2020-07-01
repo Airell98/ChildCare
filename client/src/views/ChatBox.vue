@@ -28,34 +28,64 @@
       </div>-->
 
       <div style="background-color: black; flex: 7;">
-        <video class="container-fluid" ref="rVideo" autoplay id="myVideo"></video>
-        <h5>PARTNER ID : {{partnerId}}</h5>
+        <h2 v-if="!videoCondition"  class="myVideo">{{partnerName}}</h2>
+        <video
+        v-if="videoCondition"
+          class="container-fluid myVideo"
+          ref="rVideo"
+          autoplay
+         
+        ></video>
+        <h5>PARTNER ID : {{ partnerId }}</h5>
         <div class="button-container">
-          <b-button variant="warning" type="submit" v-on:click="sendPeerId">Send Video Link</b-button>
-          <b-button
+          <b-button variant="warning" type="submit" v-on:click="sendPeerId"
+            >Send Video Link</b-button
+          >
+          <!-- <b-button
             variant="success"
             style="width: 20%;"
             type="submit"
             v-on:click="callSomeone"
-          >Call</b-button>
-          <b-button variant="danger" style="width: 20%;" type="submit" v-on:click="endCall">End Call</b-button>
+            >Call</b-button
+          > -->
+          <div class="button call" @click.prevent="callSomeone">
+            <img src="https://image.flaticon.com/icons/svg/901/901120.svg " />
+          </div>
+          <div class="button endCall" @click.prevent="endCall">
+            <img src="https://image.flaticon.com/icons/svg/811/811481.svg" />
+          </div>
+          <div
+            v-if="volumeCondition"
+            class="button mute"
+            @click.prevent="unMute"
+          >
+            <img src="https://image.flaticon.com/icons/svg/786/786474.svg" />
+          </div>
+          <div v-if="!volumeCondition" class="button mute" @click.prevent="mute">
+            <img src="https://image.flaticon.com/icons/svg/786/786488.svg" />
+          </div>
+           <div v-if="playVideo" class="button playVideo" @click.prevent="play">
+            <img src="https://image.flaticon.com/icons/svg/907/907754.svg" />
+          </div>
+             <div v-if="!playVideo" class="button playVideo" @click.prevent="pause">
+            <img src="https://image.flaticon.com/icons/svg/1053/1053175.svg" />
+          </div>
         </div>
-        <!-- <div style="display:flex;" class="content">
-          <button
-            v-on:click="mute"
-            class="fas fa-microphone-alt-slash fa-3x"
-            id="button"
-            type="submit"
-          ></button>
-          <button v-on:click="unmute" class="fas fa-microphone fa-3x" id="button" type="submit"></button>
-        </div>-->
       </div>
 
       <div id="chatWindow" style="flex: 2">
-        <div style=" height:80vh; overflow-y:scroll;">
-          <ul v-for="(message, index) in messages" :key="index" class="list-group list-group-flush">
+        <div style=" height:82vh; overflow-y:scroll;">
+          <ul
+            v-for="(message, index) in messages"
+            :key="index"
+            class="list-group list-group-flush"
+          >
             <li>
-              <div v-if="message.sender == role" style="color:#34eb7d;" class="float-right">
+              <div
+                v-if="message.sender == role"
+                style="color:#34eb7d;"
+                class="float-right"
+              >
                 <p style="color: black;">{{ message.content }}</p>
               </div>
               <div v-else style="background-color:#fffffc;" class="float-left">
@@ -70,6 +100,7 @@
           v-model="inputMessage"
           class="form-control"
           placeholder="Enter a message"
+          v-on:keyup.enter="addMessage"
           required
         />
 
@@ -78,7 +109,9 @@
           class="btn btn-lg btn-primary btn-block"
           id="button"
           type="submit"
-        >Send</button>
+        >
+          Send
+        </button>
       </div>
     </div>
   </div>
@@ -89,7 +122,7 @@ import io from "socket.io-client";
 import Swal from "sweetalert2";
 import Navbar from "../components/Navbar";
 // const serverUrl = "https://websocket-joey.herokuapp.com";
-const serverUrl = "http://localhost:3001";
+const serverUrl = "https://supernannywebcam.herokuapp.com";
 const socket = io(serverUrl, {
   path: "/chat"
 });
@@ -119,8 +152,18 @@ export default {
       this.messages.push(pesan);
       this.$store.dispatch("update_statusRead", this.$route.params.id);
     });
+    socket.on('mute Video', (data)=>{
+      console.log('your partner has muted their mic')
+       window.localstream.getAudioTracks()[0].enabled = false
+    })
+       socket.on('unMute Video', (data)=>{
+         console.log('your partner has unmuted their mic')
+       window.localstream.getAudioTracks()[0].enabled = true
+    })
+    
     socket.on("receive peerId", data => {
       this.partnerId = data.peerId;
+      this.partnerName = data.name
       window.conn = peer.connect(this.partnerId);
     });
     peer.on("call", call => {
@@ -157,10 +200,12 @@ export default {
       Swal.fire(msg);
     });
     socket.on("end call", data => {
+      Swal.fire("end call");
       var video = this.$refs.rVideo;
       window.conn.close();
       this.call.close();
 
+      // video.pause();
       video.srcObject = null;
       // video.autoplay = false;
       // console.log(window.localstream.getTracks);
@@ -203,7 +248,11 @@ export default {
       connId: "",
       tempKey: "",
       telpon: null,
-      call: null
+      call: null,
+      volumeCondition: false,
+      videoCondition: true,
+      partnerName: '',
+      playVideo: false,
       // muted: "",
     };
   },
@@ -214,71 +263,76 @@ export default {
   },
   methods: {
     callSomeone() {
-      console.log("cal someone ========== baru");
-      window.localstream.getVideoTracks().forEach(el => {
-        console.log("looping 1");
-        el.enabled = true;
-      });
-      //console.log(window.localstream.getTracks())
-      window.localstream.getTracks().forEach(el => {
-        console.log("looping 2");
-        el.enabled = true;
-      });
-      this.telpon = peer.call(this.partnerId, window.localstream);
-      this.telpon.on("stream", Stream => {
-        this.startVideo();
-
-        console.log("masuk telpon call some one======");
-        window.peer_stream = Stream;
-        this.recStream2(Stream);
-      });
+      if (this.partnerId) {
+        this.telpon = peer.call(this.partnerId, window.localstream);
+        this.telpon.on("stream", Stream => {
+          this.startVideo();
+          // Swal.fire("sisi penenlpon");
+          console.log("masuk telpon call some one======");
+          window.peer_stream = Stream;
+          this.recStream2(Stream);
+        });
+      } else {
+        Swal.fire({
+          position: "icon",
+          icon: "success",
+          title: "You need a partner id",
+          showConfirmButton: false,
+          timer: 1500
+        });
+      }
     },
     startVideo() {
-      this.getLVideo({
-        success: stream => {
-          window.localstream = stream;
-          console.log(
-            window.localstream.getTracks()[0],
-            "this is the window localstream"
-          );
-          console.log(window.localstream, "this is the window localstream");
-        },
-        error: function(err) {
-          console.log(err);
-        }
-      });
+      this.getLVideo();
     },
     endCall() {
+      // Swal.fire("end my call");
       console.log(navigator);
-      window.conn.close();
+       window.conn.close()
       this.telpon.close();
       var video = this.$refs.rVideo;
-      video.pause();
+      // video.pause();
       video.srcObject = null;
-      video.autoplay = false;
-      console.log(window.localstream.getTracks);
-      localstream.getTracks().map(function(val) {
-        val.stop();
-      });
-      window.localstream.getVideoTracks().forEach(el => {
-        el.enabled = false;
-      });
-      window.localstream.getTracks().forEach(el => {
-        el.enabled = false;
-      });
+      // video.autoplay = false;
+
+      // localstream.getTracks().map(function(val) {
+      //   val.stop();
+      // });
+      // window.localstream.getVideoTracks().forEach(el => {
+      //   el.enabled = false;
+      // });
+      // window.localstream.getTracks().forEach(el => {
+      //   el.enabled = false;
+      // });
       socket.emit("end call", {
         msg: "close",
         roomKey: localStorage.getItem("roomKey")
       });
       //this.startVideo();
     },
-    unmute() {
-      var videoUnMute = this.$refs.rVideo;
-      videoUnMute.volume = 0.0;
+    pause(){
+     this.playVideo = true;
+     this.videoCondition = false
+    },
+    play(){
+    this.playVideo = false;
+     this.videoCondition = true;
+     var video = this.$refs.rVideo;
+     video.play()
+    },
+    unMute() {
+      this.volumeCondition = false
+      // var video = this.$refs.rVideo;
+      // video.volume = 1.0;
+      localstream.getAudioTracks()[0].enabled = true
+        //  socket.emit('unMute Video', {roomKey: localStorage.roomKey})
     },
     mute() {
-      var videoMute = this.$refs.rVideo;
-      videoMute.volume = 0.0;
+       this.volumeCondition = true
+      // var video = this.$refs.rVideo;
+      // video.volume = 0.0;
+      // socket.emit('mute Video', {roomKey: localStorage.roomKey})
+     window.localstream.getAudioTracks()[0].enabled = false
     },
     recStream2(stream) {
       console.log("masuk rec stream2", this.$refs.rVideo);
@@ -286,6 +340,7 @@ export default {
       video.srcObject = stream;
       window.peer_stream = stream;
       video.autoplay = true;
+      video.play();
       // window.localstream.getVideoTracks().forEach(el => {
       //   el.enabled = true
       // });
@@ -361,7 +416,8 @@ export default {
       console.log("masuk sendPeerId", this.peerId);
       let data = {
         peerId: this.peerId,
-        roomKey: localStorage.getItem("roomKey")
+        roomKey: localStorage.getItem("roomKey"),
+        name: JSON.parse(localStorage.user).name 
       };
       socket.emit("receive peerId", data);
     }
@@ -376,17 +432,17 @@ export default {
   margin: auto;
   display: flex;
   justify-content: center;
-  transform: translateY(3rem);
+  /* transform: translateY(1rem); */
 }
 h5 {
   color: white;
-  transform: translateY(-5rem);
+  transform: translateY(-6rem);
 }
 .button-container {
   display: flex;
   justify-content: space-between;
   width: 40%;
-  transform: translateY(-5rem);
+  transform: translateY(-6rem);
 }
 li div {
   float: left;
@@ -396,7 +452,7 @@ li div {
   border: rgb(45, 201, 71);
   border-radius: 10px;
 }
-#myVideo {
+.myVideo {
   /* position: fixed; */
   right: 0;
   bottom: 0;
@@ -425,5 +481,17 @@ li div {
 #chatWindow {
   padding-right: 5px;
   margin-left: 5px;
+}
+.button {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: ease 400ms;
+  filter: grayscale(50%);
+}
+.button:hover {
+  filter: grayscale(10%);
+  transform: translateY(-6px);
 }
 </style>
