@@ -8,9 +8,7 @@
       </p>
     </b-navbar-brand>
     <b-navbar-nav class="ml-auto" v-if="login">
-      <div class="username" @click.prevent="gotoDashboard">
-        {{ username.toUpperCase() }}
-      </div>
+      <div class="username" @click.prevent="gotoDashboard">{{ username.toUpperCase() }}</div>
       <div class="Button Edit" @click.prevent="gotoEdit">EDIT</div>
       <div class="Button Logout" @click.prevent="loggingOut">LOGOUT</div>
     </b-navbar-nav>
@@ -137,5 +135,6 @@ img {
 }
 .username:hover {
   color: rgb(74, 157, 168);
+  transform: scale(1.07);
 }
 </style>

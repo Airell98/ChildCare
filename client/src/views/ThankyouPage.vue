@@ -33,12 +33,6 @@
 import NavBar from "../components/Navbar";
 export default {
   name: "ThankYou",
-  props: [],
-  data() {},
-  created() {},
-  methods: {
-    onClickHome() {}
-  },
   components: {
     NavBar
   }
@@ -56,7 +50,7 @@ export default {
   margin-right: auto;
   align-items: center;
   justify-content: space-between;
-  padding-top: 5vw;
+  padding-top: 5vh;
   margin-top: 2vw;
 }
 .container-thank {
@@ -76,7 +70,7 @@ h1 {
 .container-detail {
   /* background: rgb(108, 131, 108); */
   min-width: 27vw;
-  height: 5vw;
+  height: 5vh;
 }
 h2 {
   color: #333;

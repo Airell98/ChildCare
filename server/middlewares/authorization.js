@@ -3,6 +3,8 @@ const { Child, Nanny, Parent, NannyWishlist } = require("../models");
 const authorizationUpdateParent = (req, res, next) => {
   if (!req.parentData.id || req.params.id != req.parentData.id) {
     next({ name: "AUTHORIZATION_FAILED" });
+  } else {
+    next();
   }
 };
 
