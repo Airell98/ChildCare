@@ -12,7 +12,9 @@
       <b-form-input v-model="age" :type="'number'"></b-form-input>
       <label>Salary (Max)</label>
       <b-form-input v-model="salary" :type="'number'"></b-form-input>
-      <div class="button" @click.prevent="filteringNannies">Filter</div>
+      <div class="button" @click.prevent="filteringNannies">
+        <img src="https://image.flaticon.com/icons/svg/483/483356.svg" alt />
+      </div>
     </div>
   </div>
 </template>
@@ -90,6 +92,7 @@ export default {
   background-color: rgba(137, 139, 139, 0.205);
   border-radius: 1rem;
   padding: 1rem 0rem;
+  padding-bottom: 0;
 }
 h3 {
   text-align: center;
@@ -104,20 +107,22 @@ label {
   transform: translateY(2px);
 }
 .button {
-  text-align: center;
-  margin: 1rem auto;
-  margin-bottom: 0px;
+  margin: 1.2rem auto 0 auto;
   padding: 0.3rem 1rem;
-  background-color: rgb(247, 247, 247);
-  color: darkslategray;
-  width: 30%;
-  border-radius: 3px;
+  background-color: rgb(235, 235, 235);
+  width: 3rem;
+  height: 3rem;
+  border-radius: 100%;
   cursor: pointer;
-  font-size: 1.1rem;
-  font-weight: 450;
+  transition: ease 400ms;
 }
 .button:hover {
   background-color: white;
-  color: rgb(36, 61, 61);
+  transform: translateY(-4px);
+}
+img {
+  transform: translateY(-10%);
+  width: 120%;
+  height: 120%;
 }
 </style>

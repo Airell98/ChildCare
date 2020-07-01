@@ -49,9 +49,9 @@ export default {
     },
     defaultProfile() {
       if (this.data.gender === "male") {
-        return "https://logicplus.com.au/wp-content/uploads/2017/07/default-profile-img-male.jpg";
+        return "https://image.flaticon.com/icons/svg/2922/2922510.svg";
       } else {
-        return "https://images.assetsdelivery.com/compings_v2/photoplotnikov/photoplotnikov1703/photoplotnikov170300047.jpg";
+        return "https://image.flaticon.com/icons/svg/2922/2922561.svg";
       }
     }
   },
@@ -74,7 +74,7 @@ export default {
 .container {
   margin: 15px;
   width: 15rem;
-  height: 16rem;
+  height: 18rem;
 
   top: 0;
   right: 0;

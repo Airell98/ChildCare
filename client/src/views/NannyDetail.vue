@@ -59,7 +59,10 @@
             </div>
             <div class="container-content-brief-detail-button">
               <div>
-                <button @click.prevent="onClickEditInfo" v-if="loginAs=='agency'">Edit Info</button>
+                <button
+                  @click.prevent="onClickEditInfo"
+                  v-if="loginAs=='agency' && authorized"
+                >Edit Info</button>
                 <div>
                   <EditNannyModal :dataNanny="dataNanny"></EditNannyModal>
                 </div>
@@ -127,6 +130,12 @@ export default {
     },
     loginAs() {
       return localStorage.loginAs;
+    },
+    authorized() {
+      const user = JSON.parse(localStorage.user);
+      const agencyId = this.dataNanny.AgencyId;
+      console.log(agencyId, user.id);
+      return user.id == agencyId ? true : false;
     }
   },
   methods: {

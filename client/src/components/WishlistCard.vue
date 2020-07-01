@@ -8,16 +8,24 @@
       'background-size': 'cover', 
     }]"
     ></div>
-    <div class="cart-content">
-      <div class="cart-description">
-        <div class="name">{{nanny.name.toUpperCase()}}</div>
-        <div class="city">{{nanny.city.toUpperCase()}}</div>
-        <div class="salary">Rp. {{nanny.expectedSalary}}</div>
-      </div>
-      <div class="button-container">
-        <b-button variant="warning" @click.prevent="gotoChat">Chat</b-button>
-        <b-button variant="success" @click.prevent="hireNanny">Hire</b-button>
-        <b-button variant="danger" @click.prevent="deleteFromWishlist">Delete</b-button>
+    <div class="right">
+      <div class="cart-content">
+        <div class="cart-description">
+          <div class="name">{{nanny.name.toUpperCase()}}</div>
+          <div class="city">{{nanny.city.toUpperCase()}}</div>
+          <div class="salary">Rp. {{nanny.expectedSalary}}</div>
+        </div>
+        <div class="button-container">
+          <div class="button chat" @click.prevent="gotoChat">
+            <img src="https://image.flaticon.com/icons/svg/2462/2462719.svg" />
+          </div>
+          <div class="button hire" @click.prevent="hireNanny">
+            <img src="https://image.flaticon.com/icons/svg/1243/1243560.svg" />
+          </div>
+          <div class="button delete" @click.prevent="deleteFromWishlist">
+            <img src="https://image.flaticon.com/icons/svg/1214/1214428.svg" />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -46,24 +54,33 @@ export default {
 
 <style scoped>
 .cart {
-  width: 30rem;
-  height: 10rem;
+  width: 35rem;
+  height: 17rem;
   display: flex;
   background-color: white;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   margin: 2rem;
-  border-radius: 1rem;
+  align-items: center;
+  border-radius: 8px;
 }
 .image {
+  width: 60%;
+  height: 105%;
+  border-radius: 8px;
+}
+.right {
+  display: flex;
+  flex-direction: column;
   width: 40%;
-  border-radius: 1rem 0 0 1rem;
+  height: 90%;
 }
 .cart-content {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 60%;
-  margin: 1rem 2rem;
+  text-align: center;
+  padding-top: 20%;
+  height: 100%;
 }
 .name {
   font-size: 1.4rem;
@@ -78,8 +95,35 @@ export default {
   font-weight: bold;
 }
 .button-container {
-  width: 100%;
+  width: 80%;
   display: flex;
   justify-content: space-between;
+  margin: 0 auto;
+}
+.button {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: ease 400ms;
+  filter: grayscale(50%);
+}
+.button:hover {
+  filter: grayscale(10%);
+  transform: translateY(-6px);
+}
+.chat {
+  background-color: rgb(110, 219, 0);
+}
+.hire {
+  background-color: rgb(4, 187, 44);
+}
+.delete {
+  background-color: rgb(255, 0, 0);
+}
+img {
+  width: 70%;
+  margin: 12% auto;
+  filter: invert(100%);
 }
 </style>

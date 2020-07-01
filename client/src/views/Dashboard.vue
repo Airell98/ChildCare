@@ -10,7 +10,10 @@
               v-if="loginAs == 'parent' && id == userLocal.id"
               @click.prevent="addChild"
             >
-              Add Child
+              <span>
+                <img src="https://image.flaticon.com/icons/svg/992/992651.svg" alt />
+              </span>
+              Child
               <AddChildModal></AddChildModal>
             </div>
             <div class="Button" @click="gotoWishlist">Wishlist</div>
@@ -23,7 +26,10 @@
             v-if="loginAs == 'agency' && id ==  userLocal.id"
             @click.prevent="addNanny"
           >
-            Add Nanny
+            <span>
+              <img src="https://image.flaticon.com/icons/svg/992/992651.svg" alt />
+            </span>
+            Nanny
             <AddNannyModal :title="'addNanny'"></AddNannyModal>
           </div>
           <AgencyProfile :agency="userData"></AgencyProfile>
@@ -88,20 +94,24 @@ export default {
         this.id == this.userLocal.id
           ? this.$store.commit("set_agency", this.userLocal)
           : null;
+        this.entityName = "nanny";
       } else {
         this.$store.dispatch("get_parentById", this.id);
         this.$store.dispatch("get_children");
+        this.entityName = "child";
       }
     }
     if (localStorage.loginAs == "parent") {
       if (this.user === "agency") {
         this.$store.dispatch("get_agencyById", this.id);
+        this.entityName = "nanny";
       } else {
         this.$store.dispatch("get_parentById", this.id);
         this.$store.dispatch("get_children");
         this.id == this.userLocal.id
           ? this.$store.commit("set_parent", this.userLocal)
           : null;
+        this.entityName = "child";
       }
     }
   },
@@ -175,14 +185,14 @@ export default {
   transform: translateY(4rem);
 }
 .title {
-  color: darkslategray;
-  background-color: rgba(255, 255, 255, 0.719);
+  color: #9a1750;
+  background-color: #ffd5b25b;
   border-radius: 10px;
   font-size: 2rem;
   font-weight: 500;
   padding: 0px 1rem;
   margin: 3rem;
-  margin-bottom: 0px;
+  margin-bottom: 5rem;
   text-align: center;
 }
 .card-container {
@@ -199,22 +209,29 @@ export default {
 }
 .Button {
   width: 40%;
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 600;
   padding: 0px 1rem;
   margin: 3rem auto;
-  background-color: rgba(255, 255, 255, 0.849);
   padding: 0.2rem;
   border-radius: 10px;
   text-align: center;
   font-weight: 500;
-  color: rgb(60, 129, 129);
+  color: white;
   cursor: pointer;
-  transition: ease 370ms;
+  transition: ease 400ms;
+  align-items: center;
+  background-color: rgb(4, 187, 44);
+  filter: grayscale(50%);
 }
 .Button:hover {
-  background-color: rgb(255, 255, 255);
-  color: rgb(33, 70, 70);
+  filter: grayscale(0%);
+}
+img {
+  width: 25%;
+  transform: translateY(-2px);
+  filter: invert(100%);
+  transition: ease 400ms;
 }
 .right {
   height: 160vh;
