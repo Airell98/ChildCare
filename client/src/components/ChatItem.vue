@@ -1,13 +1,19 @@
 <template>
-  <div class="name" @click.prevent="goToRoom">
-    <span>
-      <img :src="picture" />
-    </span>
-    {{ companionChat.toUpperCase() }}
-    <p>
-      {{ message.content }}
-      <span v-if="message.unread">{{ message.unread }}</span>
-    </p>
+  <div class="item-container" @click.prevent="goToRoom">
+    <div
+      class="image"
+      :style="[{
+        'background': `url(${picture || defaultPicture})`,
+        'background-position': 'center center',
+        'background-size': 'cover',}]"
+    ></div>
+    <div class="text">
+      <div class="name">{{companionChat.toUpperCase()}}</div>
+      <div class="message">
+        <div class="lastest-msg">{{lastest}}</div>
+        <div class="unread" v-if="unread > 0">{{unread}}</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -40,14 +46,20 @@ export default {
         }
       }
       return imgUrl;
+    },
+    defaultPicture() {
+      return "https://image.flaticon.com/icons/svg/848/848043.svg";
+    },
+    unread() {
+      return this.message.unread > 0 ? this.message.unread : "";
+    },
+    lastest() {
+      return this.message.content.length < 25
+        ? this.message.content
+        : this.message.content.slice(0, 24) + "...";
     }
   },
   methods: {
-    // goToRoom(key){
-    //   console.log('Button')
-    //   localStorage.setItem('roomKey', key)
-    //   this.$router.push('/chat')
-    // }
     goToRoom() {
       localStorage.setItem(
         "roomKey",
@@ -61,21 +73,40 @@ export default {
 </script>
 
 <style scoped>
-.name {
+.item-container {
   cursor: pointer;
-  font-size: 1.5rem;
-  margin: 4px;
-  font-weight: 500;
-  color: darkslategray;
+  display: flex;
+  margin-bottom: 2rem;
 }
-img {
+.image {
+  width: 4rem;
+  height: 4rem;
   border-radius: 100%;
-  width: 2rem;
+  margin-right: 1rem;
 }
-.name:hover {
-  color: rgb(27, 68, 68);
+.text {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 90%;
+  width: 70%;
 }
-p {
+.name {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+.message {
   font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+.unread {
+  font-weight: 500;
+  background-color: #9a1750;
+  border-radius: 100%;
+  width: 1.5rem;
+  height: 1.5rem;
+  text-align: center;
+  color: white;
 }
 </style>

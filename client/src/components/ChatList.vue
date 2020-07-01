@@ -1,6 +1,6 @@
 <template>
   <div class="chat-box">
-    <h3>Chat From</h3>
+    <div class="text">Chats</div>
     <div class="chat-container">
       <ChatItem v-for="(message, index) in messageStore" :key="index" :message="message"></ChatItem>
     </div>
@@ -33,20 +33,23 @@ export default {
 .chat-box {
   width: 90%;
   height: fit-content;
-  margin: 1rem auto;
-  padding-top: 0.3rem;
-  background-color: rgba(255, 255, 255, 0.432);
+  margin: 5rem auto;
+  background-color: white;
+  border-radius: 1rem;
 }
-h3 {
-  color: darkslategray;
-  margin: 1rem 2rem;
+.text {
+  background-color: #9a1750;
+  border-radius: 1rem 1rem 0 0;
+  color: #ffffff;
+  font-size: 2rem;
+  padding: 1% 4%;
 }
 .chat-container {
   display: flex;
   flex-direction: column;
-  margin: 1rem auto;
-  width: 75%;
-  height: 14rem;
+  margin: 2rem auto;
+  width: 90%;
+  height: 20rem;
   padding-bottom: 1rem;
   overflow-y: scroll;
 }

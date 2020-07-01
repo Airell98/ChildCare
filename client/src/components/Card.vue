@@ -20,18 +20,6 @@
       </div>
     </div>
   </div>
-
-  <!-- <div class="card" @click.prevent="gotoDetail">
-    <div class="card-img">
-      <img :src="data.imageUrl || defaultProfile" />
-    </div>
-    <div class="card-body">
-      <div class="name">{{ `${data.name} (${age})` }}</div>
-      <div v-if="entityName === 'child'" class="gender">{{ data.gender }}</div>
-      <div v-if="entityName === 'nanny'" class="city">{{ data.city }}</div>
-      <div v-if="entityName === 'nanny'" class="salary">Rp. {{ data.expectedSalary }}</div>
-    </div>
-  </div>-->
 </template>
 
 <script>
@@ -44,9 +32,9 @@ export default {
     },
     defaultProfile() {
       if (this.data.gender === "male") {
-        return "https://logicplus.com.au/wp-content/uploads/2017/07/default-profile-img-male.jpg";
+        return "https://image.flaticon.com/icons/svg/2922/2922510.svg";
       } else {
-        return "https://images.assetsdelivery.com/compings_v2/photoplotnikov/photoplotnikov1703/photoplotnikov170300047.jpg";
+        return "https://image.flaticon.com/icons/svg/2922/2922561.svg";
       }
     }
   },
@@ -67,7 +55,6 @@ export default {
 
 <style scoped>
 
-
 .container {
   margin :15px;
   width: 500px;
@@ -77,7 +64,6 @@ export default {
   margin: auto;
   
   cursor: pointer;
-  
   -webkit-box-shadow: 0 0 5px #000;
   box-shadow: 0 0 5px #000;
 
@@ -225,9 +211,4 @@ img {
   margin-top: 2px;
   font-size: 18px;
 }
-.salary {
-  margin-top: 2px;
-  font-size: 20px;
-  font-weight: 550;
-} */
 </style>

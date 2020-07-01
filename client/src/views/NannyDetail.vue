@@ -80,7 +80,15 @@
               <button class=buttonA
             @click.prevent='onClickEditInfo' v-if="loginAs=='agency'"> Edit Info </button>
               <div>
-                <EditNannyModal> </EditNannyModal>
+                <button
+                  @click.prevent="onClickEditInfo"
+                  v-if="loginAs=='agency' && authorized"
+                >Edit Info</button>
+                <div>
+                  <EditNannyModal :dataNanny="dataNanny"></EditNannyModal>
+                </div>
+                <button @click.prevent="onClickWishList" v-if="loginAs=='parent'">+ Wish List</button>
+                <div></div>
               </div>
             <button class=buttonA
             @click.prevent='onClickWishList' v-if="loginAs=='parent'"> + Wish List </button>
@@ -136,6 +144,12 @@ export default {
     },
     loginAs() {
       return localStorage.loginAs;
+    },
+    authorized() {
+      const user = JSON.parse(localStorage.user);
+      const agencyId = this.dataNanny.AgencyId;
+      console.log(agencyId, user.id);
+      return user.id == agencyId ? true : false;
     }
   },
   methods: {

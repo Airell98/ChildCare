@@ -31,9 +31,9 @@ export default {
     },
     defaultProfile() {
       if (this.parent.gender === "male") {
-        return "https://logicplus.com.au/wp-content/uploads/2017/07/default-profile-img-male.jpg";
+        return "https://image.flaticon.com/icons/svg/2922/2922510.svg";
       } else {
-        return "https://images.assetsdelivery.com/compings_v2/photoplotnikov/photoplotnikov1703/photoplotnikov170300047.jpg";
+        return "https://image.flaticon.com/icons/svg/2922/2922561.svg";
       }
     }
   }
@@ -42,12 +42,22 @@ export default {
 
 <style scoped>
 .data-box {
+  /* border: 1px rgb(114, 114, 114) solid;
+  background: linear-gradient(#ffd5b2, #ffd5df);
+  background-color: rgba(137, 139, 139, 0.205);
   width: 90%;
   height: fit-content;
-  margin: 1rem auto;
-  padding-top: 0.3rem;
-  background-color: rgba(255, 255, 255, 0.432);
+  margin: auto;
   border-radius: 1rem;
+  box-shadow: 0 8px 16px -8px rgba(0, 0, 0, 0.4); */
+  width: 90%;
+  height: fit-content;
+  margin: 0rem auto;
+  transform: translateY(5%);
+  background-color: rgba(137, 139, 139, 0.205);
+  border-radius: 1rem;
+  padding: 1rem 0rem;
+  padding-bottom: 0;
 }
 .image {
   margin: auto;
@@ -59,22 +69,29 @@ img {
 }
 .name {
   font-size: 2rem;
-  font-weight: 600;
   margin: 1rem;
-  color: darkslategray;
+  /* font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif; */
+  color: #9a1750;
+  font-weight: 600;
   text-align: center;
 }
 .data-container {
   display: flex;
-  margin: 1rem auto;
-  width: 70%;
-  padding-bottom: 1rem;
+  /* border:1px black solid; */
+  margin: 1rem;
+  padding-top: 2.2%;
+  padding-left: 4.2%;
+  padding-bottom: 2.2%;
+  border-radius: 25px;
+  /* background-color: #cadef1; */
 }
 .label {
-  margin-right: 1rem;
+  margin-right: 1.5rem;
 }
 .text {
-  line-height: 90%;
-  font-size: 1.3rem;
+  /* font-family: "Courier New", Courier, monospace; */
+  font-size: 1.2rem;
+  /* font-weight: 550; */
+  color: #9a1750;
 }
 </style>

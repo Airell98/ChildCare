@@ -82,14 +82,14 @@ h2 {
   display: none;
 }
 .title {
-  color: darkslategray;
-  background-color: rgba(255, 255, 255, 0.719);
+  color: #9a1750;
+  background-color: #ffd5b25b;
   border-radius: 10px;
   font-size: 2rem;
   font-weight: 600;
   padding: 0px 1rem;
   margin: 3rem;
-  margin-bottom: 0px;
+  margin-bottom: 5rem;
   text-align: center;
 }
 </style>
