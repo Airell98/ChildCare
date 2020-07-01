@@ -2,9 +2,24 @@
   <div class="wrapper">
     <b-form class="form-signin" @submit.prevent="onSubmitDataRegister">
       <h3 class="form-signin-heading">Register As {{ User }}</h3>
-      <b-form-input type="text" name="email" placeholder="Nama" v-model="name" />
-      <b-form-input type="text" name="email" placeholder="Email Address" v-model="email" />
-      <b-form-input type="password" name="password" placeholder="Password" v-model="password" />
+      <b-form-input
+        type="text"
+        name="email"
+        placeholder="Nama"
+        v-model="name"
+      />
+      <b-form-input
+        type="text"
+        name="email"
+        placeholder="Email Address"
+        v-model="email"
+      />
+      <b-form-input
+        type="password"
+        name="password"
+        placeholder="Password"
+        v-model="password"
+      />
       <b-form-input
         type="password"
         name="password2"
@@ -19,8 +34,17 @@
         placeholder="Birth date"
         v-model="birthDate"
       />
-      <b-form-select v-if="user == 'parent'" v-model="gender" :options="genders" />
-      <b-form-input type="text" name="Address" placeholder="Address" v-model="address" />
+      <b-form-select
+        v-if="user == 'parent'"
+        v-model="gender"
+        :options="genders"
+      />
+      <b-form-input
+        type="text"
+        name="Address"
+        placeholder="Address"
+        v-model="address"
+      />
       <b-form-input type="text" name="City" placeholder="City" v-model="city" />
       <b-form-input
         v-if="user == 'agency'"
@@ -36,7 +60,14 @@
         v-model="phoneNumber"
       />
       <br />
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
+      <div style="display:flex; justify-content:space-between">
+        <button class="btn btn-lg btn-primary" type="submit">
+          Register
+        </button>
+        <button class="btn btn-lg btn-info" @click="gotoHome">
+          Kembali
+        </button>
+      </div>
     </b-form>
   </div>
 </template>
@@ -105,89 +136,10 @@ export default {
           data: userData
         });
       }
+    },
+    gotoHome() {
+      this.$router.push("/");
     }
-    // onSubmitDataRegister() {
-    //   this.onConfirmDataRegister({
-    //     name: this.name,
-    //     email: this.email,
-    //     password: this.password,
-    //     address: this.address,
-    //     city: this.city,
-    //     logoUrl: this.logoUrl,
-    //     phoneNumber: this.phoneNumber
-    //   });
-    // },
-    // onConfirmDataRegister(value) {
-    //   if (this.User == "Agensi") {
-    //     if (this.password !== this.password2) {
-    //       Swal.fire({
-    //         icon: "error",
-    //         title: "Oops...",
-    //         text: "Password tidak sama!"
-    //       });
-    //     } else {
-    //       axios({
-    //         method: "Post",
-    //         url: "http://localhost:3001/agency/register",
-    //         data: value
-    //       })
-    //         .then(({ data }) => {
-    //           console.log(data);
-    //           Swal.fire("Good job!", "Berhasil Mendaftar", "success");
-    //           (this.name = ""),
-    //             (this.email = ""),
-    //             (this.password = ""),
-    //             (this.password2 = ""),
-    //             (this.address = ""),
-    //             (this.city = ""),
-    //             (this.logoUrl = ""),
-    //             (this.phoneNumber = "");
-    //         })
-    //         .catch(err => {
-    //           Swal.fire({
-    //             icon: "error",
-    //             title: "Oops...",
-    //             text: "Something went wrong!",
-    //             footer: err
-    //           });
-    //         });
-    //     }
-    //   } else {
-    //     if (this.password !== this.password2) {
-    //       Swal.fire({
-    //         icon: "error",
-    //         title: "Oops...",
-    //         text: "Password tidak sama!"
-    //       });
-    //     } else {
-    //       axios({
-    //         method: "Post",
-    //         url: "http://localhost:3001/parent/register",
-    //         data: value
-    //       })
-    //         .then(({ data }) => {
-    //           console.log(data);
-    //           Swal.fire("Good job!", "Berhasil Mendaftar", "success");
-    //           (this.name = ""),
-    //             (this.email = ""),
-    //             (this.password = ""),
-    //             (this.password2 = ""),
-    //             (this.address = ""),
-    //             (this.city = ""),
-    //             (this.logoUrl = ""),
-    //             (this.phoneNumber = "");
-    //         })
-    //         .catch(err => {
-    //           Swal.fire({
-    //             icon: "error",
-    //             title: "Oops...",
-    //             text: "Something went wrong!",
-    //             footer: err
-    //           });
-    //         });
-    //     }
-    //   }
-    // }
   },
   created() {
     this.user === "parent" ? (this.User = "Parent") : (this.User = "Agency");
@@ -195,7 +147,10 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.wrapper {
+  transform: translateY(0%);
+}
 .form-signin {
   max-width: 580px;
   padding: 15px 35px 45px;
@@ -206,13 +161,19 @@ export default {
 
 .form-signin-heading {
   margin-bottom: 30px;
+  font-family: "Playfair Display", serif;
 }
 
 .form-control {
+  font-family: "Courier New", Courier, monospace;
   position: relative;
   font-size: 16px;
   height: auto;
   padding: 10px;
+}
+.btn {
+  margin-top: 2rem;
+  font-family: "Courier New", Courier, monospace;
 }
 
 input[type="text"] {

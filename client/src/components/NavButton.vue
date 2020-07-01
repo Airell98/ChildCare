@@ -4,7 +4,13 @@
     <div class="Dropdown">
       <div class="Button">{{ text }}</div>
       <div class="Dropdown-content">
-        <div class="dropdown-item" v-if="text === 'REGISTER'" @click.prevent="showNannyModal">Nanny</div>
+        <div
+          class="dropdown-item"
+          v-if="text === 'REGISTER'"
+          @click.prevent="showNannyModal"
+        >
+          Nanny
+        </div>
         <div class="dropdown-item" @click.prevent="gotoAgency">Agency</div>
         <div class="dropdown-item" @click.prevent="gotoParent">Parent</div>
       </div>
@@ -57,7 +63,7 @@ export default {
   margin: 0px 1rem;
 }
 .Dropdown:hover .Button {
-  transform: translateY(4px);
+  transform: scale(1.2);
   color: #a0c1b8;
 }
 .Dropdown-content {

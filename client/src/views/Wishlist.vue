@@ -4,7 +4,11 @@
     <div class="body">
       <div class="title">Your Wishlist</div>
       <div class="card-container">
-        <WishlistCard v-for="nanny in nannies" :key="nanny.id" :nanny="nanny"></WishlistCard>
+        <WishlistCard
+          v-for="nanny in nannies"
+          :key="nanny.id"
+          :nanny="nanny"
+        ></WishlistCard>
       </div>
     </div>
   </div>
@@ -31,6 +35,9 @@ export default {
 </script>
 
 <style scoped>
+.body {
+  transform: translateY(4rem);
+}
 .title {
   font-family: "Playfair Display", serif;
   letter-spacing: 2px;

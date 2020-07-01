@@ -120,7 +120,7 @@ label {
 }
 .button:hover {
   background-color: white;
-  transform: translateY(-4px);
+  transform: scale(1.2);
 }
 img {
   transform: translateY(-10%);
