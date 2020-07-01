@@ -1,4 +1,4 @@
-require("dotenv").config();
+// require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -32,6 +32,15 @@ io.on("connection", (socket) => {
   });
   socket.on("end call", (payload) => {
     socket.broadcast.in(payload.roomKey).emit("end call", payload.msg);
+  });
+  socket.on("mute Video", (payload) => {
+    socket.broadcast.in(payload.roomKey).emit("mute Video");
+  });
+  socket.on("unMute Video", (payload) => {
+    socket.broadcast.in(payload.roomKey).emit("unMute Video");
+  });
+  socket.on("pause", (payload) => {
+    socket.broadcast.in(payload.roomKey).emit("pause");
   });
   socket.on("join-room", (roomKey) => {
     console.log("Joining room ", roomKey);
