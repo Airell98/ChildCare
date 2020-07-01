@@ -49,9 +49,14 @@
         v-model="phoneNumber"
       />
       <br />
-      <button class="btn btn-lg btn-primary btn-block" type="submit">
-        Update
-      </button>
+      <div style="display:flex; justify-content:space-between">
+        <button class="btn btn-lg btn-primary" type="submit">
+          Update
+        </button>
+        <button class="btn btn-lg btn-info" @click="gotoHome">
+          Kembali
+        </button>
+      </div>
     </b-form>
   </div>
 </template>
@@ -106,12 +111,14 @@ export default {
           birthDate: this.birthDate
         };
       }
-      console.log(this.id);
       this.$store.dispatch("edit_user", {
         user: this.user,
         id: this.id,
         data: userData
       });
+    },
+    gotoHome() {
+      this.$router.push("/");
     }
   },
   created() {
