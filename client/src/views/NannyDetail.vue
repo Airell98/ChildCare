@@ -3,7 +3,7 @@
     <NavBar></NavBar>
     <div class="container-profile">
       <div class="container-searchbox">
-        <button class='effect1' @click="onClickSebelumnya">&#8592; Previous
+        <div class="button_cont" align="center"><a class="example_g" href="add-website-here" target="_blank" rel="nofollow"><span>Previous</span></a></div>
       
         </button>
       </div>
@@ -491,7 +491,7 @@ img{
    transition: 0.4s;
  }
  .example_f span:after {
-   content: '>>';
+   content:'→';
    position: absolute;
    opacity: 0;
    top: 0;
@@ -505,5 +505,53 @@ img{
    opacity: 1;
    right: 0;
  }
+
+
+
+
+
+
+.example_g {
+   border-radius: 4px;
+   background: linear-gradient(to right, #67b26b, #4ca2cb) !important;
+   border: none;
+   color: #FFFFFF;
+   text-align: center;
+   text-transform: uppercase;
+   font-size: 22px;
+   padding: 20px;
+   width: 200px;
+   transition: all 0.4s;
+   cursor: pointer;
+   margin: 5px;
+ }
+ .example_g span {
+   cursor: pointer;
+   display: inline-block;
+   position: relative;
+   transition: 0.4s;
+ }
+ .example_g span:after {
+   content:'←';
+   position: absolute;
+   opacity: 0;
+   top: 0;
+   left: -20px;
+   transition: 0.5s;
+ }
+ .example_g:hover span {
+   padding-left: 25px;
+ }
+ .example_g:hover span:after {
+   opacity: 1;
+   left: 0;
+ }
+
+
+
+
+
+
+
 
 </style>
