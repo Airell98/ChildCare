@@ -8,20 +8,42 @@
 </head>
 
 <body>
-  This agency:<br>
-  <img src="{{agencyLogoUrl}}" alt="{{agencyName}}" width="100"><br>
-  Name: {{agencyName}},<br>
-  Email: {{agencyEmail}},<br>
-  Address: {{agencyAddress}},<br>
-  Phone number: {{agencyCity}},<br>
-  City: {{agencyCity}},<br>
-
-  has <b>accepted</b> your hiring proposal for this nanny:<br>
-  <img src="{{nannyImageUrl}}" alt="{{nannyName}}" width="100"><br>
-  Nanny's name: {{nannyName}},<br>
-  Nanny's gender: {{nannyGender}},<br>
-  Nanny's phone number: {{nannyGender}},<br>
-  Nanny's birth date: {{nannyBirthDate}}<br>
+  <div class="card mb-3"
+    style="max-width: 540px; margin-left: auto; margin-right: auto; border: 5px solid #58595B; border-radius:5%;">
+    <div class="row no-gutters" style="text-align: center;">
+      <div class="col-md-4" style="text-align: center;">
+        <h1 style="text-align: center;">Proposal Acceptance</h1>
+        <img src="https://i.imgur.com/aByakG8.png" class="logo-footer" style="height: 250px;">
+      </div>
+      <div class="col-md-8" style="text-align: center;">
+        <div class="card-body" style="text-align: center;">
+          <hr>
+          <h2 class="card-title">Congratulations! This agency:</h2>
+          <div class="col-md-4" style="text-align: center;">
+            <img src="{{nannyImageUrl}}" class="logo-footer" style="height: 250px;">
+          </div>
+          <p class="card-text">Name: {{agencyName}}</p>
+          <p class="card-text">Email: {{agencyEmail}}</p>
+          <p class="card-text">Address: {{agencyAddress}}</p>
+          <p class="card-text">Phone number: {{agencyPhoneNumber}}</p>
+          <p class="card-text">Address: {{agencyAddress}}</p>
+          <p class="card-text">City: {{agencyCity}}</p>
+          <hr>
+          <p class="card-text">has <b>accepted</b> your hiring proposal for this nanny:</p>
+          <div class="col-md-4" style="text-align: center;">
+            <img src="{{nannyImageUrl}}" class="logo-footer" style="height: 250px;">
+          </div>
+          <p class="card-text">Nanny's name: {{nannyName}}</p>
+          <p class="card-text">Nanny's gender: {{nannyGender}}</p>
+          <p class="card-text">Nanny's phone number: {{nannyGender}}</p>
+          <p class="card-text">Nanny's birth date: {{nannyDate}} {{nannyMonth}} {{nannyYear}}</p>
+          <hr>
+          <div class="card">
+            <p class="card-text">Thank you for using Super Nanny</p>
+          </div>
+        </div>
+        <h6 style="color: grey; text-align: center;">© Super Nanny 2020. All rights reserved</h6>
+      </div>
 </body>
 
 </html>

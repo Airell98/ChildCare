@@ -10,6 +10,7 @@ class EmailingController {
       parentEmail,
       parentName,
       parentPhoneNumber,
+      parentGender,
       nannyId,
       nannyBirthDate,
       nannyGender,
@@ -22,6 +23,7 @@ class EmailingController {
         parentCity = parent.dataValues.city;
         parentEmail = parent.dataValues.email;
         parentName = parent.dataValues.name;
+        parentGender = parent.dataValues.gender;
         parentPhoneNumber = parent.dataValues.phoneNumber;
 
         return Nanny.findOne({
@@ -59,6 +61,21 @@ class EmailingController {
           })
         );
 
+        const monthNames = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+
         var mailOptions = {
           from: "supernanny.business@gmail.com",
           to: agencyEmail,
@@ -71,8 +88,12 @@ class EmailingController {
             parentEmail,
             parentName,
             parentPhoneNumber,
+            parentGender,
             nannyId,
             nannyBirthDate,
+            nannyDate: nannyBirthDate.getDate(),
+            nannyMonth: monthNames[nannyBirthDate.getMonth()],
+            nannyYear: nannyBirthDate.getYear(),
             nannyGender,
             nannyImageUrl,
             nannyName,
