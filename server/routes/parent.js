@@ -9,8 +9,11 @@ router.get("/", parentController.getAllParents);
 router.get("/:id", parentController.getParentById);
 router.use(authenticationParent);
 router.get("/allchildren", parentController.getAllChildren);
-router.use(authorizationUpdateParent);
-router.put("/:id", parentController.updateDataParent);
-router.delete("/:id", parentController.deleteById);
+router.put(
+  "/:id",
+  authorizationUpdateParent,
+  parentController.updateDataParent
+);
+router.delete("/:id", authorizationUpdateParent, parentController.deleteById);
 
 module.exports = router;

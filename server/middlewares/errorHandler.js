@@ -1,7 +1,7 @@
 const { map } = require("../app");
 
 function errorHandler(err, req, res, next) {
-  // console.log(err);
+  console.log(err);
   let error = "INTERNAL_SERVER_ERROR";
   let errorMessages = [];
   let errorStatus = 500;
@@ -34,6 +34,7 @@ function errorHandler(err, req, res, next) {
     });
   } else {
     errorMessages.push("Something went wrong");
+
   }
 
   res.status(errorStatus).json({

@@ -1,4 +1,4 @@
-const { Child, Nanny, Parent } = require("../models");
+const { Child, Nanny, Parent, NannyWishlist } = require("../models");
 
 const authorizationUpdateParent = (req, res, next) => {
   if (!req.parentData.id || req.params.id != req.parentData.id) {
@@ -41,9 +41,23 @@ const authorizationAgency = (req, res, next) => {
       }
     });
 };
+const wishlistAuth = (req, res, next) => {
+  NannyWishlist.findOne({ where: { id: req.params.id } })
+    .then((resp) => {
+      if (resp.dataValues.ParentId != req.parentData.id) {
+        next({ name: "AUTHORIZATION_FAILED" });
+      } else {
+        next();
+      }
+    })
+    .catch((err) => {
+      next(err);
+    });
+};
 
 module.exports = {
   authorizationUpdateParent,
   authorizationParent,
   authorizationAgency,
+  wishlistAuth,
 };

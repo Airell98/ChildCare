@@ -1,13 +1,12 @@
-const router = require('express').Router()
-const NannyController = require('../controllers/nannyController')
-const { authenticationParent, authenticationAgency } = require('../middlewares/authentication')
-const { authorizationParent } = require('../middlewares/authorization')
+const router = require("express").Router();
+const WishlistController = require("../controllers/wishlistController");
 
+const { authenticationParent } = require("../middlewares/authentication");
+const { wishlistAuth } = require("../middlewares/authorization");
 
-router.get('/', authenticationParent, NannyController.getAllWishlist ) // melihat list wishlist parent utk nanny yg sudah dipilih
-router.put('/:nannyId', authenticationParent, NannyController.addToWishList) // memasukkan nanny yg dipilih ke dlm wishlist utk diwawancara
+router.use(authenticationParent);
+router.get("/", WishlistController.getAllWishList);
+router.post("/add/:nannyId", WishlistController.addToWishlist);
+router.delete("/delete/:id", wishlistAuth, WishlistController.deleteWishlist);
 
-router.put('/remove/:nannyId', authenticationAgency, NannyController.removeWishList) // untuk parent setuju namun kemudain agency tidak setuju kirim nanny
-
-
-module.exports = router
+module.exports = router;

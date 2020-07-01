@@ -1,2 +1,0 @@
-# ChildCare
-Final Project

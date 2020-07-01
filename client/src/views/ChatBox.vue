@@ -1,105 +1,87 @@
 <template>
-  <div
-    style="background-color: #fffbfa; width:100%; margin:auto; display:flex; justify-content: center;"
-  >
-    <div id="roomKeyWindow" style="flex: 2">
-      <h3>
-        PARTNER ID
-      </h3>
-      <p>{{ partnerId }}</p>
-      <!-- <input
-        type="text"
-        id="connId"
-        class="form-control"
-        placeholder="enter a connection ID"
-        v-model="tempKey"
-      /> -->
-      <button
-        class="btn btn-lg btn-success btn-block"
-        id="conn_button"
-        type="submit"
-        v-on:click="sendPeerId"
-      >
-        Send Video Link
-      </button>
-
-      <button
-        class="btn btn-lg btn-danger btn-block"
-        id="call_button"
-        type="submit"
-        v-on:click="callSomeone"
-      >
-        Call
-      </button>
-
-      <button
-        class="btn btn-lg btn-danger btn-block"
-        id="call_button"
-        type="submit"
-        v-on:click="endCall"
-      >
-        End Call
-      </button>
-    </div>
-
-    <hr />
-    <div style="background-color: black; flex: 4;">
-      <video class="container-fluid" ref="rVideo" autoplay id="myVideo"></video>
-
-      <div style="display:flex;" class="content">
-        <button
-          v-on:click="mute"
-          class="fas fa-microphone-alt-slash fa-3x"
-          id="button"
-          type="submit"
-        ></button>
-
-        <button
-          v-on:click="unmute"
-          class="fas fa-microphone  fa-3x"
-          id="button"
-          type="submit"
-        ></button>
+  <div>
+    <Navbar></Navbar>
+    <div class="chat-body">
+      <div style="background-color: black; flex: 7;">
+        <video
+          class="container-fluid"
+          ref="rVideo"
+          autoplay
+          id="myVideo"
+        ></video>
+        <div class="ui">
+          <h5>PARTNER ID : {{ partnerId }}</h5>
+          <div class="button-container">
+            <div class="button share" v-on:click="sendPeerId">
+              <img
+                src="https://image.flaticon.com/icons/svg/1828/1828956.svg"
+                alt
+              />
+            </div>
+            <div class="button call" v-on:click="callSomeone">
+              <img
+                src="https://image.flaticon.com/icons/svg/2947/2947981.svg"
+                alt
+              />
+            </div>
+            <div class="button end-call" v-on:click="endCall">
+              <img
+                src="https://image.flaticon.com/icons/svg/481/481305.svg"
+                alt
+              />
+            </div>
+          </div>
+        </div>
+        <!-- <div style="display:flex;" class="content">
+          <button
+            v-on:click="mute"
+            class="fas fa-microphone-alt-slash fa-3x"
+            id="button"
+            type="submit"
+          ></button>
+          <button v-on:click="unmute" class="fas fa-microphone fa-3x" id="button" type="submit"></button>
+        </div>-->
       </div>
-    </div>
-    <div id="chatWindow" style="flex: 2">
-      <div style="height: 490px; overflow:scroll;">
-        <ul
-          v-for="(message, index) in messages"
-          :key="index"
-          class="list-group list-group-flush"
+
+      <div id="chatWindow" style="flex: 2">
+        <div style=" height:80vh; overflow-y:scroll;">
+          <ul
+            v-for="(message, index) in messages"
+            :key="index"
+            class="list-group list-group-flush"
+          >
+            <li>
+              <div
+                v-if="message.sender == role"
+                style="color:#34eb7d;"
+                class="float-right"
+              >
+                <p style="color: black;">{{ message.content }}</p>
+              </div>
+              <div v-else style="background-color:#fffffc;" class="float-left">
+                <p style="color: black;">{{ message.content }}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <input
+          type="text"
+          id="message"
+          v-model="inputMessage"
+          class="form-control"
+          placeholder="Enter a message"
+          required
+        />
+
+        <button
+          v-on:click="addMessage"
+          class="btn btn-lg btn-primary btn-block"
+          id="button"
+          type="submit"
         >
-          <li>
-            <div
-              v-if="message.sender == true"
-              style="color:#34eb7d;"
-              class="float-right"
-            >
-              <p style="color: black;">{{ message.message }}</p>
-            </div>
-            <div v-else style="background-color:#fffffc;" class="float-left">
-              <p style="color: black;">{{ message.message }}</p>
-            </div>
-          </li>
-        </ul>
+          Send
+        </button>
       </div>
-      <input
-        type="text"
-        id="message"
-        v-model="inputMessage"
-        class="form-control"
-        placeholder="Enter a message"
-        required
-      />
-
-      <button
-        v-on:click="addMessage"
-        class="btn btn-lg btn-primary btn-block"
-        id="button"
-        type="submit"
-      >
-        Send
-      </button>
     </div>
   </div>
 </template>
@@ -107,35 +89,41 @@
 <script>
 import io from "socket.io-client";
 import Swal from "sweetalert2";
+import Navbar from "../components/Navbar";
 // const serverUrl = "https://websocket-joey.herokuapp.com";
-const serverUrl = "http://localhost:3001"
+const serverUrl = "http://localhost:3001";
 const socket = io(serverUrl, {
   path: "/chat"
 });
 var peer = new Peer();
 export default {
   name: "ChatBox",
-  components: {},
+  components: {
+    Navbar
+  },
   created() {
-    if (localStorage.getItem('reloaded')) {
-      localStorage.removeItem('reloaded');
+    //alert("test lagi")
+    if (localStorage.getItem("reloaded")) {
+      localStorage.removeItem("reloaded");
     } else {
-      localStorage.setItem('reloaded', '1');
+      localStorage.setItem("reloaded", "1");
       location.reload();
     }
+
     this.test();
-    socket.emit('join-room', localStorage.getItem('roomKey'))
+    socket.emit("join-room", localStorage.getItem("roomKey"));
     this.startVideo();
     socket.on("sendMessage", msg => {
       let pesan = {
-        message: msg.message,
-        sender: false
+        content: msg.content,
+        sender: msg.sender
       };
       this.messages.push(pesan);
+      this.$store.dispatch("update_statusRead", this.$route.params.id);
     });
     socket.on("receive peerId", data => {
       this.partnerId = data.peerId;
-      this.conn = peer.connect(this.partnerId);
+      window.conn = peer.connect(this.partnerId);
     });
     peer.on("call", call => {
       Swal.fire({
@@ -148,16 +136,22 @@ export default {
         confirmButtonText: "Yes"
       }).then(result => {
         if (result.value) {
-          this.startVideo();
+          // this.startVideo();
           return Promise.all([this.startVideo()]).then(data => {
+            console.log("masuk promise this start Video ()");
             call.answer(window.localstream);
             call.on("stream", stream => {
+              this.startVideo();
               window.peer_stream = stream;
               this.recStream2(stream);
             });
+            this.call = call;
           });
         } else {
-          socket.emit("reject phone call", {msg: "phone rejected", roomKey: localStorage.getItem('roomKey')});
+          socket.emit("reject phone call", {
+            msg: "phone rejected",
+            roomKey: localStorage.getItem("roomKey")
+          });
         }
       });
     });
@@ -166,22 +160,39 @@ export default {
     });
     socket.on("end call", data => {
       var video = this.$refs.rVideo;
+      window.conn.close();
+      this.call.close();
 
-      video.pause();
-      video.src = "";
-      video.autoplay = false;
-
-      console.log(window.localstream.getTracks);
-      localstream.getTracks().map(function(val) {
-        val.stop();
-      });
-      window.localstream.getVideoTracks().forEach(el => {
-        el.enabled = false;
-      });
-      window.localstream.getTracks().forEach(el => {
-        el.enabled = false;
-      });
+      video.srcObject = null;
+      // video.autoplay = false;
+      // console.log(window.localstream.getTracks);
+      // localstream.getTracks().map(function(val) {
+      //   val.stop();
+      // });
+      // window.localstream.getVideoTracks().forEach(el => {
+      //   el.enabled = false;
+      // });
+      // window.localstream.getTracks().forEach(el => {
+      //   el.enabled = false;
+      // });
     });
+    peer.on("connection", () => {
+      console.log("Other already connected");
+    });
+    peer.on("error", console.log);
+    this.$store
+      .dispatch("getAllMsg", this.$route.params.id)
+      .then(resp => {
+        if (this.role == "parent") {
+          localStorage.setItem("partnerKey", resp.data[0].Agency.email);
+        } else if (this.role == "agency") {
+          localStorage.setItem("partnerKey", resp.data[0].Parent.email);
+        }
+        this.messages = resp.data;
+      })
+      .catch(err => {
+        console.log(err);
+      });
   },
   data() {
     return {
@@ -192,20 +203,34 @@ export default {
       peer_id: "",
       conn: "",
       connId: "",
-      tempKey: ""
+      tempKey: "",
+      telpon: null,
+      call: null
       // muted: "",
     };
   },
+  computed: {
+    role() {
+      return localStorage.loginAs;
+    }
+  },
   methods: {
     callSomeone() {
+      console.log("cal someone ========== baru");
       window.localstream.getVideoTracks().forEach(el => {
+        console.log("looping 1");
         el.enabled = true;
       });
+      //console.log(window.localstream.getTracks())
       window.localstream.getTracks().forEach(el => {
+        console.log("looping 2");
         el.enabled = true;
       });
-      let telpon = peer.call(this.partnerId, window.localstream);
-      telpon.on("stream", Stream => {
+      this.telpon = peer.call(this.partnerId, window.localstream);
+      this.telpon.on("stream", Stream => {
+        this.startVideo();
+
+        console.log("masuk telpon call some one======");
         window.peer_stream = Stream;
         this.recStream2(Stream);
       });
@@ -227,13 +252,12 @@ export default {
     },
     endCall() {
       console.log(navigator);
-
+      window.conn.close();
+      this.telpon.close();
       var video = this.$refs.rVideo;
-
       video.pause();
-      video.src = "";
+      video.srcObject = null;
       video.autoplay = false;
-
       console.log(window.localstream.getTracks);
       localstream.getTracks().map(function(val) {
         val.stop();
@@ -244,19 +268,22 @@ export default {
       window.localstream.getTracks().forEach(el => {
         el.enabled = false;
       });
-      socket.emit("end call", {msg: "close", roomKey: localStorage.getItem('roomKey')});
-      this.startVideo()
+      socket.emit("end call", {
+        msg: "close",
+        roomKey: localStorage.getItem("roomKey")
+      });
+      //this.startVideo();
     },
     unmute() {
-      window.localstream.getAudioTracks()[0].enabled = true;
-      localstream.getAudioTracks()[0].enabled = true;
+      var videoUnMute = this.$refs.rVideo;
+      videoUnMute.volume = 0.0;
     },
     mute() {
-      window.localstream.getAudioTracks()[0].enabled = false;
-      localstream.getAudioTracks()[0].enabled = false;
+      var videoMute = this.$refs.rVideo;
+      videoMute.volume = 0.0;
     },
-
     recStream2(stream) {
+      console.log("masuk rec stream2", this.$refs.rVideo);
       var video = this.$refs.rVideo;
       video.srcObject = stream;
       window.peer_stream = stream;
@@ -270,44 +297,129 @@ export default {
     },
     addMessage() {
       let pesan = {
-        message: this.inputMessage,
-        sender: true,
-        roomKey: localStorage.getItem('roomKey')
+        content: this.inputMessage,
+        sender: this.role,
+        roomKey: localStorage.getItem("roomKey")
       };
       this.messages.push(pesan);
-      socket.emit("sendMessage", pesan);
+      this.$store
+        .dispatch("messageDB", {
+          content: this.inputMessage,
+          sender: this.role,
+          id: this.$route.params.id
+        })
+        .then(() => {
+          socket.emit("sendMessage", pesan);
+          socket.emit("fetchingPartner", {
+            key: localStorage.getItem("partnerKey")
+          });
+        })
+        .catch(error => {
+          if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log("Error", error.message);
+          }
+          console.log(error.config);
+        });
       this.inputMessage = "";
     },
     getLVideo(callbacks) {
-      navigator.getUserMedia =
-        navigator.getUserMedia ||
-        navigator.webkitGetUserMedia ||
+      console.log("berapa kali nih ke console log rubhi");
+      navigator.mediaDevices.getUserMedia =
+        navigator.mediaDevices.getUserMedia ||
+        navigator.mediaDevices.webkitGetUserMedia ||
         navigator.mozGetUserMedia;
       let constraints = {
         audio: true,
         video: true
       };
-      navigator.getUserMedia(constraints, callbacks.success, callbacks.error);
+      //navigator.mediaDevices.getUserMedia(constraints, callbacks.success, callbacks.error);
+      navigator.mediaDevices
+        .getUserMedia(constraints)
+        .then(stream => {
+          window.localstream = stream;
+          console.log(
+            window.localstream.getTracks()[0],
+            "this is the window localstream"
+          );
+          console.log(window.localstream, "this is the window localstream");
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     test() {
-      peer.on("open", () => {
-        console.log("masuk test", peer);
-        this.peerId = peer.id;
+      peer.on("open", peer => {
+        console.log("Connected >>>", peer);
+        this.peerId = peer;
       });
     },
     sendPeerId() {
       console.log("masuk sendPeerId", this.peerId);
       let data = {
         peerId: this.peerId,
-        roomKey: localStorage.getItem('roomKey')
+        roomKey: localStorage.getItem("roomKey")
       };
       socket.emit("receive peerId", data);
-    },
-  },
+    }
+  }
 };
 </script>
 
 <style scoped>
+.chat-body {
+  background-color: #fffbfa;
+  width: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+.ui {
+  margin-left: 2rem;
+  transform: translateY(-1rem);
+}
+h5 {
+  color: white;
+  margin-bottom: 1rem;
+}
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 30%;
+}
+.button {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: ease 400ms;
+  filter: grayscale(50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.button:hover {
+  filter: grayscale(10%);
+  transform: translateY(-6px);
+}
+img {
+  width: 70%;
+  filter: invert(100%);
+}
+.share {
+  background-color: rgb(0, 95, 219);
+}
+.call {
+  background-color: rgb(4, 187, 44);
+}
+.end-call {
+  background-color: rgb(255, 0, 0);
+}
 li div {
   float: left;
   margin: 10px;
@@ -332,16 +444,17 @@ li div {
   width: 50%;
   padding: 20px;
 }
-.list-group{
+.list-group {
   list-style: none;
 }
-#roomKeyWindow{
+/* #roomKeyWindow {
+  transform: translateY(10rem);
   display: flex;
   flex-direction: column;
   padding: 10px;
   justify-content: center;
-}
-#chatWindow{
+} */
+#chatWindow {
   padding-right: 5px;
   margin-left: 5px;
 }

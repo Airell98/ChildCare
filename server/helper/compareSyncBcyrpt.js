@@ -1,3 +1,4 @@
+
 const bcrypt = require('bcrypt')
 
 function compareSyncBcrypt(pass1, pass2){
