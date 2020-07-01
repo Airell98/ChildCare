@@ -1,5 +1,9 @@
 const router = require("express").Router();
 const NannyController = require("../controllers/nannyController");
+
+router.get("/kanan/:id", NannyController.getAllNanniesToTheRight);
+router.get("/kiri/:id", NannyController.getAllNanniesToTheLeft);
+
 const {
   authenticationAgency,
   authenticationParent,
@@ -8,8 +12,6 @@ const { authorizationAgency } = require("../middlewares/authorization");
 
 router.post("/register", NannyController.registerNanny);
 router.get("/", NannyController.getAllNannies);
-router.get("/kanan/:id", NannyController.getAllNanniesToTheRight);
-router.get("/kiri/:id", NannyController.getAllNanniesToTheLeft);
 router.get(
   "/showAssociateNanny",
   authenticationAgency,
@@ -27,5 +29,7 @@ router.put(
   authorizationAgency,
   NannyController.updateAvailStatusNanny
 ); // endpoint saat ortu setuju stlh video call kemudian agency memilih utk setuju
+
+
 
 module.exports = router;

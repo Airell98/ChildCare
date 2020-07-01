@@ -4,8 +4,6 @@
     <div class="container-profile">
       <div class="container-searchbox">
         <div class="button_cont" align="center"><a class="example_g" href="add-website-here" target="_blank" rel="nofollow"><span>Previous</span></a></div>
-      
-        </button>
       </div>
       <div class="container-content">
         <div class="container-content-brief-card-name">

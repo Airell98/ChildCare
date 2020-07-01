@@ -1,13 +1,11 @@
 const { Message, Agency, Parent } = require("../models");
+
 class MessageController {
   static getAllMsgAgency(req, res, next) {
     const AgencyId = req.agencyData.id;
     Message.findAll({
       where: { AgencyId, sender: "parent" },
-      order: [
-        ["ParentId", "ASC"],
-        ["id", "ASC"],
-      ],
+      order: [["ParentId", "ASC"], ["id", "ASC"]],
       include: [
         { model: Agency, attributes: ["id", "email"] },
         { model: Parent, attributes: ["id", "email", "name"] },
@@ -35,6 +33,7 @@ class MessageController {
         filterMsgArray.sort(function (a, b) {
           return new Date(b.createdAt - a.createdAt);
         });
+
         res.status(200).json(filterMsgArray);
       })
       .catch((err) => {
@@ -45,10 +44,7 @@ class MessageController {
     const ParentId = req.parentData.id;
     Message.findAll({
       where: { ParentId, sender: "agency" },
-      order: [
-        ["AgencyId", "DESC"],
-        ["id", "ASC"],
-      ],
+      order: [["AgencyId", "DESC"], ["id", "ASC"]],
       include: [
         { model: Agency, attributes: ["id", "email", "name"] },
         { model: Parent, attributes: ["id", "email"] },
@@ -58,7 +54,7 @@ class MessageController {
         let filterMsgArray = [];
         let countUnread = 0;
         for (let i = 0; i < messages.length; i++) {
-          console.log(messages[i].dataValues.content);
+          console.log(messages[i].dataValues.content)
           if (!messages[i].dataValues.readParent) {
             countUnread++;
           }
@@ -86,11 +82,7 @@ class MessageController {
   static getMsgAgency(req, res, next) {
     const AgencyId = req.agencyData.id;
     const { ParentId } = req.params;
-    Message.findAll({
-      where: { AgencyId, ParentId },
-      include: { model: Parent, attributes: ["email"] },
-      order: [["createdAt", "ASC"]],
-    })
+    Message.findAll({ where: { AgencyId, ParentId }, include: { model : Parent, attributes : ['email'] }, order: [["createdAt", "ASC"]]  })
       .then((messages) => {
         res.status(200).json(messages);
       })
@@ -101,11 +93,7 @@ class MessageController {
   static getMsgParent(req, res, next) {
     const ParentId = req.parentData.id;
     const { AgencyId } = req.params;
-    Message.findAll({
-      where: { AgencyId, ParentId },
-      include: { model: Agency, attributes: ["email"] },
-      order: [["createdAt", "ASC"]],
-    })
+    Message.findAll({ where: { AgencyId, ParentId }, include: { model : Agency, attributes : ['email'] }, order: [["createdAt", "ASC"]] })
       .then((messages) => {
         res.status(200).json(messages);
       })

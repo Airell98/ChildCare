@@ -38,11 +38,11 @@ io.on("connection", (socket) => {
     socket.join(roomKey);
   });
   socket.on("settingRoomDashboardUnread", (payload) => {
-    socket.join(payload);
-  });
-  socket.on("fetchingPartner", (payload) => {
-    socket.broadcast.in(payload.key).emit("fetchingClientMsg");
-  });
+    socket.join(payload)
+  })
+  socket.on("fetchingPartner", payload => {
+    socket.broadcast.in(payload.key).emit('fetchingClientMsg')
+  })
 });
 
 if (process.env.NODE_ENV !== "test") {
