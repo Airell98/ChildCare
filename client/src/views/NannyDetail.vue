@@ -19,18 +19,13 @@
           <img class="img-logo" src="../assets/childCare.png" />
         </div>
         <div class="container-content-brief">
-          <div
-            class="container-content-picture"
-            :style="[
-              {
-                background: `url(${dataNanny.imageUrl})`,
-                'background-position': 'center center',
-                'background-size': 'cover',
-                'border-radius': '100%'
-              }
-            ]"
-          >
-            <!-- <img :src="dataNanny.imageUrl" height="100%" width="100%" /> -->
+          <div class="container-content-picture">
+            <img
+              class="fitImage"
+              :src="dataNanny.imageUrl"
+              height="100%"
+              width="100%"
+            />
           </div>
 
           <div class="container-content-detail">
@@ -226,7 +221,7 @@ h5 {
 
 .container-profile {
   /* background-color: rgb(181, 255, 181); */
-  transform: translateY(3rem);
+  transform: translateY(6rem);
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -551,5 +546,8 @@ img {
 .example_g:hover span:after {
   opacity: 1;
   left: 0;
+}
+.fitImage {
+  object-fit: cover;
 }
 </style>
