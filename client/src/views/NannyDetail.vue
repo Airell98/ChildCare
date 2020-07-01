@@ -2,93 +2,102 @@
   <div>
     <NavBar></NavBar>
     <div class="container-profile">
-      <!-- <div class="container-searchbox"></div> -->
+      <div class="container-searchbox">
+        <button class='effect1' @click="onClickSebelumnya">&#8592; Previous
+      
+        </button>
+      </div>
       <div class="container-content">
-        <div class="container-content-navigation">
-          <button @click="onClickSebelumnya">&#8592; Sebelumnya</button>
-          <button @click="onClickBerikutnya">Berikutnya &#8594;</button>
-        </div>
-        <div class="container-content-brief">
-          <div class="container-content-brief-card">
-            <div class="container-content-brief-card-name">
+        <div class="container-content-brief-card-name">
               <h6>{{dataNanny.name}}</h6>
               <img class="img-logo" src="../assets/childCare.png" />
-            </div>
-            <div class="container-content-brief-card-photo">
-              <div class="container-content-brief-card-photo-box">
-                <img :src="dataNanny.imageUrl" />
-              </div>
-            </div>
+        </div>
+        <div class="container-content-brief">
+          <div class='container-content-picture'>
+            <img :src="dataNanny.imageUrl" 
+              height="100%"
+              width="100%"/>
           </div>
-          <div class="container-content-brief-detail">
-            <div class="container-content-brief-detail-title">Profile</div>
 
-            <div class="container-content-brief-detail-0">
-              <div class="container-content-brief-detail-1">
-                <h5>Umur</h5>
-              </div>
-              <div class="container-content-brief-detail-2">
-                <h5>{{age}}</h5>
-              </div>
-            </div>
-            <div class="container-content-brief-detail-0">
-              <div class="container-content-brief-detail-1">
-                <h5>Jenis Kelamin</h5>
-              </div>
-              <div class="container-content-brief-detail-2">
-                <h5>{{dataNanny.gender}}</h5>
-              </div>
-            </div>
-            <div class="container-content-brief-detail-0">
-              <div class="container-content-brief-detail-1">
-                <h5>Daerah</h5>
-              </div>
-              <div class="container-content-brief-detail-2">
-                <h5>{{dataNanny.city}}</h5>
-              </div>
-            </div>
-            <!-- <div class="container-content-brief-detail-0">
-            <div class="container-content-brief-detail-1">Agency</div>
-            <div class="container-content-brief-detail-2"></div>
-            </div>-->
-            <div class="container-content-brief-detail-0">
-              <div class="container-content-brief-detail-1">
-                <h5>Gaji Diharapkan</h5>
-              </div>
-              <div class="container-content-brief-detail-2">Rp. {{dataNanny.expectedSalary}}</div>
-            </div>
-            <div class="container-content-brief-detail-button">
-              <div>
-                <button @click.prevent="onClickEditInfo" v-if="loginAs=='agency'">Edit Info</button>
-                <div>
-                  <EditNannyModal :dataNanny="dataNanny"></EditNannyModal>
+          <div class="container-content-detail">
+            <div class="container-content-detailed"> 
+              
+              <div class="symbols-detail"> 
+                <div class='symbol'>
+                <img class="img-asd" src="../assets/age.png"
+                  height="120%"
+                  width="120%"
+                />
                 </div>
-                <button @click.prevent="onClickWishList" v-if="loginAs=='parent'">+ Wish List</button>
-                <div></div>
+                <div class='answer'>
+                  {{age}}
+                </div>
               </div>
+
+              <div class="symbols-detail"> 
+                <div class='symbol'>
+                <img class="img-asd" src="../assets/gender.png"
+                  height="100%"
+                  width="100%"
+                />
+                </div>
+                <div class='answer'>
+                  {{dataNanny.gender}}
+                </div>
+              </div>
+
+              <div class="symbols-detail"> 
+                <div class='symbol'>
+                <img class="img-asd" src="../assets/location.png"
+                  height="100%"
+                  width="100%"
+                />
+                </div>
+                <div class='answer'>
+                  {{dataNanny.city}}
+                </div>
+              </div>
+
+              <div class="symbols-detail"> 
+                <div class='symbol'>
+                <img class="img-asd" src="../assets/salary.png"
+                  height="100%"
+                  width="100%"
+                />
+                </div>
+                <div class='answer'>
+                  Rp. {{dataNanny.expectedSalary}}
+                </div>
+              </div>
+
+            </div>
+
+            <div class='container-content-etc'>
+              <div class='container-content-etc2'>
+
+            </div>
+            <div class='container-content-etc3'>
+              <button class=buttonA
+            @click.prevent='onClickEditInfo' v-if="loginAs=='agency'"> Edit Info </button>
+              <div>
+                <EditNannyModal> </EditNannyModal>
+              </div>
+            <button class=buttonA
+            @click.prevent='onClickWishList' v-if="loginAs=='parent'"> + Wish List </button>
+
+            </div>
+
             </div>
           </div>
+
         </div>
-        <div class="container-content-detail">
-          <div class="container-content-detail-0">
-            <div class="container-content-detail-1">
-              <button @click.prevent="onClickDetail">Detail</button>
-            </div>
-            <div class="container-content-detail-2">
-              <button @click.prevent="onClickKeterampilan">Keterampilan</button>
-            </div>
-            <div class="container-content-detail-3">
-              <button @click.prevent="onClickAgency">Agency</button>
-            </div>
-          </div>
-          <div class="container-content-detail-detailed" v-if="detailStats">
-            <ChildCard></ChildCard>
-          </div>
-          <div class="container-content-detail-detailed" v-if="keterampilanStats">ini keterampilan</div>
-          <div class="container-content-detail-detailed" v-if="agencyStats">
-            <div>ini agency card</div>
-          </div>
-        </div>
+
+
+      </div>
+      <div class="container-searchbox2">
+        <button class='effect1' @click="onClickBerikutnya">Next
+           <span class="bg"></span>
+        </button>
       </div>
     </div>
   </div>
@@ -175,315 +184,382 @@ export default {
 </script>
 
 <style scoped>
-h6 {
-  font-family: "Courier New", Courier, monospace;
-  font-size: 45px;
+
+h6{
+  font-family: 'Courier New', Courier, monospace;
+  font-size:45px;
 }
 
-h5 {
-  font-family: "Courier New", Courier, monospace;
-  font-size: 15px;
+h5{
+  font-family: 'Courier New', Courier, monospace;
+  font-size:15px;
 }
 
-.container-profile {
-  /* background-color: green; */
-  transform: translateY(6rem);
+.container-profile{
+  /* background-color: rgb(181, 255, 181); */
+  transform: translateY(3rem);
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  /* align-items: center; */
-  /* justify-content: center; */
+  align-items: center;
+  justify-content: center;
   margin: 1px auto;
-  width: 1700px;
+  width: 90vw;
+  height:80vh;
+  
 }
 
-.container-searchbox {
-  background-color: rgb(240, 170, 90);
 
-  display: flex;
+.container-content{
+
+  /* background-color: #ffd89e; */
+
+  display:flex;
   align-items: center;
   flex-direction: column;
   flex-wrap: wrap;
-  /* padding:1em; */
-  width: 400px;
-  height: 1500px;
+  width: 60%;
+  height: 100%;
+  margin:auto;
 }
 
-.container-content {
-  /* background-color: rgb(202, 178, 150); */
+.container-searchbox{
+  background-color: rgba(255, 255, 255, 0.801);
 
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  flex-wrap: wrap;
-  /* padding:1em; */
-  width: 1100px;
-  /* height: 1500px; */
-  margin: auto;
-}
-
-.container-content-navigation {
   padding-top: 5px;
-  display: flex;
+  display:flex;
   align-items: center;
   flex-direction: row;
   flex-wrap: wrap;
   /* padding:1em; */
-  padding-top: 10px;
-  width: 1100px;
-  height: 60px;
+  height: 100%;
   justify-content: space-around;
-  margin-bottom: 15px;
+  margin-bottom: 2%;
+  margin-left: 2%;
 
   opacity: 80%;
 }
 
-.container-content-brief {
-  /* background-color: rgb(54, 173, 30); */
+.container-searchbox2{
+  background-color: rgba(255, 255, 255, 0.801);
 
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  flex-wrap: wrap;
-  /* padding:1em; */
-  width: 1100px;
-  height: 640px;
-}
-
-.container-content-brief-card {
-  /* background-color: rgb(131, 223, 112); */
-
-  display: flex;
-  align-items: center;
   padding-top: 5px;
-  flex-direction: column;
-  flex-wrap: wrap;
-  /* padding:1em; */
-  width: 500px;
-  height: 640px;
-}
-
-.container-content-brief-card-name {
-  background-color: rgb(235, 231, 231);
-  padding-left: 15px;
-  display: flex;
+  display:flex;
   align-items: center;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
-  padding-right: 15px;
-
   /* padding:1em; */
-  width: 500px;
-  height: 60px;
+  height: 100%;
+  justify-content: space-around;
+  margin-bottom: 2%;
+  margin-right: 2%;
+
+  opacity: 80%;
 }
 
-.img-logo {
-  width: 40px;
-  height: 40px;
+.container-content-brief-card-name{
+  background-color: rgba(255, 255, 255, 0.801);
+  box-shadow: 0 8px 16px -8px rgba(0,0,0,0.4);
+  border-radius:25px;
+  padding-left:3%;
+  display:flex;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content:space-between;
+  padding-right:3%;
 
+  /* padding:1em; */
+  width: 100%;
+  height: 8%;
+
+  opacity: 90%;
+
+}
+
+
+.container-content-brief-card-name-name{
+  margin-top:5px;
+}
+
+.img-logo{
+  width: 5vw;
+  height: 5vw;
+  margin-top: -2.5%;
   border-radius: 50%;
 }
 
-img {
+img{
   border-radius: 50%;
 }
 
-.container-content-brief-card-photo {
-  /* background-color: rgb(42, 78, 35); */
-  display: flex;
-  align-items: center;
-  padding-top: 5px;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  width: 500px;
-  height: 500px;
-}
-
-.container-content-brief-card-photo-box {
-  /* background-color: rgb(233, 240, 231); */
-  padding: 15px;
-
-  display: flex;
+.container-content-brief{
+  /* background-color: rgb(255, 187, 97); */
+  padding:1vw;
+  display:flex;
   align-items: center;
   flex-direction: row;
-  flex-wrap: wrap;
-  /* padding:1em; */
-  width: 450px;
-  height: 500px;
+  margin-top:1vh;
+  width: 53vw;
+  height: 33vw;
 }
 
-.container-content-brief-detail {
-  background-color: rgb(226, 226, 226);
-
-  display: flex;
-  flex-direction: Column;
-  align-items: center;
-  flex-wrap: wrap;
-  width: 600px;
-  height: 640px;
-
-  padding-left: 15px;
-  padding-top: 60px;
-}
-
-.container-content-brief-detail-title {
-  background-color: rgb(255, 255, 255);
-  border: 0.4px red;
-  padding-left: 20px;
-
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  flex-wrap: wrap;
-  /* padding:1em; */
-  width: 550px;
-  height: 40px;
-}
-
-.container-content-brief-detail-0 {
-  background-color: rgb(255, 255, 255);
-  border: 0.1px rgb(10, 10, 10);
-
-  display: flex;
-  align-items: flex-start;
-  flex-direction: row;
-  flex-wrap: wrap;
-
-  width: 550px;
-}
-
-.container-content-brief-detail-button {
-  margin-top: 10%;
-
-  display: flex;
-  align-items: flex-end;
-  /* justify-content: space-between; */
-  flex-direction: row-reverse;
-  flex-wrap: wrap;
-
-  width: 550px;
-}
-
-.container-content-brief-detail-1 {
-  background-color: rgb(185, 211, 250);
-  border: 0.1px solid rgb(177, 176, 176);
-  margin-top: 2px;
-  padding-top: 10px;
-  padding-left: 20px;
-
-  display: flex;
-  align-items: center;
-  align-items: flex-start;
-  flex-direction: column;
-  flex-wrap: wrap;
-  /* padding:1em; */
-  width: 200px;
-  height: 40px;
-}
-
-.container-content-brief-detail-2 {
-  background-color: rgb(195, 206, 230);
-  border: 0.1px solid rgb(177, 176, 176);
-  margin-top: 2px;
-  padding-top: 10px;
-  padding-left: 20px;
-
-  display: flex;
+.container-content-picture{
+  /* background-color: rgb(212, 194, 88); */
+  padding:1vw;
+  display:flex;
   align-items: center;
   flex-direction: column;
   flex-wrap: wrap;
-  /* padding:1em; */
-  width: 350px;
-  height: 40px;
+  margin-top:1vh;
+  width: 25vw;
+  height: 60vh;
 }
 
-.container-content-detail {
-  /* background-color: rgb(54, 173, 30); */
-
-  display: flex;
+.container-content-detail{
+  /* background-color: rgb(213, 255, 205); */
+  padding:1vw;
+  display:flex;
   align-items: center;
   flex-direction: column;
   flex-wrap: wrap;
-  /* padding:1em; */
-  width: 1100px;
-  /* height: 800px; */
+  margin-top:1vh;
+  width: 30vw;
+  height: 60vh;
+
 }
 
-.container-content-detail-0 {
-  /* background-color: rgb(129, 134, 128); */
-  display: flex;
-  flex-direction: row;
+.container-content-detailed{
+ /* background-color: rgb(228, 226, 255); */
+  padding:1vw;
+  display:flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin-top:1vh;
+  width: 25vw;
+  height: 30vh;
+  justify-content: flex-start;
+}
+
+.symbols-detail{
+  background-color: rgb(149, 172, 145);
+  display:flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin-top:1vh;
+  width: 22vw;
+  height: 4vh;
+  justify-content: flex-start;
+
+}
+
+.symbol{
+  /* background-color: rgb(9, 24, 6); */
+  display:flex;
   align-items: center;
-  justify-content: space-around;
-  margin-left: 30px;
+  flex-direction: column;
   flex-wrap: wrap;
-  width: 500px;
-  height: 60px;
+  width: 4vh;
+  height: 4vh;
+  margin-left:0.5vh;
+
 }
 
-.container-content-detail-1 {
-  display: flex;
+.answer{
+  background-color: rgb(196, 196, 196);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.3vw;
+  display:flex;
+  align-items: left;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 80%;
+  height: 100%;
+  justify-content: flex-start;
+}
+
+.container-content-etc{
+ /* background-color: rgb(27, 10, 255); */
+
+  display:flex;
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
   flex-wrap: wrap;
-  width: 120px;
-  height: 60px;
+  margin-top:1vh;
+  width: 25vw;
+  height: 23vh;
+  justify-content: flex-start;
 }
 
-.container-content-detail-2 {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
+.container-content-etc2{
+ /* background-color: rgb(255, 255, 255); */
+  padding:1vw;
+  display:flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  width: 120px;
-  height: 60px;
+  width: 70%;
+  height: 100%;
+  justify-content: flex-start;
 }
 
-.container-content-detail-3 {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
+.container-content-etc3{
+ /* background-color: rgb(87, 53, 53); */
+  padding:1vw;
+  display:flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  width: 120px;
-  height: 60px;
+  width: 30%;
+  height: 100%;
+  justify-content: flex-start;
 }
 
-.container-content-detail-detailed {
-  background-color: rgb(255, 255, 255);
-  border: 0.1px solid rgb(177, 176, 176);
-  padding: 25px;
 
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  margin-bottom: 100px;
 
-  flex-wrap: wrap;
-  width: 1000px;
-  /* height: 1200px; */
+
+
+
+
+
+
+
+
+
+
+
+.buttonA {
+	box-shadow: 3px 4px 0px 0px #a84f46;
+	background:linear-gradient(to bottom, #d9564a 5%, #ff756b 100%);
+	background-color:#d9564a;
+	border-radius:17px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:17px;
+	padding:7px 25px;
+	text-decoration:none;
+	/* text-shadow:0px 2px 0px #820700; */
 }
 
-button {
-  display: block;
-  cursor: pointer;
-  outline: none;
-  border: none;
-  background-color: var(--light);
-  width: 150px;
-  height: 30px;
-  border-radius: 20px;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text);
-  background-size: 100% 100%;
-  box-shadow: 0 0 0 7px var(--light) inset;
-  margin-bottom: 15px;
-
-  opacity: 110%;
+.buttonA:hover {
+	background:linear-gradient(to bottom, #ff756b 5%, #d9564a 100%);
+	background-color:#ff756b;
 }
+.buttonA:active {
+	position:relative;
+	top:1px;
+}
+
+.buttonN {
+	box-shadow: 3px 4px 0px 0px #a39694;
+	background:linear-gradient(to bottom, #ffffff 5%, #949494 100%);
+	background-color:#ffffff;
+	border-radius:5px;
+	display:inline-block;
+	cursor:pointer;
+	color:#000000;
+	font-family:Arial;
+	font-size:17px;
+	padding:7px 25px;
+	text-decoration:none;
+	/* text-shadow:0px 2px 0px #0d0d0d; */
+}
+.buttonN:hover {
+	background:linear-gradient(to bottom, #949494 5%, #ffffff 100%);
+	background-color:#949494;
+}
+.buttonN:active {
+	position:relative;
+	top:1px;
+}
+
+.effect1 {
+  color: #222;
+  text-decoration: none;
+  font-family: sans-serif;
+  font-size: 10px;
+  position: relative;
+  padding: 10px 20px 10px 20px;
+
+  -webkit-transition: all 0.3s;
+
+  -o-transition: all 0.3s;
+
+  transition: all 0.3s;
+
+  -webkit-transform: scale(3);
+
+      -ms-transform: scale(3);
+
+          transform: scale(3); /*change scale(3) to scale(1)*/
+}
+
+.effect1 .bg {
+  background: #222;
+  width: 30px;
+  height: 2px;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  margin-top: -1px;
+  z-index: -1;
+
+  -webkit-transition: all 0.3s;
+
+  -o-transition: all 0.3s;
+
+  transition: all 0.3s;
+}
+
+.effect1:hover {
+  padding-right: 1px;
+  color: #fff;
+}
+
+.effect1:hover .bg {
+  height: 100%;
+  width: 100%;
+  -webkit-transform: translate(0, -50%);
+      -ms-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+}
+
+.effect1 .bg:before, .effect1 .bg:after {
+  content: '';
+  height: 2px;
+  width: 1px;
+  background: #222;
+  position: absolute;
+  right: -2px;      
+  -webkit-transition: all 0.3s;      
+  -o-transition: all 0.3s;      
+  transition: all 0.3s;
+}
+
+.effect1 .bg:before {
+  bottom: 3px;
+  -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+          transform: rotate(45deg);
+}
+.effect1 .bg:after{
+  top: 3px;
+  -webkit-transform: rotate(-45deg);
+      -ms-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+}
+
+.effect1:hover .bg:before,
+.effect1:hover .bg:after{
+  right: 0;
+}
+
+.effect1:hover .bg:before{
+  bottom: 6px;
+}
+
+.effect1:hover .bg:after{
+  top: 6px;
+}
+
+
 </style>

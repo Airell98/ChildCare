@@ -258,7 +258,7 @@ export default {
 }
 
 .container-content-brief-card-photo-box{
-  background-color: rgb(233, 240, 231);
+  /* background-color: rgb(233, 240, 231); */
   padding: 15px;
 
   display:flex;
@@ -271,7 +271,7 @@ export default {
 }
 
 .container-content-brief-detail{
-  background-color: rgb(226, 226, 226);
+  /* background-color: rgb(226, 226, 226); */
 
   display:flex;
   flex-direction: Column;
