@@ -3,8 +3,18 @@
     <b-form class="form-signin" @submit.prevent="editUser">
       <h3 class="form-signin-heading">Edit Profile</h3>
       <b-form-input type="text" name="name" placeholder="Nama" v-model="name" />
-      <b-form-input type="text" name="email" placeholder="Email Address" v-model="email" />
-      <b-form-input type="password" name="password" placeholder="Password" v-model="password" />
+      <b-form-input
+        type="text"
+        name="email"
+        placeholder="Email Address"
+        v-model="email"
+      />
+      <b-form-input
+        type="password"
+        name="password"
+        placeholder="Password"
+        v-model="password"
+      />
       <br />
       <b-form-datepicker
         v-if="user == 'parent'"
@@ -13,8 +23,17 @@
         placeholder="Birth date"
         v-model="birthDate"
       />
-      <b-form-select v-if="user == 'parent'" v-model="gender" :options="genders" />
-      <b-form-input type="text" name="Address" placeholder="Address" v-model="address" />
+      <b-form-select
+        v-if="user == 'parent'"
+        v-model="gender"
+        :options="genders"
+      />
+      <b-form-input
+        type="text"
+        name="Address"
+        placeholder="Address"
+        v-model="address"
+      />
       <b-form-input type="text" name="City" placeholder="City" v-model="city" />
       <b-form-input
         v-if="user == 'agency'"
@@ -30,7 +49,9 @@
         v-model="phoneNumber"
       />
       <br />
-      <button class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">
+        Update
+      </button>
     </b-form>
   </div>
 </template>
@@ -109,7 +130,10 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.wrapper {
+  transform: translateY(3vh);
+}
 .form-signin {
   max-width: 580px;
   padding: 15px 35px 45px;
@@ -120,9 +144,11 @@ export default {
 
 .form-signin-heading {
   margin-bottom: 30px;
+  font-family: "Playfair Display", serif;
 }
 
 .form-control {
+  font-family: "Courier New", Courier, monospace;
   position: relative;
   font-size: 16px;
   height: auto;
@@ -139,5 +165,8 @@ input[type="password"] {
   margin-bottom: -1px;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+}
+.btn {
+  font-family: "Courier New", Courier, monospace;
 }
 </style>

@@ -110,7 +110,6 @@ input[type="password"] {
 }
 
 .btn {
-  margin-top: 2rem;
   font-family: "Courier New", Courier, monospace;
 }
 </style>

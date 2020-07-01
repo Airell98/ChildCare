@@ -149,7 +149,7 @@ export default {
 
 <style scoped>
 .wrapper {
-  transform: translateY(0%);
+  transform: translateY(3vh);
 }
 .form-signin {
   max-width: 580px;
@@ -172,7 +172,6 @@ export default {
   padding: 10px;
 }
 .btn {
-  margin-top: 2rem;
   font-family: "Courier New", Courier, monospace;
 }
 
