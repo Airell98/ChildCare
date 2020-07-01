@@ -682,6 +682,33 @@ export default new Vuex.Store({
           }
           console.log(error.config);
         });
+    },
+    deleteNanny(context, payload) {
+      axios({
+        method: "delete",
+        url: `${context.state.url}/nanny/${payload}`,
+        headers: {
+          access_token: localStorage.access_token
+        }
+      })
+        .then(response => {
+          context.state.nannies = context.state.nannies.filter(nanny => {
+            return nanny.id != payload;
+          });
+          router.push("/");
+        })
+        .catch(error => {
+          if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log("Error", error.message);
+          }
+          console.log(error.config);
+        });
     }
   }
 });

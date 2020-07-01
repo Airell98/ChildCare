@@ -11,18 +11,20 @@
       </div>
       <div class="container-content">
         <div class="container-content-brief-card-name">
-          <h6>{{dataNanny.name}}</h6>
+          <h6>{{ dataNanny.name }}</h6>
           <img class="img-logo" src="../assets/childCare.png" />
         </div>
         <div class="container-content-brief">
           <div
             class="container-content-picture"
-            :style="[{
-                'background': `url(${dataNanny.imageUrl})`,
+            :style="[
+              {
+                background: `url(${dataNanny.imageUrl})`,
                 'background-position': 'center center',
-                'background-size': 'cover', 
+                'background-size': 'cover',
                 'border-radius': '100%'
-            }]"
+              }
+            ]"
           >
             <!-- <img :src="dataNanny.imageUrl" height="100%" width="100%" /> -->
           </div>
@@ -31,49 +33,81 @@
             <div class="container-content-detailed">
               <div class="symbols-detail">
                 <div class="symbol">
-                  <img class="img-asd" src="../assets/age.png" height="120%" width="120%" />
+                  <img
+                    class="img-asd"
+                    src="../assets/age.png"
+                    height="120%"
+                    width="120%"
+                  />
                 </div>
-                <div class="answer">{{age}}</div>
+                <div class="answer">{{ age }}</div>
               </div>
 
               <div class="symbols-detail">
                 <div class="symbol">
-                  <img class="img-asd" src="../assets/gender.png" height="100%" width="100%" />
+                  <img
+                    class="img-asd"
+                    src="../assets/gender.png"
+                    height="100%"
+                    width="100%"
+                  />
                 </div>
-                <div class="answer">{{dataNanny.gender}}</div>
+                <div class="answer">{{ dataNanny.gender }}</div>
               </div>
 
               <div class="symbols-detail">
                 <div class="symbol">
-                  <img class="img-asd" src="../assets/location.png" height="100%" width="100%" />
+                  <img
+                    class="img-asd"
+                    src="../assets/location.png"
+                    height="100%"
+                    width="100%"
+                  />
                 </div>
-                <div class="answer">{{dataNanny.city}}</div>
+                <div class="answer">{{ dataNanny.city }}</div>
               </div>
 
               <div class="symbols-detail">
                 <div class="symbol">
-                  <img class="img-asd" src="../assets/salary.png" height="100%" width="100%" />
+                  <img
+                    class="img-asd"
+                    src="../assets/salary.png"
+                    height="100%"
+                    width="100%"
+                  />
                 </div>
-                <div class="answer">Rp. {{dataNanny.expectedSalary}}</div>
+                <div class="answer">Rp. {{ dataNanny.expectedSalary }}</div>
               </div>
             </div>
 
             <div class="container-content-etc">
-              <div class="container-content-etc2"></div>
+              <div class="container-content-etc2">
+                <button
+                  class="buttonA"
+                  @click.prevent="deleteNanny"
+                  v-if="loginAs == 'agency' && authorized"
+                >
+                  Delete Nanny
+                </button>
+              </div>
               <div class="container-content-etc3">
                 <button
                   class="buttonA"
                   @click.prevent="onClickEditInfo"
-                  v-if="loginAs=='agency' && authorized"
-                >Edit Info> Edit Info</button>
+                  v-if="loginAs == 'agency' && authorized"
+                >
+                  Edit Info
+                </button>
                 <div>
                   <EditNannyModal></EditNannyModal>
                 </div>
                 <button
                   class="buttonA"
                   @click.prevent="onClickWishList"
-                  v-if="loginAs=='parent'"
-                >+ Wish List</button>
+                  v-if="loginAs == 'parent'"
+                >
+                  + Wish List
+                </button>
               </div>
             </div>
           </div>
@@ -162,12 +196,10 @@ export default {
       this.$store.dispatch("slideNannyCardToTheLeft", Number(this.id) - 1);
     },
     onClickBerikutnya() {
-      // this.$router.push({
-      //   name: "NannyDetail",
-      //   params: { id: Number(this.id) + 1 }
-      // });
-      // window.location.reload();
       this.$store.dispatch("slideNannyCardToTheRight", Number(this.id) + 1);
+    },
+    deleteNanny() {
+      this.$store.dispatch("deleteNanny", this.id);
     }
   },
   mounted() {
