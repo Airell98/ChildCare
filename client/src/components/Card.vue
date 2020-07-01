@@ -12,13 +12,11 @@
       <div class="items"></div>
       <div class="items head">
         <p>{{ `${data.name} (${age})` }}</p>
-        <p v-if="entityName == 'nanny'">{{ data.city }}</p>
-        <p v-if="entityName == 'nanny'">Expected Salary</p>
-        <p v-if="entityName == 'nanny'">Rp. {{ data.expectedSalary }}</p>
-        <p v-if="entityName == 'child'">Gender</p>
-        <p v-if="entityName == 'child'">{{ data.gender }}</p>
-        <p v-if="entityName == 'child'">Condition</p>
-        <p v-if="entityName == 'child'">{{ data.condition }}</p>
+        <p>{{ data.city }}</p>
+        
+          <br />Expected Salary
+        <p>Rp. {{ data.expectedSalary }}</p>
+        <hr />
       </div>
     </div>
   </div>
@@ -42,12 +40,12 @@ export default {
   },
   methods: {
     gotoDetail() {
-      let routerName = "";
-      this.entityName === "nanny"
-        ? (routerName = "NannyDetail")
-        : (routerName = "ChildDetail");
+      // let routerName = "";
+      // this.entityName === "nanny"
+      //   ? (routerName = "NannyDetail")
+      //   : (routerName = "ChildDetail");
       this.$router.push({
-        name: routerName,
+        name: "NannyDetail",
         params: { id: this.data.id }
       });
     }
@@ -56,33 +54,40 @@ export default {
 </script>
 
 <style scoped>
+
 .container {
-  width: 15rem;
-  height: 18rem;
+  margin :15px;
+  width: 500px;
+  height: 600px;
+  
+  top:0; right: 0; left: 0; bottom: 0;
   margin: auto;
+  
   cursor: pointer;
   -webkit-box-shadow: 0 0 5px #000;
   box-shadow: 0 0 5px #000;
 
   background-repeat: no-repeat;
   background-size: 75% 50%;
-}
+  }
 
 .overlay {
   width: 100%;
   height: 100%;
-
+  
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
-
+  grid-template-rows: 1fr 2fr 2fr 1fr;
+  
   background: rgba(158, 157, 157, 0.9);
   color: #eeeeee;
   opacity: 0;
   transition: all 0.5s;
-
-  font-family: "Playfair Display", serif;
+  
+  
+  font-family: 'Playfair Display', serif;
 }
+
 
 .items {
   padding-left: 20px;
@@ -90,21 +95,120 @@ export default {
 }
 
 .head {
-  font-size: 1rem;
-
+  font-size: 30px;
+  line-height: 40px;
+  
   transform: translateY(40px);
   transition: all 0.7s;
 }
 
-span {
-  margin-left: 10px;
+.hr {
+  display: block;
+  width: 0;
+  
+  border: none;
+  border-bottom: solid 2px;
+  
+  position: absolute;
+  bottom: 0; left:20px;
+  
+  transition: all .5s;
 }
 
-i {
-  font-size: 16px;
+.price {
+  font-size: 22px;
+  line-height: 10px;
+  font-weight: bold;  
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.7s;
+
 }
+
+  .old {
+    text-decoration: line-through;
+    color: lighten(rgb(77, 77, 77),40%);
+  }
+
+
+.cart {
+  font-size: 12px;
+  opacity: 0;
+  letter-spacing: 1px;
+  font-family: 'Lato', sans-serif;
+  transform: translateY(40px);
+  transition: all 0.7s;
+}
+
+  span {
+    margin-left: 10px;
+  }
+
+  i {
+    font-size: 16px;
+  }
+
 
 .container:hover .overlay {
   opacity: 1;
+  /* & .head {
+    transform: translateY(0px);
+  }
+  
+  & hr {
+    width: 75px;
+    transition-delay: 0.4s;
+  }
+  
+  & .price {
+    transform: translateY(0px);
+    transition-delay: 0.3s;
+    opacity: 1;
+  }
+  
+  & .cart {
+    transform: translateY(0px);
+    transition-delay: 0.6s;
+    opacity: 1;
+  } */
+}
+
+
+
+
+/* .card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.5s;
+  width: 15rem;
+  height: 20rem;
+  border-radius: 1rem;
+  margin: 3rem auto;
+  cursor: pointer;
+}
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+.card-img {
+  border-radius: 1rem 1rem 0 0;
+  width: 100%;
+  height: 60%;
+}
+img {
+  border-radius: 1rem 1rem 0 0;
+  width: 100%;
+  height: 100%;
+}
+.card-body {
+  color: darkslategray;
+  padding: 15px;
+  border-radius: 0 0 1rem 1rem;
+}
+.name {
+  font-size: 1.4rem;
+}
+.gender,
+.city {
+  margin-top: 2px;
+  font-size: 18px;
 }
 </style>
