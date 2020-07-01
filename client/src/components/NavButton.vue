@@ -1,7 +1,6 @@
 <template>
   <div>
     <AddNannyModal :title="'registerNanny'"></AddNannyModal>
-    <button @click.prevent='gotoThank'>Thank</button>
     <div class="Dropdown">
       <div class="Button">{{ text }}</div>
       <div class="Dropdown-content">

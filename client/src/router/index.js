@@ -19,11 +19,6 @@ const routes = [
     component: Home
   },
   {
-    path:'/thankyou',
-    name:'thankyou',
-    component: Thank
-  },
-  {
     path: "/parent/:id/wishlist",
     name: "Wishlist",
     component: Wishlist,
