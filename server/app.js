@@ -39,6 +39,9 @@ io.on("connection", (socket) => {
   socket.on('unMute Video', (payload)=>{
     socket.broadcast.in(payload.roomKey).emit("unMute Video");
   })
+  socket.on('pause', (payload)=>{
+    socket.broadcast.in(payload.roomKey).emit("pause");
+  })
   socket.on("join-room", (roomKey) => {
     console.log("Joining room ", roomKey);
     socket.join(roomKey);

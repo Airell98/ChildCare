@@ -27,51 +27,57 @@
       >End Call</button>
       </div>-->
 
-      <div style="background-color: black; flex: 7;">
-        <h2 v-if="!videoCondition"  class="myVideo">{{partnerName}}</h2>
-        <video
-        v-if="videoCondition"
-          class="container-fluid myVideo"
-          ref="rVideo"
-          autoplay
-         
-        ></video>
+      <div style="background-color: black; flex: 7; max-height:40%">
+        <h2 v-if="!videoCondition" class="myVideo">{{ partnerName }}</h2>
+       
+          <video
+            v-if="videoCondition"
+            class="contaner-fluid"
+            height="700"
+            id="myVideo"
+            ref="rVideo"
+            width="1400"
+            
+            autoplay
+          ></video>
+          
+        
+        <div style="height: 13vh;"></div>
+          <div class="button-container">
         <h5>PARTNER ID : {{ partnerId }}</h5>
-        <div class="button-container">
-          <b-button variant="warning" type="submit" v-on:click="sendPeerId"
-            >Send Video Link</b-button
-          >
-          <!-- <b-button
+        <b-button variant="warning" type="submit" v-on:click="sendPeerId"
+          >Send Video Link</b-button
+        >
+        <!-- <b-button
             variant="success"
             style="width: 20%;"
             type="submit"
             v-on:click="callSomeone"
             >Call</b-button
           > -->
-          <div class="button call" @click.prevent="callSomeone">
-            <img src="https://image.flaticon.com/icons/svg/901/901120.svg " />
-          </div>
-          <div class="button endCall" @click.prevent="endCall">
-            <img src="https://image.flaticon.com/icons/svg/811/811481.svg" />
-          </div>
-          <div
-            v-if="volumeCondition"
-            class="button mute"
-            @click.prevent="unMute"
-          >
-            <img src="https://image.flaticon.com/icons/svg/786/786474.svg" />
-          </div>
-          <div v-if="!volumeCondition" class="button mute" @click.prevent="mute">
-            <img src="https://image.flaticon.com/icons/svg/786/786488.svg" />
-          </div>
-           <div v-if="playVideo" class="button playVideo" @click.prevent="play">
-            <img src="https://image.flaticon.com/icons/svg/907/907754.svg" />
-          </div>
-             <div v-if="!playVideo" class="button playVideo" @click.prevent="pause">
-            <img src="https://image.flaticon.com/icons/svg/1053/1053175.svg" />
-          </div>
+          
+        <div class="button call" @click.prevent="callSomeone">
+          <img src="https://image.flaticon.com/icons/svg/901/901120.svg " />
         </div>
+        <div class="button endCall" @click.prevent="endCall">
+          <img src="https://image.flaticon.com/icons/svg/811/811481.svg" />
+        </div>
+        <div v-if="volumeCondition" class="button mute" @click.prevent="unMute">
+          <img src="https://image.flaticon.com/icons/svg/786/786488.svg"/>
+        </div>
+        <div v-if="!volumeCondition" class="button mute" @click.prevent="mute">
+          <img src="https://image.flaticon.com/icons/svg/786/786474.svg"  />
+        </div>
+        <div v-if="playVideo" class="button playVideo" @click.prevent="play">
+          <!-- <img src="https://image.flaticon.com/icons/svg/907/907754.svg" />
+        </div>
+        <div v-if="!playVideo" class="button playVideo" @click.prevent="pause">
+          <img src="https://image.flaticon.com/icons/svg/1053/1053175.svg" />
+        </div> -->
       </div>
+      </div>
+
+    </div>
 
       <div id="chatWindow" style="flex: 2">
         <div style=" height:82vh; overflow-y:scroll;">
@@ -115,6 +121,7 @@
       </div>
     </div>
   </div>
+  
 </template>
 
 <script>
@@ -140,10 +147,13 @@ export default {
       localStorage.setItem("reloaded", "1");
       location.reload();
     }
-
+     socket.on('pause', (payload)=>{
+       window.localstream.getVideoTracks()[0].enabled = false
+  })
     this.test();
     socket.emit("join-room", localStorage.getItem("roomKey"));
     this.startVideo();
+    this.$store.dispatch("update_statusRead", this.$route.params.id);
     socket.on("sendMessage", msg => {
       let pesan = {
         content: msg.content,
@@ -152,18 +162,22 @@ export default {
       this.messages.push(pesan);
       this.$store.dispatch("update_statusRead", this.$route.params.id);
     });
-    socket.on('mute Video', (data)=>{
-      console.log('your partner has muted their mic')
-       window.localstream.getAudioTracks()[0].enabled = false
-    })
-       socket.on('unMute Video', (data)=>{
-         console.log('your partner has unmuted their mic')
-       window.localstream.getAudioTracks()[0].enabled = true
-    })
-    
+    socket.on("mute Video", data => {
+      console.log("your partner has muted their mic");
+      //  window.localstream.getAudioTracks()[0].enabled = false
+      var video = this.$refs.rVideo;
+      video.muted = true;
+    });
+    socket.on("unMute Video", data => {
+      console.log("your partner has unmuted their mic");
+      //  window.localstream.getAudioTracks()[0].enabled = true
+      var video = this.$refs.rVideo;
+      video.muted = false;
+    });
+
     socket.on("receive peerId", data => {
       this.partnerId = data.peerId;
-      this.partnerName = data.name
+      this.partnerName = data.name;
       window.conn = peer.connect(this.partnerId);
     });
     peer.on("call", call => {
@@ -200,7 +214,7 @@ export default {
       Swal.fire(msg);
     });
     socket.on("end call", data => {
-      Swal.fire("end call");
+      
       var video = this.$refs.rVideo;
       window.conn.close();
       this.call.close();
@@ -251,8 +265,8 @@ export default {
       call: null,
       volumeCondition: false,
       videoCondition: true,
-      partnerName: '',
-      playVideo: false,
+      partnerName: "",
+      playVideo: false
       // muted: "",
     };
   },
@@ -268,7 +282,7 @@ export default {
         this.telpon.on("stream", Stream => {
           this.startVideo();
           // Swal.fire("sisi penenlpon");
-          console.log("masuk telpon call some one======");
+          
           window.peer_stream = Stream;
           this.recStream2(Stream);
         });
@@ -288,8 +302,7 @@ export default {
     endCall() {
       // Swal.fire("end my call");
       console.log(navigator);
-       window.conn.close()
-      this.telpon.close();
+  
       var video = this.$refs.rVideo;
       // video.pause();
       video.srcObject = null;
@@ -310,29 +323,36 @@ export default {
       });
       //this.startVideo();
     },
-    pause(){
-     this.playVideo = true;
-     this.videoCondition = false
+    pause() {
+      var video = this.$refs.rVideo
+      this.playVideo = true;
+      socket.emit('pause', {roomKey: localStorage.getItem("roomKey")})
+      // this.videoCondition = false;
+      // video.pause()
     },
-    play(){
-    this.playVideo = false;
-     this.videoCondition = true;
-     var video = this.$refs.rVideo;
-     video.play()
+    play() {
+      this.playVideo = false;
+      //  socket
+      var video = this.$refs.rVideo;
+      //  video.play()
     },
     unMute() {
-      this.volumeCondition = false
+      this.volumeCondition = false;
       // var video = this.$refs.rVideo;
       // video.volume = 1.0;
-      localstream.getAudioTracks()[0].enabled = true
-        //  socket.emit('unMute Video', {roomKey: localStorage.roomKey})
+      // window.localstream.getAudioTracks()[0].enabled = true;
+      // localstream.getAudioTracks()[0].enabled = true;
+      socket.emit("unMute Video", { roomKey: localStorage.roomKey });
     },
     mute() {
-       this.volumeCondition = true
+      this.volumeCondition = true;
       // var video = this.$refs.rVideo;
       // video.volume = 0.0;
-      // socket.emit('mute Video', {roomKey: localStorage.roomKey})
-     window.localstream.getAudioTracks()[0].enabled = false
+      socket.emit("mute Video", { roomKey: localStorage.roomKey });
+      //   window.localstream.getAudioTracks().forEach(element => {
+      //   element.enabled = false
+      // });
+      //  window.localstream.getAudioTracks()[0].enabled = false
     },
     recStream2(stream) {
       console.log("masuk rec stream2", this.$refs.rVideo);
@@ -340,7 +360,7 @@ export default {
       video.srcObject = stream;
       window.peer_stream = stream;
       video.autoplay = true;
-      video.play();
+      // video.play();
       // window.localstream.getVideoTracks().forEach(el => {
       //   el.enabled = true
       // });
@@ -417,7 +437,7 @@ export default {
       let data = {
         peerId: this.peerId,
         roomKey: localStorage.getItem("roomKey"),
-        name: JSON.parse(localStorage.user).name 
+        name: JSON.parse(localStorage.user).name
       };
       socket.emit("receive peerId", data);
     }
@@ -436,13 +456,16 @@ export default {
 }
 h5 {
   color: white;
-  transform: translateY(-6rem);
+  /* transform: translateY(-2rem); */
 }
 .button-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   width: 40%;
   transform: translateY(-6rem);
+  bottom:400px;
+  margin: auto;
+  background-color: black;
 }
 li div {
   float: left;
@@ -452,13 +475,7 @@ li div {
   border: rgb(45, 201, 71);
   border-radius: 10px;
 }
-.myVideo {
-  /* position: fixed; */
-  right: 0;
-  bottom: 0;
-  min-width: 100%;
-  min-height: 100%;
-}
+
 .content {
   position: fixed;
   justify-content: space-between;
@@ -489,6 +506,7 @@ li div {
   cursor: pointer;
   transition: ease 400ms;
   filter: grayscale(50%);
+  margin-left: 10px;
 }
 .button:hover {
   filter: grayscale(10%);
