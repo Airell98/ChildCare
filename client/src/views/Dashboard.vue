@@ -11,7 +11,10 @@
               @click.prevent="addChild"
             >
               <span>
-                <img src="https://image.flaticon.com/icons/svg/992/992651.svg" alt />
+                <img
+                  src="https://image.flaticon.com/icons/svg/992/992651.svg"
+                  alt
+                />
               </span>
               Child
               <AddChildModal></AddChildModal>
@@ -23,11 +26,14 @@
         <div v-if="user === 'agency'">
           <div
             class="Button"
-            v-if="loginAs == 'agency' && id ==  userLocal.id"
+            v-if="loginAs == 'agency' && id == userLocal.id"
             @click.prevent="addNanny"
           >
             <span>
-              <img src="https://image.flaticon.com/icons/svg/992/992651.svg" alt />
+              <img
+                src="https://image.flaticon.com/icons/svg/992/992651.svg"
+                alt
+              />
             </span>
             Nanny
             <AddNannyModal :title="'addNanny'"></AddNannyModal>
@@ -40,7 +46,12 @@
         <div class="title" v-if="user === 'parent'">Children List</div>
         <div class="title" v-if="user === 'agency'">Nanny List</div>
         <div class="card-container">
-          <Card v-for="nanny in cardDatas" :key="nanny.id" :data="nanny" :entityName="entityName"></Card>
+          <Card
+            v-for="nanny in cardDatas"
+            :key="nanny.id"
+            :data="nanny"
+            :entityName="entityName"
+          ></Card>
         </div>
       </div>
     </div>
@@ -208,9 +219,9 @@ export default {
 }
 .button-container {
   display: flex;
-  font-family: "Courier New", Courier, monospace;
 }
 .Button {
+  font-family: "Courier New", Courier, monospace;
   width: 40%;
   font-size: 1.8rem;
   font-weight: 600;
