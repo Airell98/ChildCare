@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <LoginHome v-if="!login"></LoginHome>
+    <!-- <LoginHome v-if="!login"></LoginHome> -->
     <Navbar></Navbar>
     <div class="body">
       <FilterBox @passFilteredNannies="fillNanniesValue"></FilterBox>
@@ -61,7 +61,7 @@ export default {
 .body {
   display: grid;
   grid-template-columns: 1fr 3fr;
-  transform: translateY(1rem);
+  transform: translateY(4rem);
 }
 .card-container {
   margin-top: 35px;

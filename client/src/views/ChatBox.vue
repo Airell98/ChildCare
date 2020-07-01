@@ -2,43 +2,34 @@
   <div>
     <Navbar></Navbar>
     <div class="chat-body">
-      <!-- <div id="roomKeyWindow" style="flex: 2">
-      <h3>PARTNER ID</h3>
-      <p>{{ partnerId }}</p>
-      <button
-        class="btn btn-lg btn-success btn-block"
-        id="conn_button"
-        type="submit"
-        v-on:click="sendPeerId"
-      >Send Video Link</button>
-
-      <button
-        class="btn btn-lg btn-danger btn-block"
-        id="call_button"
-        type="submit"
-        v-on:click="callSomeone"
-      >Call</button>
-
-      <button
-        class="btn btn-lg btn-danger btn-block"
-        id="call_button"
-        type="submit"
-        v-on:click="endCall"
-      >End Call</button>
-      </div>-->
-
       <div style="background-color: black; flex: 7;">
-        <video class="container-fluid" ref="rVideo" autoplay id="myVideo"></video>
-        <h5>PARTNER ID : {{partnerId}}</h5>
-        <div class="button-container">
-          <div class="button share" v-on:click="sendPeerId">
-            <img src="https://image.flaticon.com/icons/svg/1828/1828956.svg" alt />
-          </div>
-          <div class="button call" v-on:click="callSomeone">
-            <img src="https://image.flaticon.com/icons/svg/2947/2947981.svg" alt />
-          </div>
-          <div class="button end-call" v-on:click="endCall">
-            <img src="https://image.flaticon.com/icons/svg/481/481305.svg" alt />
+        <video
+          class="container-fluid"
+          ref="rVideo"
+          autoplay
+          id="myVideo"
+        ></video>
+        <div class="ui">
+          <h5>PARTNER ID : {{ partnerId }}</h5>
+          <div class="button-container">
+            <div class="button share" v-on:click="sendPeerId">
+              <img
+                src="https://image.flaticon.com/icons/svg/1828/1828956.svg"
+                alt
+              />
+            </div>
+            <div class="button call" v-on:click="callSomeone">
+              <img
+                src="https://image.flaticon.com/icons/svg/2947/2947981.svg"
+                alt
+              />
+            </div>
+            <div class="button end-call" v-on:click="endCall">
+              <img
+                src="https://image.flaticon.com/icons/svg/481/481305.svg"
+                alt
+              />
+            </div>
           </div>
         </div>
         <!-- <div style="display:flex;" class="content">
@@ -54,9 +45,17 @@
 
       <div id="chatWindow" style="flex: 2">
         <div style=" height:80vh; overflow-y:scroll;">
-          <ul v-for="(message, index) in messages" :key="index" class="list-group list-group-flush">
+          <ul
+            v-for="(message, index) in messages"
+            :key="index"
+            class="list-group list-group-flush"
+          >
             <li>
-              <div v-if="message.sender == role" style="color:#34eb7d;" class="float-right">
+              <div
+                v-if="message.sender == role"
+                style="color:#34eb7d;"
+                class="float-right"
+              >
                 <p style="color: black;">{{ message.content }}</p>
               </div>
               <div v-else style="background-color:#fffffc;" class="float-left">
@@ -79,7 +78,9 @@
           class="btn btn-lg btn-primary btn-block"
           id="button"
           type="submit"
-        >Send</button>
+        >
+          Send
+        </button>
       </div>
     </div>
   </div>
@@ -377,17 +378,19 @@ export default {
   margin: auto;
   display: flex;
   justify-content: center;
-  transform: translateY(3rem);
+}
+.ui {
+  margin-left: 2rem;
+  transform: translateY(-1rem);
 }
 h5 {
   color: white;
-  transform: translateY(-5rem);
+  margin-bottom: 1rem;
 }
 .button-container {
   display: flex;
   justify-content: space-between;
   width: 30%;
-  transform: translateY(-4rem);
 }
 .button {
   width: 4rem;
@@ -444,13 +447,13 @@ li div {
 .list-group {
   list-style: none;
 }
-#roomKeyWindow {
+/* #roomKeyWindow {
   transform: translateY(10rem);
   display: flex;
   flex-direction: column;
   padding: 10px;
   justify-content: center;
-}
+} */
 #chatWindow {
   padding-right: 5px;
   margin-left: 5px;

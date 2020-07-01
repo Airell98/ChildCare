@@ -1,5 +1,5 @@
 <template>
-  <b-navbar fixed="top" sticky="true" id="navbar">
+  <b-navbar fixed="top" id="navbar">
     <b-navbar-brand id="logo" @click.prevent="gotoHome">
       <img src="../assets/childCare.png" />
       <p id="textLogo">
@@ -8,7 +8,9 @@
       </p>
     </b-navbar-brand>
     <b-navbar-nav class="ml-auto" v-if="login">
-      <div class="username" @click.prevent="gotoDashboard">{{username.toUpperCase()}}</div>
+      <div class="username" @click.prevent="gotoDashboard">
+        {{ username.toUpperCase() }}
+      </div>
       <div class="Button Edit" @click.prevent="gotoEdit">EDIT</div>
       <div class="Button Logout" @click.prevent="loggingOut">LOGOUT</div>
     </b-navbar-nav>
