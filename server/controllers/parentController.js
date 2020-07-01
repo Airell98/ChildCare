@@ -1,6 +1,7 @@
 const { Nanny, Child, Agency, Parent } = require("../models");
 const compareSyncBcrypt = require("../helper/compareSyncBcyrpt");
 const jwtSign = require("../helper/jwtSign");
+const hashPass = require("../helper/hashPass");
 class ParentController {
   static registerParent(req, res, next) {
     const {
@@ -120,11 +121,12 @@ class ParentController {
         if (!parent) {
           throw next({ name: "ERR_NOT_FOUND" });
         } else {
+          const newPass = hashPass(req.body);
           return Parent.update(
             {
               name,
               email,
-              password,
+              password: newPass,
               city,
               birthDate,
               address,

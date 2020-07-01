@@ -1,6 +1,7 @@
 const { Agency } = require("../models");
 const jwtSign = require("../helper/jwtSign");
 const compareSyncBcrypt = require("../helper/compareSyncBcyrpt");
+const hashPass = require("../helper/hashPass");
 
 class AgencyController {
   static registerAgency(req, res, next) {
@@ -111,8 +112,17 @@ class AgencyController {
         if (!agecy) {
           throw next({ name: "ERR_NOT_FOUND" });
         } else {
+          const newPass = hashPass(req.body);
           return Agency.update(
-            { name, email, password, address, city, logoUrl, phoneNumber },
+            {
+              name,
+              email,
+              password: newPass,
+              address,
+              city,
+              logoUrl,
+              phoneNumber,
+            },
             { where: { id } }
           );
         }

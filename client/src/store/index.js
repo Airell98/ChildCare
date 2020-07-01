@@ -645,6 +645,7 @@ export default new Vuex.Store({
         });
     },
     edit_user(context, payload) {
+      console.log(payload.data);
       axios({
         method: "put",
         url: `${context.state.url}/${payload.user}/${payload.id}`,
