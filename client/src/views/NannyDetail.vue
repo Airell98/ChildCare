@@ -3,7 +3,7 @@
     <NavBar></NavBar>
     <div class="container-profile">
       <div class="container-searchbox">
-        <div class="button_cont" align="center"><a class="example_g" href="add-website-here" target="_blank" rel="nofollow"><span>Previous</span></a></div>
+        <div @click.prevent='onClickSebelumnya' class="button_cont" align="center"><a class="example_g" href="add-website-here" target="_blank" rel="nofollow"><span>Previous</span></a></div>
       </div>
       <div class="container-content">
         <div class="container-content-brief-card-name">
@@ -93,7 +93,9 @@
 
       </div>
       <div class="container-searchbox2">
-        <div class="button_cont" align="center"><a class="example_f" href="add-website-here" target="_blank" rel="nofollow"><span>Next</span></a></div>
+        <div 
+        @click.prevent='onClickBerikutnya'
+        class="button_cont" align="center"><a class="example_f" href="add-website-here" target="_blank" rel="nofollow"><span>Next</span></a></div>
       </div>
     </div>
   </div>
@@ -157,20 +159,22 @@ export default {
       this.$bvModal.show("modalEditNanny");
     },
     onClickSebelumnya() {
+      console.log('sebelumnya')
       // this.$router.push({
       //   name: "NannyDetail",
       //   params: { id: Number(this.id) - 1 }
       // });
       // window.location.reload();
-      this.$store.dispatch('slideNannyCardToTheLeft', Number(this.id)-1)
+      // this.$store.dispatch('slideNannyCardToTheLeft', Number(this.id)-1)
     },
     onClickBerikutnya() {
+      console.log('berikutnya')
       // this.$router.push({
       //   name: "NannyDetail",
       //   params: { id: Number(this.id) + 1 }
       // });
       // window.location.reload();
-       this.$store.dispatch('slideNannyCardToTheRight', Number(this.id)+1)
+      //  this.$store.dispatch('slideNannyCardToTheRight', Number(this.id)+1)
     }
   },
   mounted() {
@@ -254,7 +258,7 @@ h5{
 }
 
 .container-content-brief-card-name{
-  background-color: rgba(255, 255, 255, 0.801);
+ background-color: rgba(255, 255, 255, 0.575);
   box-shadow: 0 8px 16px -8px rgba(0,0,0,0.4);
   border-radius:25px;
   padding-left:3%;
@@ -268,8 +272,6 @@ h5{
   /* padding:1em; */
   width: 100%;
   height: 8%;
-
-  opacity: 90%;
 
 }
 
@@ -290,13 +292,15 @@ img{
 }
 
 .container-content-brief{
-  /* background-color: rgb(255, 187, 97); */
+  background-color: rgba(255, 255, 255, 0.575);
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
   padding:1vw;
   display:flex;
   align-items: center;
   flex-direction: row;
   margin-top:1vh;
-  width: 53vw;
+  width: 54vw;
   height: 33vw;
 }
 
@@ -477,7 +481,7 @@ img{
    text-transform: uppercase;
    font-size: 22px;
    padding: 20px;
-   width: 200px;
+   width:7vw;
    transition: all 0.4s;
    cursor: pointer;
    margin: 5px;
@@ -507,8 +511,6 @@ img{
 
 
 
-
-
 .example_g {
    border-radius: 4px;
    background: linear-gradient(to right, #67b26b, #4ca2cb) !important;
@@ -518,7 +520,7 @@ img{
    text-transform: uppercase;
    font-size: 22px;
    padding: 20px;
-   width: 200px;
+    width:7vw;
    transition: all 0.4s;
    cursor: pointer;
    margin: 5px;
@@ -544,10 +546,6 @@ img{
    opacity: 1;
    left: 0;
  }
-
-
-
-
 
 
 

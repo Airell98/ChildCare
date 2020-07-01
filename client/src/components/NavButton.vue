@@ -1,6 +1,7 @@
 <template>
   <div>
     <AddNannyModal :title="'registerNanny'"></AddNannyModal>
+    <button @click.prevent='gotoThank'>Thank</button>
     <div class="Dropdown">
       <div class="Button">{{ text }}</div>
       <div class="Dropdown-content">
@@ -23,6 +24,9 @@ export default {
   methods: {
     showNannyModal() {
       this.$bvModal.show("modalAddNanny");
+    },
+    gotoThank(){
+      this.$router.push({ name:"thankyou"})
     },
     gotoAgency() {
       if (this.text === "REGISTER")

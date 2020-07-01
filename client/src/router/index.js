@@ -8,6 +8,7 @@ import Register from "../views/Register";
 import Login from "../views/Login";
 import NannyDetail from "../views/NannyDetail";
 import Chat from "../views/ChatBox.vue";
+import Thank from "../views/Thankyou.vue"
 
 Vue.use(VueRouter);
 
@@ -16,6 +17,11 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home
+  },
+  {
+    path:'/thankyou',
+    name:'thankyou',
+    component: Thank
   },
   {
     path: "/parent/:id/wishlist",
