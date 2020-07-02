@@ -1,7 +1,12 @@
 <template>
   <div class="cart">
-    <div class="image">
-      <img :src="nanny.imageUrl" style="object-fit: cover;" alt />
+    <div
+      class="image"
+      :style="[{
+      'background': `url(${nanny.imageUrl})`,
+      'background-position': 'center center',
+      'background-size': 'cover', 
+    }]">
     </div>
     <div class="right">
       <div class="cart-content">
