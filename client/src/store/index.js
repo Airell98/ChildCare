@@ -9,8 +9,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     messages: [],
-    // url: "https://super-nanny555.herokuapp.com",
-    url: "http://localhost:3001",
+    url: "https://super-nanny555.herokuapp.com",
+    // url: "http://localhost:3001",
     nannies: [],
     children: [],
     agencies: [],
@@ -96,7 +96,7 @@ export default new Vuex.Store({
       if (role === "parent") {
         return axios({
           method: "GET",
-          url: `${context.state.url}/message/parent/id`,
+          url: `${context.state.url}/message/parent/${id}`,
           headers: {
             access_token: localStorage.getItem("access_token")
           }
@@ -104,7 +104,7 @@ export default new Vuex.Store({
       } else if (role === "agency") {
         return axios({
           method: "GET",
-          url: `${context.state.url}/message/agency/id`,
+          url: `${context.state.url}/message/agency/${id}`,
           headers: {
             access_token: localStorage.getItem("access_token")
           }
@@ -116,7 +116,7 @@ export default new Vuex.Store({
       if (role === "parent") {
         return axios({
           method: "POST",
-          url: `${context.state.url}/message/parent/payload.id`,
+          url: `${context.state.url}/message/parent/${payload.id}`,
           headers: {
             access_token: localStorage.getItem("access_token")
           },
@@ -128,7 +128,7 @@ export default new Vuex.Store({
       } else if (role === "agency") {
         return axios({
           method: "POST",
-          url: `${context.state.url}/message/agency/payload.id`,
+          url: `${context.state.url}/message/agency/${payload.id}`,
           headers: {
             access_token: localStorage.getItem("access_token")
           },
@@ -630,7 +630,9 @@ export default new Vuex.Store({
             return nanny.id != payload.id;
           });
           payload.data.id = payload.id;
+          payload.data.AgencyId = payload.agencyId;
           context.state.nannies.push(payload.data);
+          context.state.nannyDetail = payload.data;
         })
         .catch(error => {
           if (error.response) {

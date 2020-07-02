@@ -11,10 +11,7 @@
               @click.prevent="addChild"
             >
               <span>
-                <img
-                  src="https://image.flaticon.com/icons/svg/992/992651.svg"
-                  alt
-                />
+                <img src="https://image.flaticon.com/icons/svg/992/992651.svg" alt />
               </span>
               Child
               <AddChildModal></AddChildModal>
@@ -30,10 +27,7 @@
             @click.prevent="addNanny"
           >
             <span>
-              <img
-                src="https://image.flaticon.com/icons/svg/992/992651.svg"
-                alt
-              />
+              <img src="https://image.flaticon.com/icons/svg/992/992651.svg" alt />
             </span>
             Nanny
             <AddNannyModal :title="'addNanny'"></AddNannyModal>
@@ -46,12 +40,7 @@
         <div class="title" v-if="user === 'parent'">Children List</div>
         <div class="title" v-if="user === 'agency'">Nanny List</div>
         <div class="card-container">
-          <Card
-            v-for="nanny in cardDatas"
-            :key="nanny.id"
-            :data="nanny"
-            :entityName="entityName"
-          ></Card>
+          <Card v-for="nanny in cardDatas" :key="nanny.id" :data="nanny" :entityName="entityName"></Card>
         </div>
       </div>
     </div>
@@ -67,8 +56,8 @@ import ChatList from "../components/ChatList";
 import AddNannyModal from "../components/AddNannyModal";
 import AddChildModal from "../components/AddChildModal";
 import io from "socket.io-client";
-const serverUrl = "http://localhost:3001";
-// const serverUrl = "https://super-nanny555.herokuapp.com";
+// const serverUrl = "http://localhost:3001";
+const serverUrl = "https://super-nanny555.herokuapp.com";
 const socket = io(serverUrl, {
   path: "/chat"
 });
@@ -126,7 +115,6 @@ export default {
         this.entityName = "child";
       }
     }
-    this.$store.dispatch("get_nannyByAgency");
   },
   computed: {
     userData() {

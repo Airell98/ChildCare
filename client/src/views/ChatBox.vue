@@ -3,7 +3,13 @@
     <Navbar></Navbar>
     <div class="chat-body">
       <div style="background-color: black; flex: 7;">
-        <video height="1" ref="rVideo" autoplay id="myVideo"></video>
+        <video
+          width="320"
+          height="240"
+          ref="rVideo"
+          id="myVideo"
+          autoplay
+        ></video>
         <div class="ui">
           <h5>PARTNER ID : {{ partnerId }}</h5>
           <div class="button-container">
@@ -100,8 +106,8 @@
 import io from "socket.io-client";
 import Swal from "sweetalert2";
 import Navbar from "../components/Navbar";
-// const serverUrl = "https://super-nanny555.herokuapp.com";
-const serverUrl = "http://localhost:3001";
+const serverUrl = "https://super-nanny555.herokuapp.com";
+// const serverUrl = "http://localhost:3001";
 const socket = io(serverUrl, {
   path: "/chat"
 });
@@ -249,7 +255,7 @@ export default {
       if (this.partnerId) {
         this.telpon = peer.call(this.partnerId, window.localstream);
         this.telpon.on("stream", Stream => {
-          this.startVideo();
+          // this.startVideo();
           // Swal.fire("sisi penenlpon");
 
           window.peer_stream = Stream;
@@ -266,7 +272,20 @@ export default {
       }
     },
     startVideo() {
-      this.getLVideo();
+      // this.getLVideo();
+      this.getLVideo({
+        success: stream => {
+          window.localstream = stream;
+          // console.log(
+          //   window.localstream.getTracks()[0],
+          //   "this is the window localstream"
+          // );
+          // console.log(window.localstream, "this is the window localstream");
+        },
+        error: function(err) {
+          console.log(err);
+        }
+      });
     },
     endCall() {
       // Swal.fire("end my call");

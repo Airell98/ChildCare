@@ -3,8 +3,18 @@
     <b-form class="form-signin" @submit.prevent="editUser">
       <h3 class="form-signin-heading">Edit Profile</h3>
       <b-form-input type="text" name="name" placeholder="Nama" v-model="name" />
-      <b-form-input type="text" name="email" placeholder="Email Address" v-model="email" />
-      <b-form-input type="password" name="password" placeholder="Password" v-model="password" />
+      <b-form-input
+        type="text"
+        name="email"
+        placeholder="Email Address"
+        v-model="email"
+      />
+      <b-form-input
+        type="password"
+        name="password"
+        placeholder="Password"
+        v-model="password"
+      />
       <br />
       <b-form-datepicker
         v-if="user == 'parent'"
@@ -13,8 +23,18 @@
         placeholder="Birth date"
         v-model="birthDate"
       />
-      <b-form-select v-if="user == 'parent'" v-model="gender" :options="genders" />
-      <b-form-input type="text" name="Address" placeholder="Address" v-model="address" />
+      <b-form-input type="text" name="email" v-model="logoUrl" />
+      <b-form-select
+        v-if="user == 'parent'"
+        v-model="gender"
+        :options="genders"
+      />
+      <b-form-input
+        type="text"
+        name="Address"
+        placeholder="Address"
+        v-model="address"
+      />
       <b-form-input type="text" name="City" placeholder="City" v-model="city" />
       <b-form-file
         v-if="user == 'agency'"

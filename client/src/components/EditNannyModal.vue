@@ -158,6 +158,7 @@ export default {
     },
     confirmEdit() {
       this.$store.dispatch("editNanny", {
+        agencyId: this.dataNanny.AgencyId,
         id: this.$route.params.id,
         data: {
           name: this.name,
@@ -166,7 +167,8 @@ export default {
           birthDate: this.birthDate,
           address: this.address,
           expectedSalary: this.expectedSalary,
-          imageUrl: this.image_url
+          imageUrl: this.image_url,
+          city: this.city
         }
       });
       this.modalShow = false;
@@ -193,7 +195,6 @@ export default {
   }
 };
 </script>
-
 
 <style scoped>
 .button {

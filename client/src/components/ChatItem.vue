@@ -77,6 +77,12 @@ export default {
   cursor: pointer;
   display: flex;
   margin-bottom: 2rem;
+  padding: 4px 6px;
+  transition: ease 400ms;
+  border-radius: 2.2rem;
+}
+.item-container:hover {
+  background-color: #9a175046;
 }
 .image {
   width: 4rem;
