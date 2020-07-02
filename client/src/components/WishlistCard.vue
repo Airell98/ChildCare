@@ -6,14 +6,14 @@
       'background': `url(${nanny.imageUrl})`,
       'background-position': 'center center',
       'background-size': 'cover', 
-    }]">
-    </div>
+    }]"
+    ></div>
     <div class="right">
       <div class="cart-content">
         <div class="cart-description">
           <div class="name">{{nanny.name.toUpperCase()}}</div>
           <div class="city">{{nanny.city.toUpperCase()}}</div>
-          <div class="salary">Rp. {{nanny.expectedSalary}}</div>
+          <div class="salary">Rp. {{formatPrice(nanny.expectedSalary)}}</div>
         </div>
         <div class="button-container">
           <div class="button chat" @click.prevent="gotoChat">
@@ -56,6 +56,10 @@ export default {
         }
       }
       this.$store.dispatch("hireNanny", nannyId);
+    },
+    formatPrice(value) {
+      let val = (value / 1).toFixed(2).replace(".", ",");
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
   },
   created() {

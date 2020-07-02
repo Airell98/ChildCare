@@ -3,11 +3,7 @@
     <NavBar></NavBar>
     <div class="container-profile">
       <div class="container-searchbox">
-        <div
-          class="button_cont"
-          align="center"
-          @click.prevent="onClickSebelumnya"
-        >
+        <div class="button_cont" align="center" @click.prevent="onClickSebelumnya">
           <a class="example_g" target="_blank" rel="nofollow">
             <span>Previous</span>
           </a>
@@ -20,62 +16,37 @@
         </div>
         <div class="container-content-brief">
           <div class="container-content-picture">
-            <img
-              class="fitImage"
-              :src="dataNanny.imageUrl"
-              height="100%"
-              width="100%"
-            />
+            <img class="fitImage" :src="dataNanny.imageUrl" height="100%" width="100%" />
           </div>
 
           <div class="container-content-detail">
             <div class="container-content-detailed">
               <div class="symbols-detail">
                 <div class="symbol">
-                  <img
-                    class="img-asd"
-                    src="../assets/age.png"
-                    height="120%"
-                    width="120%"
-                  />
+                  <img class="img-asd" src="../assets/age.png" height="120%" width="120%" />
                 </div>
                 <div class="answer">{{ age }}</div>
               </div>
 
               <div class="symbols-detail">
                 <div class="symbol">
-                  <img
-                    class="img-asd"
-                    src="../assets/gender.png"
-                    height="100%"
-                    width="100%"
-                  />
+                  <img class="img-asd" src="../assets/gender.png" height="100%" width="100%" />
                 </div>
                 <div class="answer">{{ dataNanny.gender }}</div>
               </div>
 
               <div class="symbols-detail">
                 <div class="symbol">
-                  <img
-                    class="img-asd"
-                    src="../assets/location.png"
-                    height="100%"
-                    width="100%"
-                  />
+                  <img class="img-asd" src="../assets/location.png" height="100%" width="100%" />
                 </div>
                 <div class="answer">{{ dataNanny.city }}</div>
               </div>
 
               <div class="symbols-detail">
                 <div class="symbol">
-                  <img
-                    class="img-asd"
-                    src="../assets/salary.png"
-                    height="100%"
-                    width="100%"
-                  />
+                  <img class="img-asd" src="../assets/salary.png" height="100%" width="100%" />
                 </div>
-                <div class="answer">Rp. {{ dataNanny.expectedSalary }}</div>
+                <div class="answer">Rp. {{ formatPrice(dataNanny.expectedSalary) }}</div>
               </div>
             </div>
 
@@ -85,18 +56,14 @@
                   class="buttonA"
                   @click.prevent="deleteNanny"
                   v-if="loginAs == 'agency' && authorized"
-                >
-                  Delete Nanny
-                </button>
+                >Delete Nanny</button>
               </div>
               <div class="container-content-etc3">
                 <button
                   class="buttonA"
                   @click.prevent="onClickEditInfo"
                   v-if="loginAs == 'agency' && authorized"
-                >
-                  Edit Info
-                </button>
+                >Edit Info</button>
                 <div>
                   <EditNannyModal></EditNannyModal>
                 </div>
@@ -104,9 +71,7 @@
                   class="buttonA"
                   @click.prevent="onClickWishList"
                   v-if="loginAs == 'parent'"
-                >
-                  + Wish List
-                </button>
+                >+ Wish List</button>
               </div>
             </div>
           </div>
@@ -114,12 +79,7 @@
       </div>
       <div class="container-searchbox2">
         <div class="button_cont" align="center">
-          <a
-            class="example_f"
-            target="_blank"
-            @click.prevent="onClickBerikutnya"
-            rel="nofollow"
-          >
+          <a class="example_f" target="_blank" @click.prevent="onClickBerikutnya" rel="nofollow">
             <span>Next</span>
           </a>
         </div>
@@ -200,6 +160,10 @@ export default {
     },
     deleteNanny() {
       this.$store.dispatch("deleteNanny", this.id);
+    },
+    formatPrice(value) {
+      let val = (value / 1).toFixed(2).replace(".", ",");
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
   },
   mounted() {

@@ -14,7 +14,7 @@
         <p style="font-size: 1.4rem;">{{ `${data.name.toUpperCase()} (${age})` }}</p>
         <p v-if="entityName == 'nanny'">{{ data.city.toUpperCase() }}</p>
         <p style="font-weight: 600;" v-if="entityName == 'nanny'">Expected Salary</p>
-        <p v-if="entityName == 'nanny'">Rp. {{ data.expectedSalary }}</p>
+        <p v-if="entityName == 'nanny'">Rp. {{ formatPrice(data.expectedSalary) }}</p>
         <p style="font-weight: 600;" v-if="entityName == 'child'">Gender</p>
         <p class="condition" v-if="entityName == 'child'">{{ data.gender }}</p>
         <hr />
@@ -49,6 +49,10 @@ export default {
         name: routerName,
         params: { id: this.data.id }
       });
+    },
+    formatPrice(value) {
+      let val = (value / 1).toFixed(2).replace(".", ",");
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
   }
 };
