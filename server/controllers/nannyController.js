@@ -236,7 +236,7 @@ class NannyController {
   static findAllCorrespondingNanny(req, res, next) {
     const AgencyId = req.agencyData.id;
     Nanny.findAll({
-      where: { AgencyId, availability: false },
+      where: { AgencyId },
       attributes: [
         "id",
         "name",

@@ -100,7 +100,7 @@
 import io from "socket.io-client";
 import Swal from "sweetalert2";
 import Navbar from "../components/Navbar";
-// const serverUrl = "https://websocket-joey.herokuapp.com";
+// const serverUrl = "https://super-nanny555.herokuapp.com";
 const serverUrl = "http://localhost:3001";
 const socket = io(serverUrl, {
   path: "/chat"

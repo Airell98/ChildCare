@@ -28,6 +28,7 @@
             accept="image/jpeg, image/png"
             ref="myFiles"
           />
+          <!-- <b-form-input type="text" v-model="image_url" /> -->
           <br />
           <h6>Name</h6>
           <b-form-input type="text" v-model="name" />
@@ -131,6 +132,7 @@ export default {
         // };
         var formData = new FormData();
         formData.append("image", files[0]);
+        console.log(formData);
         // settings.data = formData;
         // Response contains stringified JSON
         // Image URL available at response.data.link
@@ -153,15 +155,17 @@ export default {
             this.image_url = response.data.data.link;
             console.log(this.logoUrl, "sdfh");
           })
-          .catch(err => {
-            console.log(err.response.data);
-            this.logoUrl =
-              "https://e7.pngegg.com/pngimages/379/878/png-clipart-nanny-childcare-worker-child-care-infant-child-nanny-childcare.png";
-            Swal.fire({
-              icon: "error",
-              title: "Upload image failed",
-              text: "Changed to default image"
-            });
+          .catch(error => {
+            if (error.response) {
+              console.log(error.response.data);
+              console.log(error.response.status);
+              console.log(error.response.headers);
+            } else if (error.request) {
+              console.log(error.request);
+            } else {
+              console.log("Error", error.message);
+            }
+            console.log(error.config);
           });
       }
       // $("input[type=file]").val("");
@@ -186,7 +190,6 @@ export default {
   }
 };
 </script>
-
 
 <style scoped>
 .button {
