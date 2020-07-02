@@ -8,18 +8,35 @@
           <h5>PARTNER ID : {{ partnerId }}</h5>
           <div class="button-container">
             <div class="button share" v-on:click="sendPeerId">
-              <img src="https://image.flaticon.com/icons/svg/1828/1828956.svg" alt />
+              <img
+                src="https://image.flaticon.com/icons/svg/1828/1828956.svg"
+                alt
+              />
             </div>
             <div class="button call" v-on:click="callSomeone">
-              <img src="https://image.flaticon.com/icons/svg/2947/2947981.svg" alt />
+              <img
+                src="https://image.flaticon.com/icons/svg/2947/2947981.svg"
+                alt
+              />
             </div>
             <div class="button end-call" v-on:click="endCall">
-              <img src="https://image.flaticon.com/icons/svg/481/481305.svg" alt />
+              <img
+                src="https://image.flaticon.com/icons/svg/481/481305.svg"
+                alt
+              />
             </div>
-            <div v-if="!volumeCondition" class="button mute" @click.prevent="mute">
+            <div
+              v-if="!volumeCondition"
+              class="button mute"
+              @click.prevent="mute"
+            >
               <img src="https://image.flaticon.com/icons/svg/149/149139.svg" />
             </div>
-            <div v-if="volumeCondition" class="button unmute" @click.prevent="unMute">
+            <div
+              v-if="volumeCondition"
+              class="button unmute"
+              @click.prevent="unMute"
+            >
               <img src="https://image.flaticon.com/icons/svg/149/149144.svg" />
             </div>
           </div>
@@ -37,9 +54,17 @@
 
       <div id="chatWindow" style="flex: 2">
         <div style=" height:80vh; overflow-y:scroll;">
-          <ul v-for="(message, index) in messages" :key="index" class="list-group list-group-flush">
+          <ul
+            v-for="(message, index) in messages"
+            :key="index"
+            class="list-group list-group-flush"
+          >
             <li>
-              <div v-if="message.sender == role" style="color:#34eb7d;" class="float-right">
+              <div
+                v-if="message.sender == role"
+                style="color:#34eb7d;"
+                class="float-right"
+              >
                 <p style="color: black;">{{ message.content }}</p>
               </div>
               <div v-else style="background-color:#fffffc;" class="float-left">
@@ -63,7 +88,9 @@
           class="btn btn-lg btn-primary btn-block"
           id="button"
           type="submit"
-        >Send</button>
+        >
+          Send
+        </button>
       </div>
     </div>
   </div>
@@ -148,7 +175,7 @@ export default {
           });
         } else {
           socket.emit("reject phone call", {
-            msg: "phone rejected",
+            msg: "call rejected",
             roomKey: localStorage.getItem("roomKey")
           });
         }
