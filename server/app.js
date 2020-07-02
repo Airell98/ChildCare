@@ -52,6 +52,13 @@ io.on("connection", (socket) => {
   socket.on("fetchingPartner", (payload) => {
     socket.broadcast.in(payload.key).emit("fetchingClientMsg");
   });
+  socket.on("disbandSettingRoomDashboardUnread", (payload) => {
+    socket.leave(payload);
+  });
+  socket.on("leave-room", (roomKey) => {
+    console.log("Leaving room ", roomKey);
+    socket.leave(roomKey);
+  });
 });
 
 if (process.env.NODE_ENV !== "test") {

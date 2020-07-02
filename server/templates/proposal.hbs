@@ -37,14 +37,14 @@
           <hr>
           <div class="card">
             Do you accept this proposal?<br>
-            <form action="http://localhost:3001/emailing/agency/accept" method="POST">
+            <form action="https://super-nanny555.herokuapp.com/emailing/agency/accept" method="POST">
               <input type="hidden" id="parentId" name="parentId" value="{{parentId}}">
               <input type="hidden" id="nannyId" name="nannyId" value="{{nannyId}}">
               <input type="hidden" id="agencyId" name="agencyId" value="{{agencyId}}">
               <input type="submit" value="YES">
             </form><br>
 
-            <form action="http://localhost:3001/emailing/agency/refuse" method="POST">
+            <form action="https://super-nanny555.herokuapp.com/emailing/agency/refuse" method="POST">
               <input type="hidden" id="parentId" name="parentId" value="{{parentId}}">
               <input type="hidden" id="nannyId" name="nannyId" value="{{nannyId}}">
               <input type="hidden" id="agencyId" name="agencyId" value="{{agencyId}}">
