@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import proposal from "./Proposal";
 export default {
   name: "Wishlist",
   props: ["nanny"],
@@ -48,6 +49,7 @@ export default {
       this.$store.dispatch("deleteFromWishlist", this.nanny.id);
     },
     hireNanny() {
+      // console.log(this.nanny);
       let nannyId = null;
       for (let i = 0; i < this.originalNannies.length; i++) {
         if (this.nanny.name == this.originalNannies[i].name) {
@@ -55,7 +57,19 @@ export default {
           break;
         }
       }
-      this.$store.dispatch("hireNanny", nannyId);
+      const html = proposal(this.user, this.nanny, nannyId);
+      const data = {
+        to: this.nanny.Agency.email,
+        subject: "Super Nanny - Someone wants to hire your nanny!",
+        html: html,
+        company: "Super Nanny",
+        sendername: "Super Nanny Customer Support"
+      };
+      this.$store.dispatch("hireNanny", data);
+    },
+    formatPrice(value) {
+      let val = (value / 1).toFixed(2).replace(".", ",");
+      return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
   },
   created() {
@@ -64,6 +78,9 @@ export default {
   computed: {
     originalNannies() {
       return this.$store.state.nannies;
+    },
+    user() {
+      return JSON.parse(localStorage.user);
     }
   }
 };

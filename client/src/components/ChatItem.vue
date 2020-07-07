@@ -66,7 +66,6 @@ export default {
         `${this.message.Parent.email}${this.message.Agency.email}`
       );
       this.$router.push("/chat/" + this.userId);
-      this.$store.dispatch("update_statusRead", this.userId);
     }
   }
 };

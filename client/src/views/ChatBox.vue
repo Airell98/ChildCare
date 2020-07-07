@@ -74,7 +74,8 @@ import io from "socket.io-client";
 import Swal from "sweetalert2";
 import Navbar from "../components/Navbar";
 // const serverUrl = "https://websocket-joey.herokuapp.com";
-const serverUrl = "http://localhost:3001";
+// const serverUrl = "http://localhost:3001";
+const serverUrl = "https://super-nanny555.herokuapp.com"
 const socket = io(serverUrl, {
   path: "/chat"
 });
@@ -217,6 +218,9 @@ export default {
       return localStorage.loginAs;
     }
   },
+  destroyed() {
+    socket.emit("leave-room", localStorage.getItem("roomKey"));
+  },
   methods: {
     callSomeone() {
       if (this.partnerId) {
@@ -230,7 +234,7 @@ export default {
         });
       } else {
         Swal.fire({
-          position: "icon",
+          position: "top-center",
           icon: "success",
           title: "You need a partner id",
           showConfirmButton: false,
@@ -301,13 +305,7 @@ export default {
       video.srcObject = stream;
       window.peer_stream = stream;
       video.autoplay = true;
-      // video.play();
-      // window.localstream.getVideoTracks().forEach(el => {
-      //   el.enabled = true
-      // });
-      // window.localstream.getTracks().forEach(el => {
-      //   el.enabled = true
-      // });
+      video.muted = true;
     },
     addMessage() {
       let pesan = {

@@ -43,12 +43,12 @@ export default {
   },
   methods: {
     gotoDetail() {
-      let routerName = "";
-      this.entityName === "nanny" ? (routerName = "NannyDetail") : null;
-      this.$router.push({
-        name: routerName,
-        params: { id: this.data.id }
-      });
+      if(this.entityName === "nanny"){
+        this.$router.push({
+          name: "NannyDetail",
+          params: { id: this.data.id }
+        });
+      }
     }
   }
 };

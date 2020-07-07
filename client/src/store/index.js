@@ -9,7 +9,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     messages: [],
-    url: "http://localhost:3001",
+    // url: "http://localhost:3001",
+    url: "https://super-nanny555.herokuapp.com",
     nannies: [],
     children: [],
     agencies: [],
@@ -63,12 +64,13 @@ export default new Vuex.Store({
       if (role === "parent") {
         axios({
           method: "GET",
-          url: "http://localhost:3001/message/parent",
+          url: `${context.state.url}/message/parent`,
           headers: {
             access_token: localStorage.getItem("access_token")
           }
         })
           .then(response => {
+            console.log(response.data)
             context.commit("setMessages", response.data);
           })
           .catch(err => {
@@ -77,12 +79,13 @@ export default new Vuex.Store({
       } else if (role === "agency") {
         axios({
           method: "GET",
-          url: "http://localhost:3001/message/agency",
+          url: `${context.state.url}/message/agency`,
           headers: {
             access_token: localStorage.getItem("access_token")
           }
         })
           .then(response => {
+            console.log(response.data)
             context.commit("setMessages", response.data);
           })
           .catch(err => {
@@ -95,7 +98,7 @@ export default new Vuex.Store({
       if (role === "parent") {
         return axios({
           method: "GET",
-          url: "http://localhost:3001/message/parent/" + id,
+          url: `${context.state.url}/message/parent/${id}`,
           headers: {
             access_token: localStorage.getItem("access_token")
           }
@@ -103,7 +106,7 @@ export default new Vuex.Store({
       } else if (role === "agency") {
         return axios({
           method: "GET",
-          url: "http://localhost:3001/message/agency/" + id,
+          url: `${context.state.url}/message/agency/${id}`,
           headers: {
             access_token: localStorage.getItem("access_token")
           }
@@ -115,7 +118,7 @@ export default new Vuex.Store({
       if (role === "parent") {
         return axios({
           method: "POST",
-          url: "http://localhost:3001/message/parent/" + payload.id,
+          url: `${context.state.url}/message/parent/${payload.id}`,
           headers: {
             access_token: localStorage.getItem("access_token")
           },
@@ -127,7 +130,7 @@ export default new Vuex.Store({
       } else if (role === "agency") {
         return axios({
           method: "POST",
-          url: "http://localhost:3001/message/agency/" + payload.id,
+          url: `${context.state.url}/message/agency/${payload.id}`,
           headers: {
             access_token: localStorage.getItem("access_token")
           },
@@ -472,6 +475,13 @@ export default new Vuex.Store({
       })
         .then(response => {
           const { data } = response;
+          Swal.fire({
+            position: 'top-center',
+            icon: 'success',
+            title: 'You have added one nanny to your wishlist',
+            showConfirmButton: false,
+            timer: 1500
+            }) 
           console.log(data);
         })
         .catch(error => {
@@ -569,6 +579,7 @@ export default new Vuex.Store({
         }
       })
         .then(response => {
+          console.log(response.data, '>>>>>>>>>>>>>>>>>>>>>.')
           const { data } = response;
           context.commit("set_nannyByAgency", data);
         })
@@ -588,9 +599,9 @@ export default new Vuex.Store({
     update_statusRead(context, payload) {
       let url = "";
       if (localStorage.loginAs == "agency") {
-        url = `http://localhost:3001/message/read/agency/${payload}`;
+        url = `${context.state.url}/message/read/agency/${payload}`;
       } else {
-        url = `http://localhost:3001/message/read/parent/${payload}`;
+        url = `${context.state.url}/message/read/parent/${payload}`;
       }
       axios({
         method: "put",
@@ -757,13 +768,15 @@ export default new Vuex.Store({
         });
     },
     hireNanny(context, payload) {
-      console.log(payload);
       axios({
-        method: "get",
-        url: `${context.state.url}/emailing/parent/${payload}`,
+        method: "post",
+        url: `https://supernanny-b074.restdb.io/mail`,
         headers: {
-          access_token: localStorage.access_token
-        }
+          "x-apikey": "5efdf8b5a529a1752c476cb8",
+          "Content-type": "application/json",
+          Accept: "application/json"
+        },
+        data: payload
       })
         .then(response => {
           router.push("/thankyou");

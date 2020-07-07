@@ -158,20 +158,6 @@ module.exports = (sequelize, DataTypes) => {
       },
       AgencyId: {
         type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: "AgencyId field is not found",
-          },
-          notEmpty: {
-            args: true,
-            msg: "AgencyId is empty",
-          },
-          isInt: {
-            args: true,
-            msg: "Invalid AgencyId",
-          },
-        },
       },
       ParentId: {
         type: DataTypes.INTEGER,

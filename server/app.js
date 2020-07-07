@@ -46,8 +46,15 @@ io.on("connection", (socket) => {
     console.log("Joining room ", roomKey);
     socket.join(roomKey);
   });
+  socket.on("leave-room", (roomKey) => {
+    console.log("Leaving room ", roomKey);
+    socket.leave(roomKey);
+  });
   socket.on("settingRoomDashboardUnread", (payload) => {
     socket.join(payload);
+  });
+  socket.on("disbandSettingRoomDashboardUnread", (payload) => {
+    socket.leave(payload);
   });
   socket.on("fetchingPartner", (payload) => {
     socket.broadcast.in(payload.key).emit("fetchingClientMsg");

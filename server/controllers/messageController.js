@@ -58,7 +58,6 @@ class MessageController {
         let filterMsgArray = [];
         let countUnread = 0;
         for (let i = 0; i < messages.length; i++) {
-          console.log(messages[i].dataValues.content);
           if (!messages[i].dataValues.readParent) {
             countUnread++;
           }

@@ -4,11 +4,11 @@ const { authenticationParent } = require('../middlewares/authentication')
 const { authorizationParent } = require('../middlewares/authorization')
 
 router.get('/', ChildController.getAllChildren)
-router.get('/:id', ChildController.getChildById)
+// router.get('/:id', ChildController.getChildById)
 
 router.use(authenticationParent)
 router.post('/', ChildController.addChild)
-router.put('/:id', authorizationParent, ChildController.updateDataChild)
-router.delete('/:id', authorizationParent, ChildController.deleteById)
+// router.put('/:id', authorizationParent, ChildController.updateDataChild)
+// router.delete('/:id', authorizationParent, ChildController.deleteById)
 
 module.exports = router

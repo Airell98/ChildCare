@@ -133,6 +133,7 @@ import Vuex from "vuex";
 import NavBar from "../components/Navbar";
 import ChildCard from "../components/ChildCard";
 import EditNannyModal from "../components/EditNannyModal";
+import Swal from "sweetalert2";
 
 export default {
   name: "NannyDetail",
@@ -199,7 +200,18 @@ export default {
       this.$store.dispatch("slideNannyCardToTheRight", Number(this.id) + 1);
     },
     deleteNanny() {
-      this.$store.dispatch("deleteNanny", this.id);
+      Swal.fire({
+        title: "Are you sure?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then(result => {
+        if (result.value) {
+          this.$store.dispatch("deleteNanny", this.id);
+        }
+      });
     }
   },
   mounted() {

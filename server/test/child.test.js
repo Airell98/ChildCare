@@ -48,23 +48,4 @@ describe("Child CRUD by agency", () => {
         });
     });
   });
-
-  describe("Get one child data by its id", () => {
-    describe("Failed (id is not found)", () => {
-      it("Should return 404 and message", (done) => {
-        request(app)
-          .get("/child/1000")
-          .then((response) => {
-            let { body, status } = response;
-            expect(status).toBe(404);
-            expect(body).toHaveProperty("error", "ERR_NOT_FOUND");
-            expect(body).toHaveProperty("errorMessages");
-            done();
-          })
-          .catch((err) => {
-            done(err);
-          });
-      });
-    });
-  });
 });

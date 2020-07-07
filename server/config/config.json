@@ -2,23 +2,22 @@
   "development": {
     "username": "postgres",
     "password": "postgres",
-    "database": "FinalProject",
+    "database": "FinalProject-2",
     "host": "localhost",
     "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
-    "password": "hacktiv",
-    "database": "super-nanny-db-test",
+    "password": "postgres",
+    "database": "FinalProject-3",
     "host": "localhost",
     "dialect": "postgres"
   },
   "production": {
-    "username": "root",
-    "password": null,
-    "database": "database_production",
-    "host": "127.0.0.1",
-    "dialect": "mysql",
-    "operatorsAliases": false
+    "username": "evvieekpogmdhp",
+    "password": "4802f494c4f0e1e7f65d92c00d20cc31156c4fe24a819c2a60eac01539d5ffd0",
+    "database": "dcnhtqebmmbri8",
+    "host": "ec2-3-91-139-25.compute-1.amazonaws.com",
+    "dialect": "postgres"
   }
 }
